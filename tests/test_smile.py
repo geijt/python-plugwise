@@ -5,6 +5,7 @@ import asyncio
 # Fixture writing
 import logging
 import os
+import sys
 from pprint import PrettyPrinter
 
 # String generation
@@ -16,9 +17,7 @@ import aiohttp
 import jsonpickle as json
 import pytest
 
-import sys, os.path
-
-pw_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..")) + "/plugwise/"
+pw_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..")) + "/plugwise/" # noqa: E402
 sys.path.append(pw_dir)
 
 from exceptions import (
