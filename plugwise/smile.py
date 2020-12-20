@@ -40,8 +40,10 @@ from exceptions import (
     XMLDataMissingError,
 )
 import logging
+
 # Time related
 import pytz
+
 # Version detection
 import semver
 from util import (
