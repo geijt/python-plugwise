@@ -5,12 +5,13 @@ import asyncio
 # Fixture writing
 import logging
 import os
-import sys
 from pprint import PrettyPrinter
 
 # String generation
 import random
 import string
+
+import sys
 
 # Testing
 import aiohttp

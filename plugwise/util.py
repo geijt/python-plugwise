@@ -7,9 +7,6 @@ import binascii
 import datetime
 import re
 import struct
-
-import crcmod
-
 from constants import (
     ENERGY_KILO_WATT_HOUR,
     HW_MODELS,
@@ -20,6 +17,7 @@ from constants import (
     UTF8_DECODE,
     VOLUME_CUBIC_METERS,
 )
+import crcmod
 
 crc_fun = crcmod.mkCrcFun(0x11021, rev=False, initCrc=0x0000, xorOut=0x0000)
 
