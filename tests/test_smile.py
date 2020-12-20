@@ -17,7 +17,9 @@ import aiohttp
 import jsonpickle as json
 import pytest
 
-pw_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..")) + "/plugwise/" # noqa: E402
+pw_dir = (
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..")) + "/plugwise/"
+)  # noqa: E402
 sys.path.append(pw_dir)
 
 from exceptions import (
