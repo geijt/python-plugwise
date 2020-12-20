@@ -20,13 +20,13 @@ import pytest
 pw_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..")) + "/plugwise/"
 sys.path.append(pw_dir)
 
-from exceptions import (
+from exceptions import (  # noqa: E402
     ConnectionFailedError,
     DeviceTimeoutError,
     ErrorSendingCommandError,
     InvalidXMLError,
     ResponseError,
-)  # noqa: E402
+)
 from smile import Smile  # noqa: E402
 
 pp = PrettyPrinter(indent=8)
