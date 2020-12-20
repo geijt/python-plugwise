@@ -1,8 +1,10 @@
 """Plugwise Home Assistant module."""
+import asyncio
+import datetime as dt
+import logging
 
 import aiohttp
 import async_timeout
-import asyncio
 from constants import (
     APPLIANCES,
     ATTR_NAME,
@@ -26,7 +28,6 @@ from constants import (
     SWITCH_GROUP_TYPES,
     SYSTEM,
 )
-import datetime as dt
 from dateutil.parser import parse
 from defusedxml import ElementTree as etree
 from exceptions import (
@@ -39,7 +40,6 @@ from exceptions import (
     UnsupportedDeviceError,
     XMLDataMissingError,
 )
-import logging
 
 # Time related
 import pytz

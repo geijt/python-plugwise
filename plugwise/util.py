@@ -7,6 +7,7 @@ import binascii
 import datetime
 import re
 import struct
+
 from constants import (
     ENERGY_KILO_WATT_HOUR,
     HW_MODELS,
