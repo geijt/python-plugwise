@@ -17,9 +17,7 @@ import aiohttp
 import jsonpickle as json
 import pytest
 
-pw_dir = (
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..")) + "/plugwise/"
-)  
+pw_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..")) + "/plugwise/"
 sys.path.append(pw_dir)
 
 from exceptions import (
@@ -28,8 +26,8 @@ from exceptions import (
     ErrorSendingCommandError,
     InvalidXMLError,
     ResponseError,
-) # noqa: E402
-from smile import Smile # noqa: E402
+)  # noqa: E402
+from smile import Smile  # noqa: E402
 
 pp = PrettyPrinter(indent=8)
 
