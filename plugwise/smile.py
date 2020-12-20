@@ -918,16 +918,11 @@ class Smile:
                             direct_data[net_string] = 0
                         if f_val != 0:
                             if isinstance(f_val, int):
-                                is_int = True
                                 direct_data[net_string] += int(
                                     round(float(f_val * diff))
                                 )
                             else:
-                                is_int = False
                                 direct_data[net_string] += float(f_val * diff)
-                            _LOGGER.debug(
-                                f"{f_val}: int={is_int}, {net_string}: {direct_data[net_string]}"
-                            )
 
                     if "gas" in measurement:
                         key_string = f"{measurement}_{log_found}"
