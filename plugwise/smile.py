@@ -429,7 +429,7 @@ class Smile:
                 "thermostatic_radiator_valve",
             ]:
                 locator = "./logs/point_log[type='thermostat']/thermostat"
-                mod_type = thermostat
+                mod_type = "thermostat"
                 module_data = self._get_module_data(locator, mod_type)
                 if module_data is not None:
                     if module_data[0] == "ThermoTouch":
@@ -441,7 +441,7 @@ class Smile:
 
             if stretch_v2 or stretch_v3:
                 locator = ".//logs/point_log/electricity_point_meter"
-                mod_type = electricity_point_meter
+                mod_type = "electricity_point_meter"
                 module_data = self._get_module_data(locator, mod_type)
                 if module_data is not None:
                     appliance_model = module_data[2]
@@ -482,7 +482,7 @@ class Smile:
 
             if self.smile_type != "stretch" and "plug" in appliance_types:
                 locator = ".//logs/point_log/electricity_point_meter"
-                mod_type = electricity_point_meter
+                mod_type = "electricity_point_meter"
                 module_data = self._get_module_data(locator, mod_type)
                 if module_data is not None:
                     appliance_model = module_data[2]
