@@ -1399,6 +1399,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         _LOGGER.info(" # Assert legacy")
         assert smile._smile_legacy  # pylint: disable=protected-access
 
+        smile.get_all_devices()
         await self.device_test(smile, testdata)
 
         await smile.close_connection()
@@ -1434,6 +1435,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
 
         await self.tinker_switch(smile, ["2587a7fcdd7e482dab03fda256076b4b"])
 
+        smile.get_all_devices()
         await self.device_test(smile, testdata)
 
         await smile.close_connection()
