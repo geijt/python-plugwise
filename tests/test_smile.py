@@ -970,6 +970,8 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         _LOGGER.info("Basics:")
         _LOGGER.info(" # Assert version")
         assert smile.smile_version[0] == "3.2.4"
+        _LOGGER.info(" # Assert legacy")
+        assert not smile._smile_legacy  # pylint: disable=protected-access
         _LOGGER.info(" # Assert master thermostat")
         assert smile.single_master_thermostat()
 
@@ -978,10 +980,10 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
             ["b83f9f9758064c0fab4af6578cba4c6d"],
             ["aa6b0002df0a46e1b1eb94beb61eddfe", "f2be121e4a9345ac83c6e99ed89a98be"],
         )
+        await self.device_test(smile, testdata)
         await self.tinker_switch(
             smile, ["2743216f626f43948deec1f7ab3b3d70"], model="dhw_cm_switch"
         )
-        await self.device_test(smile, testdata)
         await smile.close_connection()
         await self.disconnect(server, client)
 
