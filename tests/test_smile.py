@@ -973,7 +973,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         _LOGGER.info(" # Assert legacy")
         assert not smile._smile_legacy  # pylint: disable=protected-access
         _LOGGER.info(" # Assert master thermostat")
-        assert smile.single_master_thermostat()
+        assert not smile.single_master_thermostat()
 
         await self.tinker_switch(
             smile,
