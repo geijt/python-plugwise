@@ -136,6 +136,8 @@ class Smile:
 
         model = version = None
         if gateway is not None:
+            model = result.find(".//gateway/vendor_model").text
+            version = result.find(".//gateway/firmware_version").text
             if gateway.find("hostname") is not None:
                 self.smile_hostname = gateway.find("hostname").text
         else:
@@ -175,9 +177,9 @@ class Smile:
                     _LOGGER.error("Connected but no gateway device information found")
                     raise ConnectionFailedError
 
-        if not self._smile_legacy:
-            model = result.find(".//gateway/vendor_model").text
-            version = result.find(".//gateway/firmware_version").text
+        #if not self._smile_legacy:
+        #    model = result.find(".//gateway/vendor_model").text
+        #    version = result.find(".//gateway/firmware_version").text
 
         if model is None or version is None:  # pragma: no cover
             # Corner case check
