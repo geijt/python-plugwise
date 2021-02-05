@@ -1400,6 +1400,8 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         assert smile.smile_version[0] == "3.1.11"
         _LOGGER.info(" # Assert legacy")
         assert smile._smile_legacy  # pylint: disable=protected-access
+        _LOGGER.info(" # Assert no master thermostat")
+        assert smile.single_master_thermostat() is None  # it's not a thermostat :)
 
         smile.get_all_devices()
         await self.device_test(smile, testdata)
@@ -1434,6 +1436,8 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         assert smile.smile_version[0] == "2.3.12"
         _LOGGER.info(" # Assert legacy")
         assert smile._smile_legacy  # pylint: disable=protected-access
+        _LOGGER.info(" # Assert no master thermostat")
+        assert smile.single_master_thermostat() is None  # it's not a thermostat :)
 
         await self.tinker_switch(smile, ["2587a7fcdd7e482dab03fda256076b4b"])
 
