@@ -23,6 +23,7 @@ from .constants import (
     STATUS,
     SWITCH_GROUP_TYPES,
     SYSTEM,
+    THERMOSTAT_CLASSES,
 )
 from .exceptions import (
     ConnectionFailedError,
@@ -315,12 +316,6 @@ class Smile:
 
         if self.smile_type != "thermostat":
             return device_data
-
-        thermostat_classes = [
-            "thermostat",
-            "zone_thermostat",
-            "thermostatic_radiator_valve",
-        ]
 
         # Legacy_anna: create heating_state and leave out domestic_hot_water_state
         if "boiler_state" in device_data:
