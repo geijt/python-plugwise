@@ -46,6 +46,10 @@ from .helpers import (
     _schemas,
     _temperature_uri,
     request,
+    update_appliances,
+    update_domain_objects,
+    update_locations,
+    update_modules,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -213,17 +217,17 @@ class Smile:
         """Update all XML data from device."""
         # P1 legacy has no appliances
         if not (self.smile_type == "power" and self._smile_legacy):
-            await self.update_appliances()
+            await update_appliances(self)
             if self._appliances is None:  # pragma: no cover
                 _LOGGER.error("Appliance data missing")
                 raise XMLDataMissingError
 
-        await self.update_domain_objects()
+        await update_domain_objects(self)
         if self._domain_objects is None:  # pragma: no cover
             _LOGGER.error("Domain_objects data missing")
             raise XMLDataMissingError
 
-        await self.update_locations()
+        await update_locations(self)
         if self._locations is None:  # pragma: no cover
             _LOGGER.error("Locataion data missing")
             raise XMLDataMissingError
