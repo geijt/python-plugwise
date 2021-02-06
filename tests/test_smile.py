@@ -340,7 +340,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         self._write_json("get_all_devices", device_list)
         self._write_json("notifications", smile.notifications)
 
-        smile.scan_thermostats()
+        smile._scan_thermostats()
         location_list = smile.thermo_locs
 
         _LOGGER.info("Gateway id = %s", smile.gateway_id)
