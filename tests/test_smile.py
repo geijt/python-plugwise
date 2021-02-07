@@ -798,10 +798,10 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
             "a270735e4ccd45239424badc0578a2b1": {
                 "outdoor_temperature": 10.8,
             },
-            # Central
-            "c46b4794d28149699eacf053deedd003": {
-                "heating_state": False,
-            },
+            ## Central
+            #"c46b4794d28149699eacf053deedd003": {
+            #    "heating_state": False,
+            #},
         }
 
         self.smile_setup = "anna_without_boiler_fw3"
@@ -857,10 +857,10 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
             "a270735e4ccd45239424badc0578a2b1": {
                 "outdoor_temperature": 16.6,
             },
-            # Central
-            "c46b4794d28149699eacf053deedd003": {
-                "heating_state": True,
-            },
+            ## Central
+            #"c46b4794d28149699eacf053deedd003": {
+            #    "heating_state": True,
+            #},
         }
 
         self.smile_setup = "anna_without_boiler_fw4"
@@ -1030,7 +1030,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
                 "battery": 67,
             },
             # Adam
-            "90986d591dcd426cae3ec3e8111ff730": {"intended_boiler_temperature": 70.0},
+            #"90986d591dcd426cae3ec3e8111ff730": {"intended_boiler_temperature": 70.0},
             "fe799307f1624099878210aa0b9f1475": {
                 "outdoor_temperature": 7.69,
             },
@@ -1125,7 +1125,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
                 "battery": 67,
             },
             # Adam
-            "90986d591dcd426cae3ec3e8111ff730": {"intended_boiler_temperature": 70.0},
+            #"90986d591dcd426cae3ec3e8111ff730": {"intended_boiler_temperature": 70.0},
             "fe799307f1624099878210aa0b9f1475": {
                 "outdoor_temperature": 7.81,
             },
