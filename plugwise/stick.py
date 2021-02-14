@@ -447,7 +447,7 @@ class stick:
         """Process NodeInfoResponse message."""
         if not self._pass_message_to_node(node_info_response, mac, False):
             _LOGGER.debug(
-                "Received NodeInfoResponse from currently unknown node with mac %s with sequence id %s",
+                "Received NodeInfoResponse from currently unknown node with mac %s with seq_id %s",
                 mac,
                 str(node_info_response.seq_id),
             )

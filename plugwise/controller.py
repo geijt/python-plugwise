@@ -295,10 +295,13 @@ class StickMessageController:
                     del self.expected_responses[b"0000"]
                 self.last_seq_id = seq_id
             else:
-                _LOGGER.info(
-                    "Drop unexpected %s%s using seq_id %s",
-                    STATUS_RESPONSES.get(ack_response, "") + " ",
+                _LOGGER.warning(
+                    "Drop unexpected %s%s from %s using seq_id %s",
+                    STATUS_RESPONSES.get(ack_response) + " "
+                    if STATUS_RESPONSES.get(ack_response)
+                    else "",
                     request,
+                    mac,
                     str(seq_id),
                 )
 
@@ -310,13 +313,13 @@ class StickMessageController:
                     if self.expected_responses[seq_id][3] < (
                         datetime.now() - timedelta(seconds=MESSAGE_TIME_OUT)
                     ):
-                        _mac = "<unknown>"
+                        _mac = "<---unknown--->"
                         if self.expected_responses[seq_id][0].mac:
                             _mac = self.expected_responses[seq_id][0].mac.decode(
                                 UTF8_DECODE
                             )
                         _LOGGER.info(
-                            "No response within %s seconds timeout for %s to %s with sequence ID %s",
+                            "No response within %s seconds timeout for %s to %s, seq_id %s",
                             str(MESSAGE_TIME_OUT),
                             self.expected_responses[seq_id][0].__class__.__name__,
                             _mac,
@@ -357,14 +360,14 @@ class StickMessageController:
                     )
                 else:
                     _LOGGER.warning(
-                        "Received unmanaged (%s) %s for unknown request with seq_id %s",
+                        "Received unmanaged (%s) %s for unknown request, seq_id %s",
                         str(status),
                         message.__class__.__name__,
                         str(message.seq_id),
                     )
         else:
             _LOGGER.info(
-                "Received %s from %s with sequence id %s",
+                "Received %s from %s, seq_id %s",
                 message.__class__.__name__,
                 message.mac.decode(UTF8_DECODE),
                 str(message.seq_id),
