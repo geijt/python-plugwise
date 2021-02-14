@@ -175,9 +175,8 @@ class PlugwiseNode:
                 callback,
             )
 
-    def message_for_node(self, message):
+    def message_for_node(self, message: NodeResponse):
         """Process received message."""
-        assert isinstance(message, NodeResponse)
         if message.mac == self._mac:
             if message.timestamp is not None:
                 _LOGGER.debug(
