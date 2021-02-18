@@ -193,29 +193,16 @@ class Smile:
 
     async def full_update_device(self):
         """Update all XML data from device."""
+        await sh.update_domain_objects(self)
+        await sh.request(self, LOCATIONS)
+
         # P1 legacy has no appliances
         if not (self.smile_type == "power" and self._smile_legacy):
-            await sh.update_appliances(self)
-            if self._appliances is None:  # pragma: no cover
-                _LOGGER.error("Appliance data missing")
-                raise XMLDataMissingError
-
-        await sh.update_domain_objects(self)
-        if self._domain_objects is None:  # pragma: no cover
-            _LOGGER.error("Domain_objects data missing")
-            raise XMLDataMissingError
-
-        await sh.update_locations(self)
-        if self._locations is None:  # pragma: no cover
-            _LOGGER.error("Locataion data missing")
-            raise XMLDataMissingError
+            await sh.request(self, APPLIANCES)
 
         # No need to import modules for P1, no userfull info
         if self.smile_type != "power":
-            await sh.update_modules(self)
-            if self._modules is None:  # pragma: no cover
-                _LOGGER.error("Modules data missing")
-                raise XMLDataMissingError
+            await sh.request(self, MODULES)
 
     def get_all_devices(self):
         """Determine available devices from inventory."""
