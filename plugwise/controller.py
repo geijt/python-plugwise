@@ -303,7 +303,7 @@ class StickMessageController:
                     if STATUS_RESPONSES.get(ack_response)
                     else "",
                     request,
-                    mac if mac else "Unknown MAC",
+                    mac.decode(UTF8_DECODE) if mac else "Unknown MAC",
                     str(seq_id),
                 )
 
