@@ -249,7 +249,7 @@ class StickMessageController:
         if isinstance(message, NodeAckSmallResponse):
             self._log_status_message(message, message.ack_id)
             self._post_message_action(
-                message.seq_id, message.ack_id, message.__class__.__name__
+                message.seq_id, message.ack_id, message.__class__.__name__, message.mac
             )
         else:
             if isinstance(message, (NodeAckResponse, NodeAckLargeResponse)):
@@ -263,10 +263,12 @@ class StickMessageController:
                 and message.seq_id != b"FFFD"
             ):
                 self._post_message_action(
-                    message.seq_id, None, message.__class__.__name__
+                    message.seq_id, None, message.__class__.__name__, message.mac
                 )
 
-    def _post_message_action(self, seq_id, ack_response=None, request="unknown"):
+    def _post_message_action(
+        self, seq_id, ack_response=None, request="unknown", mac=None
+    ):
         """Execute action if request has been successful.."""
         if seq_id in self.expected_responses:
             if ack_response in (*REQUEST_SUCCESS, None):
@@ -301,7 +303,7 @@ class StickMessageController:
                     if STATUS_RESPONSES.get(ack_response)
                     else "",
                     request,
-                    mac,
+                    mac if mac else "Unknown MAC",
                     str(seq_id),
                 )
 

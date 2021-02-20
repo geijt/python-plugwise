@@ -33,6 +33,7 @@ class NodeResponse(PlugwiseMessage):
         self.params = []
         self.timestamp = None
         self.seq_id = None
+        self.mac = None
         self.msg_id = None
         self.ack_id = None
         if self.format_size == MESSAGE_SMALL:
