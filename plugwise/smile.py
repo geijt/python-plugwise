@@ -88,7 +88,7 @@ class Smile(SmileHelper):
         """Connect to Plugwise device."""
         names = []
 
-        result = await self.request(self, DOMAIN_OBJECTS)
+        result = await self.request(DOMAIN_OBJECTS)
         dsmrmain = result.find(".//module/protocols/dsmrmain")
         network = result.find(".//module/protocols/network_router/network")
 
@@ -128,7 +128,7 @@ class Smile(SmileHelper):
                 # P1 legacy:
                 if dsmrmain is not None:
                     try:
-                        status = await self.request(self, STATUS)
+                        status = await self.request(STATUS)
                         version = status.find(".//system/version").text
                         model = status.find(".//system/product").text
                         self.smile_hostname = status.find(".//network/hostname").text
@@ -139,7 +139,7 @@ class Smile(SmileHelper):
                 # Stretch:
                 elif network is not None:
                     try:
-                        system = await self.request(self, SYSTEM)
+                        system = await self.request(SYSTEM)
                         version = system.find(".//gateway/firmware").text
                         model = system.find(".//gateway/product").text
                         self.smile_hostname = system.find(".//gateway/hostname").text
@@ -194,7 +194,7 @@ class Smile(SmileHelper):
     async def full_update_device(self):
         """Update all XML data from device."""
         await self.update_domain_objects()
-        self._locations = await self.request(self, LOCATIONS)
+        self._locations = await self.request(LOCATIONS)
 
         # P1 legacy has no appliances
         if not (self.smile_type == "power" and self._smile_legacy):
@@ -352,7 +352,7 @@ class Smile(SmileHelper):
                     f' id="{template_id}"/><active>{state}</active></rule></rules>'
                 )
 
-                await self.request(self, uri, method="put", data=data)
+                await self.request(uri, method="put", data=data)
 
         return True
 
@@ -375,7 +375,7 @@ class Smile(SmileHelper):
             f"</type><preset>{preset}</preset></location></locations>"
         )
 
-        await self.request(self, uri, method="put", data=data)
+        await self.request(uri, method="put", data=data)
         return True
 
     async def set_temperature(self, loc_id, temperature):
@@ -387,7 +387,7 @@ class Smile(SmileHelper):
             f"{temperature}</setpoint></thermostat_functionality>"
         )
 
-        await self.request(self, uri, method="put", data=data)
+        await self.request(uri, method="put", data=data)
         return True
 
     async def set_switch_state(self, appl_id, members, model, state):
@@ -413,7 +413,7 @@ class Smile(SmileHelper):
                 state = str(state)
                 data = f"<{func_type}><state>{state}</state></{func_type}>"
 
-                await self.request(self, uri, method="put", data=data)
+                await self.request(uri, method="put", data=data)
             return True
 
         locator = f'appliance[@id="{appl_id}"]/{actuator}/{func_type}'
@@ -424,7 +424,7 @@ class Smile(SmileHelper):
         state = str(state)
         data = f"<{func_type}><state>{state}</state></{func_type}>"
 
-        await self.request(self, uri, method="put", data=data)
+        await self.request(uri, method="put", data=data)
         return True
 
     async def set_preset_legacy(self, preset):
@@ -437,7 +437,7 @@ class Smile(SmileHelper):
         uri = f"{RULES}"
         data = f'<rules><rule id="{rule.attrib["id"]}"><active>true</active></rule></rules>'
 
-        await self.request(self, uri, method="put", data=data)
+        await self.request(uri, method="put", data=data)
         return True
 
     async def set_schedule_state_legacy(self, name, state):
@@ -463,12 +463,12 @@ class Smile(SmileHelper):
             f' id="{template_id}" /><active>{state}</active></rule></rules>'
         )
 
-        await self.request(self, uri, method="put", data=data)
+        await self.request(uri, method="put", data=data)
         return True
 
     async def delete_notification(self):
         """Send a set request to the schema with the given name."""
         uri = f"{NOTIFICATIONS}"
 
-        await self.request(self, uri, method="delete")
+        await self.request(uri, method="delete")
         return True

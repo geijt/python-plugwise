@@ -92,6 +92,7 @@ class SmileHelper:
                 if method == "get":
                     # Work-around for Stretchv2, should not hurt the other smiles
                     headers = {"Accept-Encoding": "gzip"}
+                    print(f"HOIHOI {command}")
                     resp = await self.websession.get(
                         url, auth=self._auth, headers=headers
                     )
