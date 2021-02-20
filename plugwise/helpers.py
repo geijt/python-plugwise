@@ -22,7 +22,6 @@ from .constants import (
     ENERGY_WATT_HOUR,
     HOME_MEASUREMENTS,
     LOCATIONS,
-    MODULES,
     POWER_WATT,
     SWITCH_GROUP_TYPES,
 )
@@ -52,13 +51,29 @@ class SmileHelper:
         self._cp_state = None
         self._endpoint = None
         self._home_location = None
+        self._smile_legacy = None
         self._host = None
+        self._loc_data = {}
         self._port = None
         self._timeout = None
+
+        __empty_xml = etree.XML("<xml></xml>")
+        self._appliances = __empty_xml
+        self._domain_objects = __empty_xml
+        self._locations = __empty_xml
+        self._modules = __empty_xml
+
+        self.active_device_present = None
+        self.appl_data = {}
         self.gateway_id = None
         self.heater_id = None
         self.notifications = {}
+        self.smile_hostname = None
+        self.smile_name = None
+        self.smile_type = None
+        self.smile_version = ()
         self.thermo_locs = None
+        self.websession = None
 
     async def request(
         self,
@@ -163,7 +178,7 @@ class SmileHelper:
                 home_location = location_id
                 location_types.add("home")
 
-                for location_type in SmileHelper.types_finder(self, location):
+                for location_type in self.types_finder(location):
                     location_types.add(location_type)
 
             # Legacy P1 right location has 'services' filled
@@ -260,9 +275,7 @@ class SmileHelper:
                     self, appliance, locator, mod_type
                 )
                 appliance_v_name = module_data[0]
-                appliance_model = SmileHelper.check_model(
-                    self, module_data[1], appliance_v_name
-                )
+                appliance_model = self.check_model(module_data[1], appliance_v_name)
                 appliance_fw = module_data[3]
 
             if appliance_class == "heater_central":
@@ -283,9 +296,7 @@ class SmileHelper:
                         self, appliance, locator2, mod_type
                     )
                 appliance_v_name = module_data[0]
-                appliance_model = SmileHelper.check_model(
-                    self, module_data[1], appliance_v_name
-                )
+                appliance_model = self.check_model(module_data[1], appliance_v_name)
                 if appliance_model is None:
                     appliance_model = (
                         "Generic heater/cooler" if self._cp_state else "Generic heater"
@@ -308,7 +319,7 @@ class SmileHelper:
             # Appliance with location (i.e. a device)
             if appliance.find("location") is not None:
                 appliance_location = appliance.find("location").attrib["id"]
-                for appl_type in SmileHelper.types_finder(self, appliance):
+                for appl_type in self.types_finder(appliance):
                     appliance_types.add(appl_type)
             else:
                 # Return all types applicable to home
@@ -368,7 +379,8 @@ class SmileHelper:
                 return [v_name, v_model, hw_version, fw_version]
         return [None, None, None, None]
 
-    def check_model(self, name, v_name):
+    @staticmethod
+    def check_model(name, v_name):
         """Model checking before using version_to_model."""
         if v_name in ["Plugwise", "Plugwise B.V."]:
             if name == "ThermoTouch":
@@ -424,7 +436,8 @@ class SmileHelper:
 
         return presets
 
-    def types_finder(self, data):
+    @staticmethod
+    def types_finder(data):
         """Detect types within locations from logs."""
         types = set()
         for measure, attrs in HOME_MEASUREMENTS.items():
@@ -544,7 +557,7 @@ class SmileHelper:
                     try:
                         measurement = attrs[ATTR_NAME]
                     except KeyError:
-                        measurement = measurement
+                        pass
 
                     data[measurement] = format_measure(
                         measure, attrs[ATTR_UNIT_OF_MEASUREMENT]
@@ -621,8 +634,6 @@ class SmileHelper:
                 if appl_class in thermo_matching:
                     if thermo_matching[appl_class] > high_prio:
                         high_prio = thermo_matching[appl_class]
-
-        return
 
     def temperature_uri(self, loc_id):
         """Determine the location-set_temperature uri - from LOCATIONS."""
