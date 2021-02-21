@@ -77,7 +77,7 @@ class NodeResponse(PlugwiseMessage):
 
         _args = b"".join(a.serialize() for a in self.args)
         msg = self.ID
-        if self.mac != "":
+        if self.mac:
             msg += self.mac
         msg += _args
 
