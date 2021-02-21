@@ -267,7 +267,7 @@ class StickMessageController:
                 )
 
     def _post_message_action(self, seq_id, ack_response, request, mac):
-        """Execute registered callback action if successfull response is received."""
+        """Execute registered callback action if successful response is received."""
         if seq_id in self.expected_responses:
             if ack_response in (*REQUEST_SUCCESS, None):
                 if self.expected_responses[seq_id][1]:
