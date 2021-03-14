@@ -566,20 +566,23 @@ class SmileHelper:
         Determined from APPLIANCES or legacy DOMAIN_OBJECTS.
         """
         data = {}
-        search = self._appliances
-        if self._smile_legacy and self.smile_type != "stretch":
-            search = self._domain_objects
+        search = self.var_select(
+            self._appliances, 
+            self._domain_objects, 
+            self._smile_legacy, 
+            self.smile_type != "stretch",
+        )
 
         appliances = search.findall(f'.//appliance[@id="{dev_id}"]')
 
         for appliance in appliances:
-            measurements = DEVICE_MEASUREMENTS.items()
-            if self.active_device_present:
-                measurements = {
-                    **DEVICE_MEASUREMENTS,
-                    **HEATER_CENTRAL_MEASUREMENTS,
-                }.items()
-
+            measurements = self.var_select(
+                DEVICE_MEASUREMENTS.items(),
+                {**DEVICE_MEASUREMENTS, **HEATER_CENTRAL_MEASUREMENTS}.items(),
+                self.active_device_present,
+                True,
+            )
+            
             for measurement, attrs in measurements:
 
                 p_locator = (
