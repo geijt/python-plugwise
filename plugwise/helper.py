@@ -751,9 +751,12 @@ class SmileHelper:
         """Obtain the power-data from domain_objects based on location."""
         direct_data = {}
         search = self._domain_objects
-        t_string = "tariff"
-        if self._smile_legacy and self.smile_type == "power":
-            t_string = "tariff_indicator"
+        t_string = self.var_select(
+            "tariff",
+            "tariff_indicator",
+            self._smile_legacy,
+            self.smile_type == "power"
+        )
 
         loc_logs = search.find(f'.//location[@id="{loc_id}"]/logs')
 
@@ -975,3 +978,11 @@ class SmileHelper:
                 data["lock"] = format_measure(measure, None)
 
         return data
+
+    def var_select(self, item_1, item_2, cond_1, cond_2):
+        """Provide the correct var name/state/value."""
+        var = item_1
+        if cond_1 and cond_2:
+            var = item_2
+
+        return var
