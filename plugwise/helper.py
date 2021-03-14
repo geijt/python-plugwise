@@ -580,7 +580,7 @@ class SmileHelper:
                 DEVICE_MEASUREMENTS.items(),
                 {**DEVICE_MEASUREMENTS, **HEATER_CENTRAL_MEASUREMENTS}.items(),
                 self.active_device_present,
-                True,
+                None,
             )
 
             for measurement, attrs in measurements:
@@ -796,7 +796,7 @@ class SmileHelper:
                         f"{measurement}_{peak}_{log_found}",
                         f"{measurement}_{log_found}",
                         "gas" in measurement,
-                        True,
+                        None,
                     )
                     net_string = f"net_electricity_{log_found}"
                     val = loc_logs.find(locator).text
@@ -984,6 +984,9 @@ class SmileHelper:
 
     def var_select(self, item_1, item_2, cond_1, cond_2):
         """Provide the correct var name/state/value."""
+        if cond_2 is None:
+            cond_2 = True
+
         var = item_1
         if cond_1 and cond_2:
             var = item_2
