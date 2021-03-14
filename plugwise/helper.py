@@ -752,10 +752,7 @@ class SmileHelper:
         direct_data = {}
         search = self._domain_objects
         t_string = self.var_select(
-            "tariff",
-            "tariff_indicator",
-            self._smile_legacy,
-            self.smile_type == "power"
+            "tariff", "tariff_indicator", self._smile_legacy, self.smile_type == "power"
         )
 
         loc_logs = search.find(f'.//location[@id="{loc_id}"]/logs')
