@@ -789,9 +789,12 @@ class SmileHelper:
                     if peak == "offpeak":
                         peak = "off_peak"
                     log_found = log_type.split("_")[0]
-                    key_string = f"{measurement}_{peak}_{log_found}"
-                    if "gas" in measurement:
-                        key_string = f"{measurement}_{log_found}"
+                    key_string = self.var_select(
+                        f"{measurement}_{peak}_{log_found}",
+                        f"{measurement}_{log_found}",
+                        "gas" in measurement,
+                        True,
+                    )
                     net_string = f"net_electricity_{log_found}"
                     val = loc_logs.find(locator).text
                     f_val = power_data_local_format(attrs, key_string, val)
