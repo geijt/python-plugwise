@@ -567,9 +567,9 @@ class SmileHelper:
         """
         data = {}
         search = self.var_select(
-            self._appliances, 
-            self._domain_objects, 
-            self._smile_legacy, 
+            self._appliances,
+            self._domain_objects,
+            self._smile_legacy,
             self.smile_type != "stretch",
         )
 
@@ -582,7 +582,7 @@ class SmileHelper:
                 self.active_device_present,
                 True,
             )
-            
+
             for measurement, attrs in measurements:
 
                 p_locator = (
