@@ -12,6 +12,7 @@ from homeassistant.components.climate.const import (
 HVAC_MODES_HEAT_ONLY = [HVAC_MODE_HEAT, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 HVAC_MODES_HEAT_COOL = [HVAC_MODE_HEAT_COOL, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 
+
 class SmileThermostat:
     """Represents a Smile Thermostat."""
 
@@ -85,8 +86,8 @@ class SmileThermostat:
 
     def update_data(self):
         """Handle update callbacks."""
-        #_LOGGER.debug("Processing data from device %d", self._dev_id)
-        
+        # _LOGGER.debug("Processing data from device %d", self._dev_id)
+
         climate_data = self._api.get_device_data(self._dev_id)
         if self._active_device:
             heater_central_data = self._api.get_device_data(self._heater_id)
@@ -151,9 +152,3 @@ class SmileThermostat:
         if self._selected_schema:
             attributes["selected_schema"] = self._selected_schema
         self._extra_state_attributes = attributes
-
-
-
-        
-
-    
