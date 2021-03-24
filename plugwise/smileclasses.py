@@ -19,7 +19,7 @@ from .constants import (
     HVAC_MODES,
     OUTDOOR_TEMP,
     PRESET_MODE,
-    PRESET_MODES
+    PRESET_MODES,
     CURRENT_TEMP,
     TARGET_TEMP,
     TEMP_DIFF,
