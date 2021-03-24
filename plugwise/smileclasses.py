@@ -41,7 +41,7 @@ class MasterThermostat:
             HVAC_MODE[ID],
             HVAC_MODES[ID],
             PRESET_MODE[ID],
-            PRESET_MODES[ID]
+            PRESET_MODES[ID],
             CURRENT_TEMP[ID],
             TARGET_TEMP[ID],
         }
