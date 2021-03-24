@@ -488,59 +488,59 @@ SMILES = {
 
 # Newly added smileclasses constants
 
-    ID = "id"
-    NAME = "name"
-    STATE = "state"
-    TEMP_KELVIN = "°K"
-    UNIT = "unit"
-    UNIT_LUMEN = "lm"
+ID = "id"
+NAME = "name"
+STATE = "state"
+TEMP_KELVIN = "°K"
+UNIT = "unit"
+UNIT_LUMEN = "lm"
 
-    EXTRA_STATE_ATTRIBS = {}
-    HVAC_ACTION = {ID: "hvac_action"}
-    HVAC_MODE = {ID: "hvac_mode"}
-    HVAC_MODES = {ID: "hvac_modes"}
-    PRESET_MODE = {ID: "preset_mode"}
-    PRESET_MODES = {ID: "preset_modes"}
+EXTRA_STATE_ATTRIBS = {}
+HVAC_ACTION = {ID: "hvac_action"}
+HVAC_MODE = {ID: "hvac_mode"}
+HVAC_MODES = {ID: "hvac_modes"}
+PRESET_MODE = {ID: "preset_mode"}
+PRESET_MODES = {ID: "preset_modes"}
 
-    BATTERY = {
-        ID: "battery",
-        NAME: "Battery level",
-        STATE: "battery",
-        UNIT: PERCENTAGE,
+BATTERY = {
+    ID: "battery",
+    NAME: "Battery level",
+    STATE: "battery",
+    UNIT: PERCENTAGE,
+}
+ILLUMINANCE = {
+    ID: "illuminance",
+    NAME: "Illuminance",
+    STATE: "illuminance",
+    UNIT: UNIT_LUMEN,
+}
+OUTDOOR_TEMP = {
+    ID: "outdoor_temperature",
+    NAME: "Outdoor Temperature",
+    STATE: "outdoor_temperature",
+    UNIT: TEMP_CELSIUS,
     }
-    ILLUMINANCE = {
-        ID: "illuminance",
-        NAME: "Illuminance",
-        STATE: "illuminance",
-        UNIT: UNIT_LUMEN,
+CURRENT_TEMP = {
+    ID: "temperature",
+    NAME: "Current Temperature",
+    STATE: "temperature",
+    UNIT: TEMP_CELSIUS,
     }
-    OUTDOOR_TEMP = {
-        ID: "outdoor_temperature",
-        NAME: "Outdoor Temperature",
-        STATE: "outdoor_temperature",
-        UNIT: TEMP_CELSIUS,
-        }
-    CURRENT_TEMP = {
-        ID: "temperature",
-        NAME: "Current Temperature",
-        STATE: "temperature",
-        UNIT: TEMP_CELSIUS,
-        }
-    TARGET_TEMP = {
-        ID: "setpoint",
-        NAME: "Setpoint",
-        STATE: "setpoint",
-        UNIT: TEMP_CELSIUS,
-        }
-    TEMP_DIFF = {
-        ID: "temperature_difference",
-        NAME: "Temperature Difference",
-        STATE: "temperature_difference",
-        UNIT: TEMP_KELVIN,
-        }
-    VALVE_POS = {
-        ID: "valve_position",
-        NAME: "Valve Position",
-        STATE: "valve_position",
-        UNIT: PERCENTAGE,
-        }
+TARGET_TEMP = {
+    ID: "setpoint",
+    NAME: "Setpoint",
+    STATE: "setpoint",
+    UNIT: TEMP_CELSIUS,
+    }
+TEMP_DIFF = {
+    ID: "temperature_difference",
+    NAME: "Temperature Difference",
+    STATE: "temperature_difference",
+    UNIT: TEMP_KELVIN,
+    }
+VALVE_POS = {
+    ID: "valve_position",
+    NAME: "Valve Position",
+    STATE: "valve_position",
+    UNIT: PERCENTAGE,
+    }
