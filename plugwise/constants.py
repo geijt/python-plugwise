@@ -519,28 +519,28 @@ OUTDOOR_TEMP = {
     NAME: "Outdoor Temperature",
     STATE: "outdoor_temperature",
     UNIT: TEMP_CELSIUS,
-    }
+}
 CURRENT_TEMP = {
     ID: "temperature",
     NAME: "Current Temperature",
     STATE: "temperature",
     UNIT: TEMP_CELSIUS,
-    }
+}
 TARGET_TEMP = {
     ID: "setpoint",
     NAME: "Setpoint",
     STATE: "setpoint",
     UNIT: TEMP_CELSIUS,
-    }
+}
 TEMP_DIFF = {
     ID: "temperature_difference",
     NAME: "Temperature Difference",
     STATE: "temperature_difference",
     UNIT: TEMP_KELVIN,
-    }
+}
 VALVE_POS = {
     ID: "valve_position",
     NAME: "Valve Position",
     STATE: "valve_position",
     UNIT: PERCENTAGE,
-    }
+}
