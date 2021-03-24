@@ -9,16 +9,53 @@ from homeassistant.components.climate.const import (
     PRESET_AWAY,
 )
 
+from .constants import (
+    BATTERY,
+    ID,
+    ILLUMINANCE,
+    EXTRA_STATE_ATTRIBS,
+    HVAC_ACTION,
+    HVAC_MODE,
+    HVAC_MODES,
+    OUTDOOR_TEMP,
+    PRESET_MODE,
+    PRESET_MODES
+    CURRENT_TEMP,
+    TARGET_TEMP,
+    TEMP_DIFF,
+    VALVE_POS,
+)
+
 HVAC_MODES_HEAT_ONLY = [HVAC_MODE_HEAT, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 HVAC_MODES_HEAT_COOL = [HVAC_MODE_HEAT_COOL, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 
 
-class SmileThermostat:
-    """Represents a Smile Thermostat."""
+class MasterThermostat:
+    """Represents a Master Thermostat."""
 
     def __init__(self, api, dev_id):
         """Initialize the paramaters."""
+        self.climate_params = {
+            EXTRA_STATE_ATTRIBS[ID],
+            HVAC_ACTION[ID],
+            HVAC_MODE[ID],
+            HVAC_MODES[ID],
+            PRESET_MODE[ID],
+            PRESET_MODES[ID]
+            CURRENT_TEMP[ID],
+            TARGET_TEMP[ID],
+        }
+        self.sensors = {
+            BATTERY[ID],
+            ILLUMINANCE[ID],
+            OUTDOOR_TEMP[ID],
+            TARGET_TEMP[ID],
+            CURRENT_TEMP[ID],
+            TEMP_DIFF[ID],
+            VALVE_POS[ID],
+        }
         self._api = api
+        self._current_temperature = None
         self._dev_id = dev_id
         self._extra_state_attributes = None
         self._hvac_action = None
@@ -27,17 +64,17 @@ class SmileThermostat:
         self._get_presets = None
         self._preset_mode = None
         self._preset_modes = None
-        self._current_temperature = None
         self._schema_names = None
+        self._schema_status = None
         self._selected_schema = None
         self._target_temperature = None
 
         self._compressor_state = None
         self._cooling_state = None
         self._heating_state = None
-        self._schema_status = None
-        self._single_thermostat = None
 
+        self._climate = {}
+        self._sensor = {}
         self._active_device = self._api.active_device_present
         self._heater_id = self._api.heater_id
         self._single_thermostat = self._api.single_master_thermostat()
@@ -100,18 +137,14 @@ class SmileThermostat:
         self._current_temperature = climate_data.get("temperature")
 
         # hvac action
+        self._hvac_action = CURRENT_HVAC_IDLE
         if self._single_thermostat:
             if self._heating_state:
                 self._hvac_action = CURRENT_HVAC_HEAT
             if self._cooling_state:
                 self._hvac_action = CURRENT_HVAC_COOL
-            self._hvac_action = CURRENT_HVAC_IDLE
-
         elif self._target_temperature > self._current_temperature:
             self._hvac_action = CURRENT_HVAC_HEAT
-
-        else:
-            self._hvac_action = CURRENT_HVAC_IDLE
 
         # hvac mode
         self._hvac_mode = HVAC_MODE_AUTO
@@ -130,10 +163,9 @@ class SmileThermostat:
                     self._hvac_mode = HVAC_MODE_HEAT_COOL
 
         # hvac modes
+        self._hvac_mode = HVAC_MODES_HEAT_ONLY
         if self._compressor_state is not None:
             self._hvac_mode = HVAC_MODES_HEAT_COOL
-        else:
-            self._hvac_mode = HVAC_MODES_HEAT_ONLY
 
         # preset modes
         self._get_presets = climate_data.get("presets")
