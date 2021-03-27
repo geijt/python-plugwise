@@ -106,6 +106,11 @@ class MasterThermostat:
         return self._firmware_version
 
     @property
+    def hvac_action(self):
+        """HVAC action."""
+        return self._hvac_action
+
+    @property
     def hvac_mode(self):
         """Active HVAC mode."""
         return self._hvac_mode
