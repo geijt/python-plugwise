@@ -9,7 +9,7 @@ from homeassistant.components.climate.const import (
     PRESET_AWAY,
 )
 
-from .constants import (
+from constants import (
     BATTERY,
     ID,
     ILLUMINANCE,
@@ -33,30 +33,12 @@ HVAC_MODES_HEAT_COOL = [HVAC_MODE_HEAT_COOL, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 class MasterThermostat:
     """Represents a Master Thermostat."""
 
-    def __init__(self, api, dev_id):
+    def __init__(self, api, devices, dev_id):
         """Initialize the paramaters."""
-        self.climate_params = {
-            #EXTRA_STATE_ATTRIBS, disabled for testing
-            HVAC_ACTION[ID],
-            HVAC_MODE[ID],
-            HVAC_MODES[ID],
-            PRESET_MODE[ID],
-            PRESET_MODES[ID],
-            CURRENT_TEMP[ID],
-            TARGET_TEMP[ID],
-        }
-        self.sensors = {
-            BATTERY[ID],
-            ILLUMINANCE[ID],
-            OUTDOOR_TEMP[ID],
-            TARGET_TEMP[ID],
-            CURRENT_TEMP[ID],
-            TEMP_DIFF[ID],
-            VALVE_POS[ID],
-        }
         self._api = api
         self._current_temperature = None
         self._dev_id = dev_id
+        self._devices = devices
         self._extra_state_attributes = None
         self._firmware_version = None
         self._friendly_name = None
@@ -77,8 +59,25 @@ class MasterThermostat:
         self._cooling_state = None
         self._heating_state = None
 
-        self._climate = {}
-        self._sensor = {}
+        self.climate_params = {
+            self._extra_state_attributes,
+            self._hvac_action,
+            self._hvac_mode,
+            self._hvac_modes,
+            self._preset_mode,
+            self._preset_modes,
+            self._current_temperature,
+            self._target_temperature,
+        }
+        self.sensors = {
+            BATTERY[ID],
+            ILLUMINANCE[ID],
+            OUTDOOR_TEMP[ID],
+            TARGET_TEMP[ID],
+            CURRENT_TEMP[ID],
+            TEMP_DIFF[ID],
+            VALVE_POS[ID],
+        }
         self._active_device = self._api.active_device_present
         self._heater_id = self._api.heater_id
         self._single_thermostat = self._api.single_master_thermostat()
@@ -145,24 +144,16 @@ class MasterThermostat:
         """Extra state attributes."""
         return self._extra_state_attributes
 
-    def init_data(self, dev_id):
+    def init_data(self):
         """Collect the initial data."""
-        devices = self._api.get_all_devices()
-        for dev_id in devices:
-            if devices[dev_id]["class"] in [
-                "thermostat",
-                "zone_thermostat",
-                "thermostatic_radiator_valve",
-            ]:
-                self._friendly_name = devices[dev_id]["name"]
-                self._firmware_version = devices[dev_id]["fw"]
-                self._model = devices[dev_id]["model"]
-                self._vendor = devices[dev_id]["vendor"]   
+        self._friendly_name = self._devices[self._dev_id]["name"]
+        self._firmware_version = self._devices[self._dev_id]["fw"]
+        self._model = self._devices[self._dev_id]["model"]
+        self._vendor = self._devices[self._dev_id]["vendor"]   
 
     def update_data(self):
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
-
         climate_data = self._api.get_device_data(self._dev_id)
         if self._active_device:
             heater_central_data = self._api.get_device_data(self._heater_id)
