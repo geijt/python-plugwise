@@ -58,16 +58,20 @@ class MasterThermostat:
         self._current_temperature = None
         self._dev_id = dev_id
         self._extra_state_attributes = None
+        self._firmware_version = None
+        self._friendly_name = None
         self._hvac_action = None
         self._hvac_mode = None
         self._hvac_modes = None
         self._get_presets = None
+        self._model = None
         self._preset_mode = None
         self._preset_modes = None
         self._schema_names = None
         self._schema_status = None
         self._selected_schema = None
         self._target_temperature = None
+        self._vendor = None
 
         self._compressor_state = None
         self._cooling_state = None
@@ -82,9 +86,24 @@ class MasterThermostat:
         self.update_data()
 
     @property
-    def hvac_action(self):
-        """HVAC action."""
-        return self._hvac_action
+    def friendly_name(self):
+        """Device friendly name."""
+        return self._friendly_name
+
+    @property
+    def model(self):
+        """Device model name."""
+        return self._model
+
+    @property
+    def vendor(self):
+        """Device vendor name."""
+        return self._vendor
+
+    @property
+    def firmware_version(self):
+        """Device firmware version."""
+        return self._firmware_version
 
     @property
     def hvac_mode(self):
@@ -126,6 +145,11 @@ class MasterThermostat:
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
 
         climate_data = self._api.get_device_data(self._dev_id)
+        self._friendly_name = climate_data.get("name")
+        self._firmware_version = climate_data.get("fw")
+        self._model = climate_data.get("model")
+        self._vendor = climate_data.get("vensor")
+        # QUESTION/TODO: should we split between data that is static, like above, and data that is dynamic?
         if self._active_device:
             heater_central_data = self._api.get_device_data(self._heater_id)
             self._compressor_state = heater_central_data.get("compressor_state")
