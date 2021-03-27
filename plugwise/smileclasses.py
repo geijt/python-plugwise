@@ -149,7 +149,7 @@ class MasterThermostat:
         self._friendly_name = self._devices[self._dev_id]["name"]
         self._firmware_version = self._devices[self._dev_id]["fw"]
         self._model = self._devices[self._dev_id]["model"]
-        self._vendor = self._devices[self._dev_id]["vendor"]   
+        self._vendor = self._devices[self._dev_id]["vendor"]
 
     def update_data(self):
         """Handle update callbacks."""
