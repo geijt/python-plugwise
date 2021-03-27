@@ -36,7 +36,7 @@ class MasterThermostat:
     def __init__(self, api, dev_id):
         """Initialize the paramaters."""
         self.climate_params = {
-            EXTRA_STATE_ATTRIBS[ID],
+            #EXTRA_STATE_ATTRIBS, disabled for testing
             HVAC_ACTION[ID],
             HVAC_MODE[ID],
             HVAC_MODES[ID],
@@ -145,16 +145,25 @@ class MasterThermostat:
         """Extra state attributes."""
         return self._extra_state_attributes
 
+    def init_data(self, dev_id):
+        """Collect the initial data."""
+        devices = self._api.get_all_devices()
+        for dev_id in devices:
+            if devices[dev_id]["class"] in [
+                "thermostat",
+                "zone_thermostat",
+                "thermostatic_radiator_valve",
+            ]:
+                self._friendly_name = devices[dev_id]["name"]
+                self._firmware_version = devices[dev_id]["fw"]
+                self._model = devices[dev_id]["model"]
+                self._vendor = devices[dev_id]["vendor"]   
+
     def update_data(self):
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
 
         climate_data = self._api.get_device_data(self._dev_id)
-        self._friendly_name = climate_data.get("name")
-        self._firmware_version = climate_data.get("fw")
-        self._model = climate_data.get("model")
-        self._vendor = climate_data.get("vensor")
-        # QUESTION/TODO: should we split between data that is static, like above, and data that is dynamic?
         if self._active_device:
             heater_central_data = self._api.get_device_data(self._heater_id)
             self._compressor_state = heater_central_data.get("compressor_state")
