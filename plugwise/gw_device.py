@@ -6,7 +6,7 @@ The Smile Gateway device to control associated thermostats, etc.
 import aiohttp
 import asyncio
 
-from smile import Smile
+from .smile import Smile
 
 
 class GWDevice:
