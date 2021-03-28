@@ -82,6 +82,7 @@ class MasterThermostat:
         self._heater_id = self._api.heater_id
         self._single_thermostat = self._api.single_master_thermostat()
 
+        self.init_data()
         self.update_data()
 
     @property
