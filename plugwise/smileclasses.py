@@ -36,6 +36,7 @@ class Thermostat:
     def __init__(self, api, devices, dev_id):
         """Initialize the Thermostat."""
         self._api = api
+        self._battery = None
         self._current_temperature = None
         self._dev_id = dev_id
         self._devices = devices
@@ -45,8 +46,10 @@ class Thermostat:
         self._hvac_action = None
         self._hvac_mode = None
         self._hvac_modes = None
+        self._illuminance = None
         self._get_presets = None
         self._model = None
+        self._outdoor_temperature = None
         self._preset_mode = None
         self._preset_modes = None
         self._schema_names = None
@@ -54,6 +57,8 @@ class Thermostat:
         self._selected_schema = None
         self._smile_class = None
         self._target_temperature = None
+        self._temperature_difference = None
+        self._valve_position = None
         self._vendor = None
 
         self._compressor_state = None
@@ -146,6 +151,31 @@ class Thermostat:
         """Extra state attributes."""
         return self._extra_state_attributes
 
+    @property
+    def battery(self):
+        """Battery level."""
+        return self._battery
+
+    @property
+    def illuminance(self):
+        """Illuminance sensor."""
+        return self._illuminance
+
+    @property
+    def outdoor_temperature(self):
+        """Outdoor temperature."""
+        return self._outdoor_temperature
+
+    @property
+    def temperature_difference(self):
+        """Temperature difference."""
+        return self._temperature_difference
+
+    @property
+    def valve_position(self):
+        """Valve position."""
+        return self._valve_position
+
     def init_data(self):
         """Collect the initial data."""
         self._smile_class = self._devices[self._dev_id]["class"]
@@ -158,6 +188,13 @@ class Thermostat:
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
         climate_data = self._api.get_device_data(self._dev_id)
+
+        # sensor data
+        self._battery = climate_data.get("battery")
+        self._illuminance = climate_data.get("illuminance")
+        self._outdoor_temperature = climate_data.get("outdoor_temperature")
+        self._temperature_difference = climate_data.get("temperature_difference")
+        self._valve_position = climate_data.get("valve_position")
 
         # current & target_temps, heater_central data when required
         self._current_temperature = climate_data.get("temperature")
