@@ -159,7 +159,7 @@ class Thermostat:
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
         climate_data = self._api.get_device_data(self._dev_id)
 
-        # current & target_temps, heater_central data when required        
+        # current & target_temps, heater_central data when required
         self._current_temperature = climate_data.get("temperature")
         if self._active_device and self._smile_class != "thermo_sensor":
             self._target_temperature = climate_data.get("setpoint")
