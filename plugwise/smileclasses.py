@@ -171,7 +171,7 @@ class Thermostat:
 
         if self._class == "thermo_sensor":
             return
-        
+
         # hvac action
         self._hvac_action = CURRENT_HVAC_IDLE
         if self._single_thermostat:
