@@ -76,7 +76,6 @@ class GWDevice:
 
         self._devices = api.get_all_devices()
         self._firmware_version = api.smile_version[1]
-        self._friendly_name = api.smile_name
         self._hostname = api.smile_hostname
         self._type = api.smile_type
 
@@ -84,6 +83,7 @@ class GWDevice:
             if self._devices[dev_id]["class"] != "gateway":
                 continue
 
+            self._friendly_name = self._devices[dev_id]["name"]
             self._model = self._devices[dev_id]["model"]
             self._vendor = self._devices[dev_id]["vendor"]
 
