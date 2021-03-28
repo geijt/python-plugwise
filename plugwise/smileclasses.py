@@ -199,9 +199,9 @@ class Thermostat:
                     self._hvac_mode = HVAC_MODE_HEAT_COOL
 
         # hvac modes
-        self._hvac_mode = HVAC_MODES_HEAT_ONLY
+        self._hvac_modes = HVAC_MODES_HEAT_ONLY
         if self._compressor_state is not None:
-            self._hvac_mode = HVAC_MODES_HEAT_COOL
+            self._hvac_modes = HVAC_MODES_HEAT_COOL
 
         # preset modes
         self._get_presets = climate_data.get("presets")
