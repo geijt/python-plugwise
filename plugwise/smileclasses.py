@@ -30,12 +30,13 @@ HVAC_MODES_HEAT_ONLY = [HVAC_MODE_HEAT, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 HVAC_MODES_HEAT_COOL = [HVAC_MODE_HEAT_COOL, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 
 
-class MasterThermostat:
+class Thermostat:
     """Represents a Master Thermostat."""
 
     def __init__(self, api, devices, dev_id):
         """Initialize the Thermostat."""
         self._api = api
+        self._class = None
         self._current_temperature = None
         self._dev_id = dev_id
         self._devices = devices
@@ -147,6 +148,7 @@ class MasterThermostat:
 
     def init_data(self):
         """Collect the initial data."""
+        self._class = self._devices[self._dev_id]["class"]
         self._friendly_name = self._devices[self._dev_id]["name"]
         self._firmware_version = self._devices[self._dev_id]["fw"]
         self._model = self._devices[self._dev_id]["model"]
@@ -156,16 +158,20 @@ class MasterThermostat:
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
         climate_data = self._api.get_device_data(self._dev_id)
-        if self._active_device:
+        if self._active_device and self._class != "thermo_sensor":
             heater_central_data = self._api.get_device_data(self._heater_id)
             self._compressor_state = heater_central_data.get("compressor_state")
-            self._cooling_state = heater_central_data.get("cooling_state")
-            self._heating_state = heater_central_data.get("heating_state")
+            if self._single_thermostat:
+                self._cooling_state = heater_central_data.get("cooling_state")
+                self._heating_state = heater_central_data.get("heating_state")
 
         # current & target_temps
         self._target_temperature = climate_data.get("setpoint")
         self._current_temperature = climate_data.get("temperature")
 
+        if self._class == "thermo_sensor":
+            return
+        
         # hvac action
         self._hvac_action = CURRENT_HVAC_IDLE
         if self._single_thermostat:
