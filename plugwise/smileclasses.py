@@ -31,7 +31,7 @@ HVAC_MODES_HEAT_COOL = [HVAC_MODE_HEAT_COOL, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 
 
 class Thermostat:
-    """Represents a Master Thermostat."""
+    """Represent a Plugwise Thermostat Device."""
 
     def __init__(self, api, devices, dev_id):
         """Initialize the Thermostat."""
@@ -113,67 +113,67 @@ class Thermostat:
 
     @property
     def hvac_action(self):
-        """HVAC action."""
+        """Climate HVAC action."""
         return self._hvac_action
 
     @property
     def hvac_mode(self):
-        """Active HVAC mode."""
+        """Climate active HVAC mode."""
         return self._hvac_mode
 
     @property
     def hvac_modes(self):
-        """Available HVAC modes."""
+        """Climate available HVAC modes."""
         return self._hvac_modes
 
     @property
     def preset_mode(self):
-        """Active preset mode."""
+        """Climate active preset mode."""
         return self._preset_mode
 
     @property
     def preset_modes(self):
-        """Available preset modes."""
+        """Climate preset modes."""
         return self._preset_modes
 
     @property
     def current_temperature(self):
-        """Current measured temperature."""
+        """Climate current measured temperature."""
         return self._temperature
 
     @property
     def target_temperature(self):
-        """Target temperature."""
+        """Climate target temperature."""
         return self._setpoint
 
     @property
     def extra_state_attributes(self):
-        """Extra state attributes."""
+        """Climate extra state attributes."""
         return self._extra_state_attributes
 
     @property
     def battery(self):
-        """Battery level."""
+        """Thermostat Battery level."""
         return self._battery
 
     @property
     def illuminance(self):
-        """Illuminance sensor."""
+        """Thermostat illuminance sensor."""
         return self._illuminance
 
     @property
     def outdoor_temperature(self):
-        """Outdoor temperature."""
+        """Thermostat outdoor temperature."""
         return self._outdoor_temperature
 
     @property
     def temperature_difference(self):
-        """Temperature difference."""
+        """Thermostat temperature difference."""
         return self._temperature_difference
 
     @property
     def valve_position(self):
-        """Valve position."""
+        """Thermostat valve position."""
         return self._valve_position
 
     def init_data(self):
