@@ -37,7 +37,6 @@ class Thermostat:
         """Initialize the Thermostat."""
         self._api = api
         self._battery = None
-        self._current_temperature = None
         self._dev_id = dev_id
         self._devices = devices
         self._extra_state_attributes = None
@@ -55,8 +54,9 @@ class Thermostat:
         self._schema_names = None
         self._schema_status = None
         self._selected_schema = None
+        self._setpoint = None
         self._smile_class = None
-        self._target_temperature = None
+        self._temperature = None
         self._temperature_difference = None
         self._valve_position = None
         self._vendor = None
@@ -72,8 +72,8 @@ class Thermostat:
             self._hvac_modes,
             self._preset_mode,
             self._preset_modes,
-            self._current_temperature,
-            self._target_temperature,
+            self._temperature,
+            self._setpoint,
         }
         self.sensors = {
             BATTERY[ID],
@@ -139,12 +139,12 @@ class Thermostat:
     @property
     def current_temperature(self):
         """Current measured temperature."""
-        return self._current_temperature
+        return self._temperature
 
     @property
     def target_temperature(self):
         """Target temperature."""
-        return self._target_temperature
+        return self._setpoint
 
     @property
     def extra_state_attributes(self):
@@ -197,9 +197,9 @@ class Thermostat:
         self._valve_position = climate_data.get("valve_position")
 
         # current & target_temps, heater_central data when required
-        self._current_temperature = climate_data.get("temperature")
+        self._temperature = climate_data.get("temperature")
         if self._active_device and self._smile_class != "thermo_sensor":
-            self._target_temperature = climate_data.get("setpoint")
+            self._setpoint = climate_data.get("setpoint")
             heater_central_data = self._api.get_device_data(self._heater_id)
             self._compressor_state = heater_central_data.get("compressor_state")
             if self._single_thermostat:
@@ -217,7 +217,7 @@ class Thermostat:
                 self._hvac_action = CURRENT_HVAC_HEAT
             if self._cooling_state:
                 self._hvac_action = CURRENT_HVAC_COOL
-        elif self._target_temperature > self._current_temperature:
+        elif self._setpoint > self._temperature:
             self._hvac_action = CURRENT_HVAC_HEAT
 
         # hvac mode
