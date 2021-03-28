@@ -34,7 +34,7 @@ class MasterThermostat:
     """Represents a Master Thermostat."""
 
     def __init__(self, api, devices, dev_id):
-        """Initialize the paramaters."""
+        """Initialize the Thermostat."""
         self._api = api
         self._current_temperature = None
         self._dev_id = dev_id
