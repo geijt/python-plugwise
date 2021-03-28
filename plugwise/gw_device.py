@@ -1,4 +1,3 @@
-
 """
 Use of this source code is governed by the MIT license found in the LICENSE file.
 
@@ -18,7 +17,7 @@ class GWDevice:
         self._host = host
         self._password = password
         self._port = port
-        
+
         self._devices = {}
         self._firmware_version = None
         self._friendly_name = None
@@ -61,20 +60,20 @@ class GWDevice:
     def vendor(self):
         """Device vendor name."""
         return self._vendor
-        
+
     async def discover(self):
         """Connect to the Gateway Device and collect the properties."""
         websession = aiohttp.ClientSession()
         if self._port:
             api = Smile(self._host, self._password, self._port, websession=websession)
         else:
-            api = Smile(self._host, self._password, websession=websession)            
-                            
+            api = Smile(self._host, self._password, websession=websession)
+
         connected = await api.connect()
         await api.full_update_device()
 
         await websession.close()
-        
+
         self._devices = api.get_all_devices()
         self._firmware_version = api.smile_version[1]
         self._friendly_name = api.smile_name
@@ -89,7 +88,3 @@ class GWDevice:
             self._vendor = self._devices[dev_id]["vendor"]
 
         return api
-            
-            
-
-        
