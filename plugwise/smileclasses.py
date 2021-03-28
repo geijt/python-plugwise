@@ -36,7 +36,6 @@ class Thermostat:
     def __init__(self, api, devices, dev_id):
         """Initialize the Thermostat."""
         self._api = api
-        self._class = None
         self._current_temperature = None
         self._dev_id = dev_id
         self._devices = devices
@@ -53,6 +52,7 @@ class Thermostat:
         self._schema_names = None
         self._schema_status = None
         self._selected_schema = None
+        self._smile_class = None
         self._target_temperature = None
         self._vendor = None
 
@@ -148,7 +148,7 @@ class Thermostat:
 
     def init_data(self):
         """Collect the initial data."""
-        self._class = self._devices[self._dev_id]["class"]
+        self._smile_class = self._devices[self._dev_id]["class"]
         self._friendly_name = self._devices[self._dev_id]["name"]
         self._firmware_version = self._devices[self._dev_id]["fw"]
         self._model = self._devices[self._dev_id]["model"]
@@ -158,18 +158,19 @@ class Thermostat:
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
         climate_data = self._api.get_device_data(self._dev_id)
-        if self._active_device and self._class != "thermo_sensor":
+
+        # current & target_temps, heater_central data when required        
+        self._current_temperature = climate_data.get("temperature")
+        if self._active_device and self._smile_class != "thermo_sensor":
+            self._target_temperature = climate_data.get("setpoint")
             heater_central_data = self._api.get_device_data(self._heater_id)
             self._compressor_state = heater_central_data.get("compressor_state")
             if self._single_thermostat:
                 self._cooling_state = heater_central_data.get("cooling_state")
                 self._heating_state = heater_central_data.get("heating_state")
 
-        # current & target_temps
-        self._target_temperature = climate_data.get("setpoint")
-        self._current_temperature = climate_data.get("temperature")
-
-        if self._class == "thermo_sensor":
+        # skip the rest for thermo_sensors
+        if self._smile_class == "thermo_sensor":
             return
 
         # hvac action
