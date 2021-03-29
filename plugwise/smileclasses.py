@@ -288,17 +288,17 @@ class AuxDevice:
         self._heating_state = None
 
         self.binary_sensors = {
-	    self._dhw_state,
-	    self._flame_state,
-	    self._slave_boiler_state,
+            self._dhw_state,
+            self._flame_state,
+            self._slave_boiler_state,
         }
         self.sensors = {
             OUTDOOR_TEMP[ID],
             self._intended_boiler_temperature,
-	    self._modulation_level,
-	    self._return_temperature,
-	    self._water_pressure,
-	    self._water_temperature,
+            self._modulation_level,
+            self._return_temperature,
+            self._water_pressure,
+            self._water_temperature,
         }
         self._active_device = self._api.active_device_present
         self._heater_id = self._api.heater_id
@@ -380,7 +380,9 @@ class AuxDevice:
             self._flame_state = aux_data.get("flame_state")
             self._slave_boiler_state = aux_data.get("slave_boiler_state")
             # sensors
-            self._intended_boiler_temperature = aux_data.get("intended_boiler_temperature")
+            self._intended_boiler_temperature = aux_data.get(
+                "intended_boiler_temperature"
+            )
             self._modulation_level = aux_data.get("modulation_level")
             self._return_temperature = aux_data.get("return_temperature")
             self._water_pressure = aux_data.get("water_pressure")
