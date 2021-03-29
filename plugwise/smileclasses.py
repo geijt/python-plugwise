@@ -473,7 +473,7 @@ class Plug:
     def electricity_produced(self):
         """Plug sensor electricity produced."""
         return self._electricity_produced
-       
+
     @property
     def electricity_produced_interval(self):
         """Plug sensor electricity produced interval."""
@@ -483,7 +483,7 @@ class Plug:
     def lock_state(self):
         """Plug switch lock state."""
         return self._lock_state
-       
+
     @property
     def relay_state(self):
         """Plug switch state."""
@@ -503,9 +503,12 @@ class Plug:
         plug_data = self._api.get_device_data(self._dev_id)
 
         self._electricity_consumed = plug_data.get("electricity_consumed")
-        self._electricity_consumed_interval = plug_data.get("electricity_consumed_interval")  
-        self._electricity_produced = plug_data.get("electricity_produced")  
-        self._electricity_produced_interval = plug_data.get("electricity_produced_interval")
+        self._electricity_consumed_interval = plug_data.get(
+            "electricity_consumed_interval"
+        )
+        self._electricity_produced = plug_data.get("electricity_produced")
+        self._electricity_produced_interval = plug_data.get(
+            "electricity_produced_interval"
+        )
         self._lock_state = plug_data.get("lock")
         self._relay_state = plug_data.get("relay")
-
