@@ -30,6 +30,38 @@ HVAC_MODES_HEAT_ONLY = [HVAC_MODE_HEAT, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 HVAC_MODES_HEAT_COOL = [HVAC_MODE_HEAT_COOL, HVAC_MODE_AUTO, HVAC_MODE_OFF]
 
 
+class Gateway:
+    """ Represent the Plugwise Smile/Stretch gateway."""
+
+    def __init__(self, api, devices, dev_id):
+        """Initialize the Gateway."""
+        self._api = api
+        self._dev_id = dev_id
+        self._devices = devices
+        self._outdoor_temperature = None        
+        self._plugwise_notification = {}
+
+        self.update_data()
+
+    @property
+    def outdoor_temperature(self):
+        """Gateway sensor outdoor temperature."""
+        return self._outdoor_temperature
+
+    @property
+    def plugwise_notification(self):
+        """Binary sensor plugwise notification."""
+        return self._plugwise_notification
+       
+    def update_data(self):
+        """Handle update callbacks."""
+        # _LOGGER.debug("Processing data from device %d", self._dev_id)
+        gw_data = self._api.get_device_data(self._dev_id)
+        
+        self._outdoor_temperature = gw_data.get("outdoor_temperature")     
+        self._plugwise_notification = self._api.notifications
+
+
 class Thermostat:
     """Represent a Plugwise Thermostat Device."""
 
