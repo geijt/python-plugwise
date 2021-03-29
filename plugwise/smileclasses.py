@@ -415,3 +415,97 @@ class AuxDevice:
             self._return_temperature = aux_data.get("return_temperature")
             self._water_pressure = aux_data.get("water_pressure")
             self._water_temperature = aux_data.get("water_temperature")
+
+
+class Plug:
+    """ Represent the Plugwise Plug device."""
+
+    def __init__(self, api, devices, dev_id):
+        """Initialize the Plug."""
+        self._api = api
+        self._dev_id = dev_id
+        self._devices = devices
+        self._electricity_consumed = None
+        self._electricity_consumed_interval = None
+        self._electricity_produced = None
+        self._electricity_produced_interval = None
+        self._firmware_version = None
+        self._friendly_name = None
+        self._lock_state = False
+        self._model = None
+        self._relay_state = False
+        self._vendor = None
+
+        self.init_data()
+        self.update_data()
+
+    @property
+    def friendly_name(self):
+        """Device friendly name."""
+        return self._friendly_name
+
+    @property
+    def model(self):
+        """Device model name."""
+        return self._model
+
+    @property
+    def vendor(self):
+        """Device vendor name."""
+        return self._vendor
+
+    @property
+    def firmware_version(self):
+        """Device firmware version."""
+        return self._firmware_version
+
+    @property
+    def electricity_consumed(self):
+        """Plug sensor electricity consumed."""
+        return self._electricity_consumed
+
+    @property
+    def electricity_consumed_interval(self):
+        """Plug sensor electricity consumed interval."""
+        return self._electricity_consumed_interval
+
+    @property
+    def electricity_produced(self):
+        """Plug sensor electricity produced."""
+        return self._electricity_produced
+       
+    @property
+    def electricity_produced_interval(self):
+        """Plug sensor electricity produced interval."""
+        return self._electricity_produced_interval
+
+    @property
+    def lock_state(self):
+        """Plug switch lock state."""
+        return self._lock_state
+       
+    @property
+    def relay_state(self):
+        """Plug switch state."""
+        return self._relay_state
+
+    def init_data(self):
+        """Collect the initial data."""
+        self._smile_class = self._devices[self._dev_id]["class"]
+        self._friendly_name = self._devices[self._dev_id]["name"]
+        self._firmware_version = self._devices[self._dev_id]["fw"]
+        self._model = self._devices[self._dev_id]["model"]
+        self._vendor = self._devices[self._dev_id]["vendor"]
+
+    def update_data(self):
+        """Handle update callbacks."""
+        # _LOGGER.debug("Processing data from device %d", self._dev_id)
+        plug_data = self._api.get_device_data(self._dev_id)
+
+        self._electricity_consumed = plug_data.get("electricity_consumed")
+        self._electricity_consumed_interval = plug_data.get("electricity_consumed_interval")  
+        self._electricity_produced = plug_data.get("electricity_produced")  
+        self._electricity_produced_interval = plug_data.get("electricity_produced_interval")
+        self._lock_state = plug_data.get("lock")
+        self._relay_state = plug_data.get("relay")
+
