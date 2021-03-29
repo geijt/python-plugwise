@@ -38,7 +38,7 @@ class Gateway:
         self._api = api
         self._dev_id = dev_id
         self._devices = devices
-        self._outdoor_temperature = None        
+        self._outdoor_temperature = None
         self._plugwise_notification = {}
 
         self.update_data()
@@ -52,13 +52,13 @@ class Gateway:
     def plugwise_notification(self):
         """Binary sensor plugwise notification."""
         return self._plugwise_notification
-       
+
     def update_data(self):
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
         gw_data = self._api.get_device_data(self._dev_id)
-        
-        self._outdoor_temperature = gw_data.get("outdoor_temperature")     
+
+        self._outdoor_temperature = gw_data.get("outdoor_temperature")
         self._plugwise_notification = self._api.notifications
 
 
