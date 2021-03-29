@@ -275,7 +275,6 @@ class AuxDevice:
         self._intended_boiler_temperature = None
         self._model = None
         self._modulation_level = None
-        self._outdoor_temperature = None
         self._return_temperature = None
         self._slave_boiler_state = False
         self._smile_class = None
@@ -293,7 +292,6 @@ class AuxDevice:
             self._slave_boiler_state,
         }
         self.sensors = {
-            OUTDOOR_TEMP[ID],
             self._intended_boiler_temperature,
             self._modulation_level,
             self._return_temperature,
@@ -301,8 +299,6 @@ class AuxDevice:
             self._water_temperature,
         }
         self._active_device = self._api.active_device_present
-        self._heater_id = self._api.heater_id
-        self._single_thermostat = self._api.single_master_thermostat()
 
         self.init_data()
         self.update_data()
