@@ -544,3 +544,5 @@ VALVE_POS = {
     STATE: "valve_position",
     UNIT: PERCENTAGE,
 }
+
+SWITCH_CLASSES = ["plug", "switch_group"]
