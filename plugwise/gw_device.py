@@ -23,7 +23,7 @@ class GWDevice:
         self._friendly_name = None
         self._hostname = None
         self._model = None
-        self._type = None
+        self._s_type = None
         self._vendor = None
 
     @property
@@ -52,9 +52,9 @@ class GWDevice:
         return self._model
 
     @property
-    def type(self):
+    def s_type(self):
         """Device vendor name."""
-        return self._type
+        return self._s_type
 
     @property
     def vendor(self):
@@ -77,7 +77,7 @@ class GWDevice:
         self._devices = api.get_all_devices()
         self._firmware_version = api.smile_version[1]
         self._hostname = api.smile_hostname
-        self._type = api.smile_type
+        self._s_type = api.smile_type
 
         for dev_id in self._devices:
             if self._devices[dev_id]["class"] != "gateway":
