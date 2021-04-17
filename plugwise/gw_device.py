@@ -77,9 +77,9 @@ class GWDevice:
         try:
             await api.connect()
         except InvalidAuthentication as err:
-            raise InvalidAuth from err
+            _LOGGER.error("Invalid login:", err)
         except PlugwiseException as err:
-            raise CannotConnect from err
+            _LOGGER.error("Cannot connect:", err)
         else:
             await api.full_update_device()
 
