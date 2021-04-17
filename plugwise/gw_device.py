@@ -5,6 +5,7 @@ The Smile Gateway device to control associated thermostats, etc.
 """
 import aiohttp
 import asyncio
+import logging
 
 from .smile import Smile
 
