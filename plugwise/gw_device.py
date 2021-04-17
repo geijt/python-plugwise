@@ -26,6 +26,7 @@ class GWDevice:
         self._devices = {}
         self._firmware_version = None
         self._friendly_name = None
+        self._gateway_id = None
         self._hostname = None
         self._model = None
         self._s_type = None
@@ -44,7 +45,7 @@ class GWDevice:
     @property
     def gateway_id(self):
         """Device firmware version."""
-        return self._firmware_version
+        return self._gateway_id
 
     @property
     def friendly_name(self):
