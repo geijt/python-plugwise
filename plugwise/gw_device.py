@@ -8,6 +8,11 @@ import asyncio
 
 from .smile import Smile
 
+from .exceptions import (
+    InvalidAuthentication,
+    PlugwiseException,
+)
+
 
 class GWDevice:
     """ Representing the Plugwise Smile/Stretch gateway to which the various Nodes are connected."""
@@ -69,8 +74,14 @@ class GWDevice:
         else:
             api = Smile(self._host, self._password, websession=websession)
 
-        connected = await api.connect()
-        await api.full_update_device()
+        try:
+            await api.connect()
+        except InvalidAuthentication as err:
+            raise InvalidAuth from err
+        except PlugwiseException as err:
+            raise CannotConnect from err
+        else:
+            await api.full_update_device()
 
         await websession.close()
 
