@@ -42,6 +42,11 @@ class GWDevice:
         return self._firmware_version
 
     @property
+    def gateway_id(self):
+        """Device firmware version."""
+        return self._firmware_version
+
+    @property
     def friendly_name(self):
         """Device friendly name."""
         return self._friendly_name
@@ -60,6 +65,11 @@ class GWDevice:
     def s_type(self):
         """Device vendor name."""
         return self._s_type
+
+    @property
+    def single_master_thermostat(self):
+        """Device vendor name."""
+        return self._single_master_thermostat
 
     @property
     def vendor(self):
@@ -86,6 +96,8 @@ class GWDevice:
         await websession.close()
 
         self._devices = api.get_all_devices()
+        self._single_master_thermostat = api.single_master_thermostat()
+        self._gateway_id = api.gateway_id
         self._firmware_version = api.smile_version[1]
         self._hostname = api.smile_hostname
         self._s_type = api.smile_type
