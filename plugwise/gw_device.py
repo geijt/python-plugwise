@@ -13,6 +13,8 @@ from .exceptions import (
     PlugwiseException,
 )
 
+_LOGGER = logging.getLogger(__name__)
+
 
 class GWDevice:
     """ Representing the Plugwise Smile/Stretch gateway to which the various Nodes are connected."""
