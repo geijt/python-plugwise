@@ -3,16 +3,13 @@ Use of this source code is governed by the MIT license found in the LICENSE file
 
 The Smile Gateway device to control associated thermostats, etc.
 """
-import aiohttp
 import asyncio
 import logging
 
-from .smile import Smile
+import aiohttp
 
-from .exceptions import (
-    InvalidAuthentication,
-    PlugwiseException,
-)
+from .exceptions import InvalidAuthentication, PlugwiseException
+from .smile import Smile
 
 _LOGGER = logging.getLogger(__name__)
 
