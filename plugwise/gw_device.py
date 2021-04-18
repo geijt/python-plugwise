@@ -17,11 +17,12 @@ _LOGGER = logging.getLogger(__name__)
 class GWDevice:
     """ Representing the Plugwise Smile/Stretch gateway to which the various Nodes are connected."""
 
-    def __init__(self, host, password, port=None):
+    def __init__(self, host, password, websession, port=None):
         """Initialize the device."""
         self._host = host
         self._password = password
         self._port = port
+        self._websession = websession
 
         self._devices = {}
         self._firmware_version = None
@@ -79,11 +80,10 @@ class GWDevice:
 
     async def discover(self):
         """Connect to the Gateway Device and collect the properties."""
-        websession = aiohttp.ClientSession()
         if self._port:
-            api = Smile(self._host, self._password, self._port, websession=websession)
+            api = Smile(self._host, self._password, self._port, websession=self._websession)
         else:
-            api = Smile(self._host, self._password, websession=websession)
+            api = Smile(self._host, self._password, websession=self._websession)
 
         try:
             await api.connect()
