@@ -82,10 +82,10 @@ class GWDevice:
         """Connect to the Gateway Device and collect the properties."""
         if self._port:
             api = Smile(
-                self._host, self._password, self._port, websession=self._websession
+                self._host, self._password, self._port, timeout=30, websession=self._websession
             )
         else:
-            api = Smile(self._host, self._password, websession=self._websession)
+            api = Smile(self._host, self._password, timeout=30, websession=self._websession)
 
         try:
             await api.connect()
