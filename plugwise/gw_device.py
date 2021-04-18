@@ -96,8 +96,6 @@ class GWDevice:
         else:
             await api.full_update_device()
 
-        await websession.close()
-
         self._devices = api.get_all_devices()
         self._single_master_thermostat = api.single_master_thermostat()
         self._gateway_id = api.gateway_id
