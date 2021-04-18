@@ -144,19 +144,24 @@ class Thermostat:
         return self._firmware_version
 
     @property
-    def hvac_action(self):
+    def compressor_state(self):
+        """Comlimate HVAC action."""
+        return self._compressor_state
+
+    @property
+    def cooling_state(self):
         """Climate HVAC action."""
-        return self._hvac_action
+        return self._cooling_state
+
+    @property
+    def heating_state(self):
+        """Climate HVAC action."""
+        return self._heating_state
 
     @property
     def hvac_mode(self):
         """Climate active HVAC mode."""
         return self._hvac_mode
-
-    @property
-    def hvac_modes(self):
-        """Climate available HVAC modes."""
-        return self._hvac_modes
 
     @property
     def preset_mode(self):
@@ -242,16 +247,6 @@ class Thermostat:
         if self._smile_class == "thermo_sensor":
             return
 
-        # hvac action
-        self._hvac_action = CURRENT_HVAC_IDLE
-        if self._single_thermostat:
-            if self._heating_state:
-                self._hvac_action = CURRENT_HVAC_HEAT
-            if self._cooling_state:
-                self._hvac_action = CURRENT_HVAC_COOL
-        elif self._setpoint > self._temperature:
-            self._hvac_action = CURRENT_HVAC_HEAT
-
         # hvac mode
         self._hvac_mode = HVAC_MODE_AUTO
         if "selected_schedule" in climate_data:
@@ -267,11 +262,6 @@ class Thermostat:
                 self._hvac_mode = HVAC_MODE_HEAT
                 if self._compressor_state is not None:
                     self._hvac_mode = HVAC_MODE_HEAT_COOL
-
-        # hvac modes
-        self._hvac_modes = HVAC_MODES_HEAT_ONLY
-        if self._compressor_state is not None:
-            self._hvac_modes = HVAC_MODES_HEAT_COOL
 
         # preset modes
         self._get_presets = climate_data.get("presets")
@@ -313,10 +303,6 @@ class AuxDevice:
         self._vendor = None
         self._water_pressure = None
         self._water_temperature = None
-
-        self._compressor_state = None
-        self._cooling_state = None
-        self._heating_state = None
 
         self.binary_sensors = {
             self._dhw_state,
