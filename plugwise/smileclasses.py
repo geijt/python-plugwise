@@ -97,16 +97,6 @@ class Thermostat:
         self._cooling_state = None
         self._heating_state = None
 
-        self.climate_params = {
-            self._extra_state_attributes,
-            self._hvac_action,
-            self._hvac_mode,
-            self._hvac_modes,
-            self._preset_mode,
-            self._preset_modes,
-            self._temperature,
-            self._setpoint,
-        }
         self.sensors = {
             BATTERY[ID],
             ILLUMINANCE[ID],
