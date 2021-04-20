@@ -11,16 +11,17 @@ from homeassistant.components.climate.const import (
 
 from .constants import (
     BATTERY,
-    CURRENT_TEMP,
+    ID,
+    ILLUMINANCE,
     EXTRA_STATE_ATTRIBS,
     HVAC_ACTION,
     HVAC_MODE,
     HVAC_MODES,
-    ID,
-    ILLUMINANCE,
     OUTDOOR_TEMP,
     PRESET_MODE,
     PRESET_MODES,
+    PW_NOTIFICATION,
+    CURRENT_TEMP,
     TARGET_TEMP,
     TEMP_DIFF,
     VALVE_POS,
@@ -41,7 +42,8 @@ class Gateway:
         self._outdoor_temperature = None
         self._plugwise_notification = {}
 
-        self.update_data()
+        self.binary_sensors = {}
+        self.sensors = {}
 
     @property
     def outdoor_temperature(self):
@@ -56,10 +58,14 @@ class Gateway:
     def update_data(self):
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
-        gw_data = self._api.get_device_data(self._dev_id)
+        data = self._api.get_device_data(self._dev_id)
 
-        self._outdoor_temperature = gw_data.get("outdoor_temperature")
-        self._plugwise_notification = self._api.notifications
+        sensor_list = ["outdoor_temperature"]
+        for item in sensor_list:
+            if data.get(item) is not None:
+                self.sensors[item] = data.get(item)
+        
+        self.binary_sensors["plugwise_notification"] = (self._api.notifications != {})
 
 
 class Thermostat:
@@ -97,21 +103,20 @@ class Thermostat:
         self._cooling_state = None
         self._heating_state = None
 
-        self.sensors = {
-            BATTERY[ID],
-            ILLUMINANCE[ID],
-            OUTDOOR_TEMP[ID],
-            TARGET_TEMP[ID],
-            CURRENT_TEMP[ID],
-            TEMP_DIFF[ID],
-            VALVE_POS[ID],
-        }
+        self.sensors = {}
+        #    BATTERY[ID],
+        #    ILLUMINANCE[ID],
+        #    OUTDOOR_TEMP[ID],
+        #    TARGET_TEMP[ID],
+        #    CURRENT_TEMP[ID],
+        #    TEMP_DIFF[ID],
+        #    VALVE_POS[ID],
+        #}
         self._active_device = self._api.active_device_present
         self._heater_id = self._api.heater_id
-        self._single_thermostat = self._api.single_master_thermostat()
+        self._sm_thermostat = self._api.single_master_thermostat()
 
         self.init_data()
-        self.update_data()
 
     @property
     def friendly_name(self):
@@ -214,33 +219,40 @@ class Thermostat:
     def update_data(self):
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
-        climate_data = self._api.get_device_data(self._dev_id)
+        data = self._api.get_device_data(self._dev_id)
 
         # sensor data
-        self._battery = climate_data.get("battery")
-        self._illuminance = climate_data.get("illuminance")
-        self._outdoor_temperature = climate_data.get("outdoor_temperature")
-        self._temperature_difference = climate_data.get("temperature_difference")
-        self._valve_position = climate_data.get("valve_position")
-
-        # current & target_temps, heater_central data when required
-        self._temperature = climate_data.get("temperature")
-        if self._active_device and self._smile_class != "thermo_sensor":
-            self._setpoint = climate_data.get("setpoint")
-            heater_central_data = self._api.get_device_data(self._heater_id)
-            self._compressor_state = heater_central_data.get("compressor_state")
-            if self._single_thermostat:
-                self._cooling_state = heater_central_data.get("cooling_state")
-                self._heating_state = heater_central_data.get("heating_state")
+        sensor_list = [
+            "battery",
+            "illuminance",
+            "outdoor_temperature",
+            "setpoint",
+            "temperature",
+            "temperature_difference",
+            "valve_position",
+        ]
+        for item in sensor_list:
+            if data.get(item) is not None:
+                self.sensors[item] = data.get(item)
 
         # skip the rest for thermo_sensors
         if self._smile_class == "thermo_sensor":
             return
 
+        # current & target_temps, heater_central data when required
+        self._temperature = data.get("temperature")
+        self._setpoint = data.get("setpoint")
+        if self._active_device:
+            hc_data = self._api.get_device_data(self._heater_id)
+            self._compressor_state = hc_data.get("compressor_state")
+            if self._sm_thermostat:
+                self._cooling_state = hc_data.get("cooling_state")
+                self._heating_state = hc_data.get("heating_state")
+
         # hvac mode
         self._hvac_mode = HVAC_MODE_AUTO
-        if "selected_schedule" in climate_data:
-            self._selected_schema = climate_data["selected_schedule"]
+        if "selected_schedule" in data:
+            self._selected_schema = data["selected_schedule"]
             self._schema_status = False
             if self._selected_schema is not None:
                 self._schema_status = True
@@ -254,17 +266,17 @@ class Thermostat:
                     self._hvac_mode = HVAC_MODE_HEAT_COOL
 
         # preset modes
-        self._get_presets = climate_data.get("presets")
+        self._get_presets = data.get("presets")
         if self._get_presets:
             self._preset_modes = list(self._get_presets)
 
         # preset mode
-        self._preset_mode = climate_data.get("active_preset")
+        self._preset_mode = data.get("active_preset")
 
         # extra state attributes
         attributes = {}
-        self._schema_names = climate_data.get("available_schedules")
-        self._selected_schema = climate_data.get("selected_schedule")
+        self._schema_names = data.get("available_schedules")
+        self._selected_schema = data.get("selected_schedule")
         if self._schema_names:
             attributes["available_schemas"] = self._schema_names
         if self._selected_schema:
@@ -279,37 +291,40 @@ class AuxDevice:
         """Initialize the Thermostat."""
         self._api = api
         self._dev_id = dev_id
-        self._dhw_state = False
+        self._dhw_state = None
         self._devices = devices
         self._firmware_version = None
-        self._flame_state = False
+        self._flame_state = None
         self._friendly_name = None
         self._intended_boiler_temperature = None
         self._model = None
         self._modulation_level = None
         self._return_temperature = None
-        self._slave_boiler_state = False
+        self._slave_boiler_state = None
         self._smile_class = None
         self._vendor = None
         self._water_pressure = None
         self._water_temperature = None
 
-        self.binary_sensors = {
-            self._dhw_state,
-            self._flame_state,
-            self._slave_boiler_state,
-        }
-        self.sensors = {
-            self._intended_boiler_temperature,
-            self._modulation_level,
-            self._return_temperature,
-            self._water_pressure,
-            self._water_temperature,
-        }
+        self._compressor_state = None
+        self._cooling_state = None
+        self._heating_state = None
+
+        self.binary_sensors = {}
+        #    self._dhw_state,
+        #    self._flame_state,
+        #    self._slave_boiler_state,
+        #}
+        self.sensors = {}
+        #    self._intended_boiler_temperature,
+        #    self._modulation_level,
+        #    self._return_temperature,
+        #    self._water_pressure,
+        #    self._water_temperature,
+        #}
         self._active_device = self._api.active_device_present
 
         self.init_data()
-        self.update_data()
 
     @property
     def friendly_name(self):
@@ -376,21 +391,27 @@ class AuxDevice:
     def update_data(self):
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
-        aux_data = self._api.get_device_data(self._dev_id)
+        data = self._api.get_device_data(self._dev_id)
 
+        binary_sensor_list = [
+            "dhw_state",
+            "flame_state",
+            "slave_boiler_state"
+        ]
+        sensor_list = [
+            "intended_boiler_temperature",
+            "modulation_level",
+            "return_temperature",
+            "water_pressure",
+            "water_temperature"
+        ]
         if self._active_device:
-            # binary sensors
-            self._dhw_state = aux_data.get("dhw_state")
-            self._flame_state = aux_data.get("flame_state")
-            self._slave_boiler_state = aux_data.get("slave_boiler_state")
-            # sensors
-            self._intended_boiler_temperature = aux_data.get(
-                "intended_boiler_temperature"
-            )
-            self._modulation_level = aux_data.get("modulation_level")
-            self._return_temperature = aux_data.get("return_temperature")
-            self._water_pressure = aux_data.get("water_pressure")
-            self._water_temperature = aux_data.get("water_temperature")
+            for item in binary_sensor_list:
+                if data.get(item) is not None:
+                    self.binary_sensors[item] = data.get(item)
+            for item in sensor_list:
+                if data.get(item) is not None:
+                    self.sensors[item] = data.get(item)
 
 
 class Plug:
@@ -407,13 +428,15 @@ class Plug:
         self._electricity_produced_interval = None
         self._firmware_version = None
         self._friendly_name = None
-        self._lock_state = False
+        self._lock_state = None
         self._model = None
-        self._relay_state = False
+        self._relay_state = None
         self._vendor = None
 
+        self.sensors = {}
+        self.switches = {}
+
         self.init_data()
-        self.update_data()
 
     @property
     def friendly_name(self):
@@ -476,15 +499,21 @@ class Plug:
     def update_data(self):
         """Handle update callbacks."""
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
-        plug_data = self._api.get_device_data(self._dev_id)
+        data = self._api.get_device_data(self._dev_id)
 
-        self._electricity_consumed = plug_data.get("electricity_consumed")
-        self._electricity_consumed_interval = plug_data.get(
-            "electricity_consumed_interval"
-        )
-        self._electricity_produced = plug_data.get("electricity_produced")
-        self._electricity_produced_interval = plug_data.get(
-            "electricity_produced_interval"
-        )
-        self._lock_state = plug_data.get("lock")
-        self._relay_state = plug_data.get("relay")
+        sensor_list = [
+            "electricity_consumed",
+            "electricity_consumed_interval",
+            "electricity_produced",
+            "electricity_produced_interval",
+        ]
+        for item in sensor_list:
+            if data.get(item) is not None:
+                self.sensors[item] = data.get(item)
+
+        switch_list = ["lock", "relay"]
+        for item in switch_list:
+            if data.get(item) is not None:
+                self.switches[item] = data.get(item)
+
+
