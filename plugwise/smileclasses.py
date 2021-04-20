@@ -64,8 +64,8 @@ class Gateway:
         for item in sensor_list:
             if data.get(item) is not None:
                 self.sensors[item] = data.get(item)
-        
-        self.binary_sensors["plugwise_notification"] = (self._api.notifications != {})
+
+        self.binary_sensors["plugwise_notification"] = self._api.notifications != {}
 
 
 class Thermostat:
@@ -376,17 +376,13 @@ class AuxDevice:
         # _LOGGER.debug("Processing data from device %d", self._dev_id)
         data = self._api.get_device_data(self._dev_id)
 
-        binary_sensor_list = [
-            "dhw_state",
-            "flame_state",
-            "slave_boiler_state"
-        ]
+        binary_sensor_list = ["dhw_state", "flame_state", "slave_boiler_state"]
         sensor_list = [
             "intended_boiler_temperature",
             "modulation_level",
             "return_temperature",
             "water_pressure",
-            "water_temperature"
+            "water_temperature",
         ]
         if self._active_device:
             for item in binary_sensor_list:
@@ -500,5 +496,3 @@ class Plug:
         for item in switch_list:
             if data.get(item) is not None:
                 self.switches[item] = data.get(item)
-
-
