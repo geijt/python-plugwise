@@ -21,7 +21,6 @@ from .constants import (
     OUTDOOR_TEMP,
     PRESET_MODE,
     PRESET_MODES,
-    PW_NOTIFICATION,
     TARGET_TEMP,
     TEMP_DIFF,
     VALVE_POS,
