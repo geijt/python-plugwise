@@ -73,8 +73,11 @@ class Thermostat:
 
     def __init__(self, api, devices, dev_id):
         """Initialize the Thermostat."""
+
         self._api = api
         self._battery = None
+        self._compressor_state = None
+        self._cooling_state = None
         self._dev_id = dev_id
         self._devices = devices
         self._extra_state_attributes = None
@@ -83,6 +86,7 @@ class Thermostat:
         self._hvac_action = None
         self._hvac_mode = None
         self._hvac_modes = None
+        self._heating_state = None
         self._illuminance = None
         self._get_presets = None
         self._model = None
@@ -99,19 +103,8 @@ class Thermostat:
         self._valve_position = None
         self._vendor = None
 
-        self._compressor_state = None
-        self._cooling_state = None
-        self._heating_state = None
-
         self.sensors = {}
-        #    BATTERY[ID],
-        #    ILLUMINANCE[ID],
-        #    OUTDOOR_TEMP[ID],
-        #    TARGET_TEMP[ID],
-        #    CURRENT_TEMP[ID],
-        #    TEMP_DIFF[ID],
-        #    VALVE_POS[ID],
-        #}
+
         self._active_device = self._api.active_device_present
         self._heater_id = self._api.heater_id
         self._sm_thermostat = self._api.single_master_thermostat()
@@ -290,12 +283,15 @@ class AuxDevice:
     def __init__(self, api, devices, dev_id):
         """Initialize the Thermostat."""
         self._api = api
+        self._compressor_state = None
+        self._cooling_state = None
         self._dev_id = dev_id
         self._dhw_state = None
         self._devices = devices
         self._firmware_version = None
         self._flame_state = None
         self._friendly_name = None
+        self._heating_state = None
         self._intended_boiler_temperature = None
         self._model = None
         self._modulation_level = None
@@ -306,22 +302,9 @@ class AuxDevice:
         self._water_pressure = None
         self._water_temperature = None
 
-        self._compressor_state = None
-        self._cooling_state = None
-        self._heating_state = None
-
         self.binary_sensors = {}
-        #    self._dhw_state,
-        #    self._flame_state,
-        #    self._slave_boiler_state,
-        #}
         self.sensors = {}
-        #    self._intended_boiler_temperature,
-        #    self._modulation_level,
-        #    self._return_temperature,
-        #    self._water_pressure,
-        #    self._water_temperature,
-        #}
+
         self._active_device = self._api.active_device_present
 
         self.init_data()
@@ -412,6 +395,8 @@ class AuxDevice:
             for item in sensor_list:
                 if data.get(item) is not None:
                     self.sensors[item] = data.get(item)
+            if data.get("dhw_comf_mode") is not None:
+                self.switches["dhw_comf_mode"] = data.get("dhw_comf_mode")
 
 
 class Plug:
