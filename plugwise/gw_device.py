@@ -13,8 +13,8 @@ from .smile import Smile
 
 _LOGGER = logging.getLogger(__name__)
 
-from constants import SWITCH_CLASSES, THERMOSTAT_CLASSES
-from smileclasses import AuxDevice, Gateway, Plug, Thermostat
+from .constants import SWITCH_CLASSES, THERMOSTAT_CLASSES
+from .smileclasses import AuxDevice, Gateway, Plug, Thermostat
 
 
 _LOGGER = logging.getLogger(__name__)
