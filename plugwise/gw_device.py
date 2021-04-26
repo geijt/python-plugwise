@@ -13,12 +13,19 @@ from .smile import Smile
 
 _LOGGER = logging.getLogger(__name__)
 
+from constants import SWITCH_CLASSES, THERMOSTAT_CLASSES
+from smileclasses import AuxDevice, Gateway, Plug, Thermostat
+
+
+_LOGGER = logging.getLogger(__name__)
+
 
 class GWDevice:
     """ Representing the Plugwise Smile/Stretch gateway to which the various Nodes are connected."""
 
     def __init__(self, host, password, websession, port=None):
         """Initialize the device."""
+        self._api = None
         self._host = host
         self._password = password
         self._port = port
@@ -101,13 +108,14 @@ class GWDevice:
             _LOGGER.error("Cannot connect:", err)
         else:
             await api.full_update_device()
+            self._api = api
 
-        self._devices = api.get_all_devices()
-        self._single_master_thermostat = api.single_master_thermostat()
-        self._gateway_id = api.gateway_id
-        self._firmware_version = api.smile_version[1]
-        self._hostname = api.smile_hostname
-        self._s_type = api.smile_type
+        self._devices = self._api.get_all_devices()
+        self._single_master_thermostat = self._api.single_master_thermostat()
+        self._gateway_id = self._api.gateway_id
+        self._firmware_version = self._api.smile_version[1]
+        self._hostname = self._api.smile_hostname
+        self._s_type = self._api.smile_type
 
         for dev_id in self._devices:
             if self._devices[dev_id]["class"] != "gateway":
@@ -117,4 +125,43 @@ class GWDevice:
             self._model = self._devices[dev_id]["model"]
             self._vendor = self._devices[dev_id]["vendor"]
 
-        return api
+        return self._api
+
+    async def refresh_data(self):
+        """Reconnect to the Gateway Device and collect the data points."""
+
+        await self._api.update_device()
+
+        for dev_id in self._devices:
+            if self._devices[dev_id]["class"] in THERMOSTAT_CLASSES:
+                thermostat = Thermostat(self._api, self._devices, dev_id)
+                thermostat.update_data()
+                self._devices[dev_id].update({"hvac_mode": thermostat.hvac_mode})
+                self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
+                self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
+                self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
+                self._devices[dev_id].update({"current_temperature": thermostat.current_temperature})
+                self._devices[dev_id].update({"extra_state_attributes": thermostat.extra_state_attributes})
+                self._devices[dev_id].update({"sensors": thermostat.sensors})
+            if self._devices[dev_id]["class"] == "thermo_sensor":
+                thermostat = Thermostat(self._api, self._devices, dev_id)
+                thermostat.update_data()
+                self._devices[dev_id].update({"sensors": thermostat.sensors})
+            if self._devices[dev_id]["class"] == "heater_central":
+                auxdev = AuxDevice(self._api, self._devices, dev_id)
+                auxdev.update_data()
+                self._devices[dev_id].update({"binary_sensors": auxdev.binary_sensors})
+                self._devices[dev_id].update({"sensors": auxdev.sensors})
+                self._devices[dev_id].update({"switches": auxdev.switches})
+            if self._devices[dev_id]["class"] == "gateway":
+                gateway = Gateway(self._api, self._devices, dev_id)
+                gateway.update_data()
+                self._devices[dev_id].update({"binary_sensors": gateway.binary_sensors})
+                self._devices[dev_id].update({"sensors": gateway.sensors})
+            if any(dummy in self._devices[dev_id]["types"] for dummy in SWITCH_CLASSES):
+                plug = Plug(self._api, self._devices, dev_id)
+                plug.update_data()
+                if plug.sensors != {}:
+                    self._devices[dev_id].update({"sensors": plug.sensors})
+                self._devices[dev_id].update({"switches": plug.switches})
+
