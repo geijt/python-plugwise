@@ -303,6 +303,7 @@ class AuxDevice:
 
         self.binary_sensors = {}
         self.sensors = {}
+        self.switches = {}
 
         self._active_device = self._api.active_device_present
 
