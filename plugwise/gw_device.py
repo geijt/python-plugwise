@@ -140,8 +140,12 @@ class GWDevice:
                 self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
                 self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
                 self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
-                self._devices[dev_id].update({"current_temperature": thermostat.current_temperature})
-                self._devices[dev_id].update({"extra_state_attributes": thermostat.extra_state_attributes})
+                self._devices[dev_id].update(
+                    {"current_temperature": thermostat.current_temperature}
+                )
+                self._devices[dev_id].update(
+                    {"extra_state_attributes": thermostat.extra_state_attributes}
+                )
                 self._devices[dev_id].update({"sensors": thermostat.sensors})
             if self._devices[dev_id]["class"] == "thermo_sensor":
                 thermostat = Thermostat(self._api, self._devices, dev_id)
@@ -164,4 +168,3 @@ class GWDevice:
                 if plug.sensors != {}:
                     self._devices[dev_id].update({"sensors": plug.sensors})
                 self._devices[dev_id].update({"switches": plug.switches})
-
