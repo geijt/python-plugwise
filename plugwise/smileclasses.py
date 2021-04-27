@@ -58,7 +58,11 @@ class Gateway:
         self.binary_sensors = {}
         self.sensors = {}
 
+        self.sensor_list = [OUTDOOR_TEMP]
+
         self._sm_thermostat = self._api.single_master_thermostat()
+
+        self.init_data()
 
     @property
     def outdoor_temperature(self):
@@ -70,20 +74,30 @@ class Gateway:
         """Binary sensor plugwise notification."""
         return self._plugwise_notification
 
+    def init_data(self):
+        """Collect the initial data."""
+        data = self._api.get_device_data(self._dev_id)
+
+        for key, value in PW_NOTIFICATION.items():
+            if self._sm_thermostat is not None:
+                self.binary_sensors.update(PW_NOTIFICATION)
+
+        for sensor in self.sensor_list:
+            for key, value in sensor.items():
+                if data.get(value[ID]) is not None:
+                    self.sensors.update(sensor)
+
     def update_data(self):
         """Handle update callbacks."""
         data = self._api.get_device_data(self._dev_id)
 
         for key, value in PW_NOTIFICATION.items():
             if self._sm_thermostat is not None:
-                self.binary_sensors.update(PW_NOTIFICATION)
                 self.binary_sensors[key][STATE] = self._api.notifications != {}
 
-        sensor_list = [OUTDOOR_TEMP]
-        for item in sensor_list:
-            for key, value in item.items():
+        for sensor in self.sensor_list:
+            for key, value in sensor.items():
                 if data.get(value[ID]) is not None:
-                    self.sensors.update(item)
                     self.sensors[key][STATE] = data.get(value[ID])
 
 
@@ -123,6 +137,16 @@ class Thermostat:
         self._vendor = None
 
         self.sensors = {}
+
+        self.sensor_list = [
+            BATTERY,
+            ILLUMINANCE,
+            OUTDOOR_TEMP,
+            TARGET_TEMP,
+            CURRENT_TEMP,
+            TEMP_DIFF,
+            VALVE_POS,
+        ]
 
         self._active_device = self._api.active_device_present
         self._heater_id = self._api.heater_id
@@ -228,24 +252,20 @@ class Thermostat:
         self._model = self._devices[self._dev_id]["model"]
         self._vendor = self._devices[self._dev_id]["vendor"]
 
+        data = self._api.get_device_data(self._dev_id)
+        for sensor in self.sensor_list:
+            for key, value in sensor.items():
+                if data.get(value[ID]) is not None:
+                    self.sensors.update(sensor)
+
     def update_data(self):
         """Handle update callbacks."""
         data = self._api.get_device_data(self._dev_id)
 
         # sensor data
-        sensor_list = [
-            BATTERY,
-            ILLUMINANCE,
-            OUTDOOR_TEMP,
-            TARGET_TEMP,
-            CURRENT_TEMP,
-            TEMP_DIFF,
-            VALVE_POS,
-        ]
-        for item in sensor_list:
-            for key, value in item.items():
+        for sensor in self.sensor_list:
+            for key, value in sensor.items():
                 if data.get(value[ID]) is not None:
-                    self.sensors.update(item)
                     self.sensors[key][STATE] = data.get(value[ID])
 
         # skip the rest for thermo_sensors
@@ -326,6 +346,18 @@ class AuxDevice:
         self.sensors = {}
         self.switches = {}
 
+        self.b_sensor_list = [DHW_STATE, FLAME_STATE, SLAVE_BOILER_STATE]
+
+        self.sensor_list = [
+            INTENDED_BOILER_TEMP,
+            MOD_LEVEL,
+            RETURN_TEMP,
+            WATER_PRESSURE,
+            WATER_TEMP,
+        ]
+
+        self.switch_list = [DHW_COMF_MODE]
+
         self._active_device = self._api.active_device_present
 
         self.init_data()
@@ -392,36 +424,42 @@ class AuxDevice:
         self._model = self._devices[self._dev_id]["model"]
         self._vendor = self._devices[self._dev_id]["vendor"]
 
+        data = self._api.get_device_data(self._dev_id)
+
+        if self._active_device:
+            for b_sensor in self.b_sensor_list:
+                for key, value in b_sensor.items():
+                    if data.get(value[ID]) is not None:
+                        self.binary_sensors.update(b_sensor)
+
+        for sensor in self.sensor_list:
+            for key, value in sensor.items():
+                if data.get(value[ID]) is not None:
+                    self.sensors.update(sensor)
+
+        for switch in self.switch_list:
+            for key, value in switch.items():
+                if data.get(value[ID]) is not None:
+                    self.switches.update(switch)
+
     def update_data(self):
         """Handle update callbacks."""
         data = self._api.get_device_data(self._dev_id)
 
-        binary_sensor_list = [DHW_STATE, FLAME_STATE, SLAVE_BOILER_STATE]
         if self._active_device:
-            for item in binary_sensor_list:
+            for item in self.b_sensor_list:
                 for key, value in item.items():
                     if data.get(value[ID]) is not None:
-                        self.binary_sensors.update(item)
                         self.binary_sensors[key][STATE] = data.get(value[ID])
 
-        sensor_list = [
-            INTENDED_BOILER_TEMP,
-            MOD_LEVEL,
-            RETURN_TEMP,
-            WATER_PRESSURE,
-            WATER_TEMP,
-        ]
-        for item in sensor_list:
+        for item in self.sensor_list:
             for key, value in item.items():
                 if data.get(value[ID]) is not None:
-                    self.sensors.update(item)
                     self.sensors[key][STATE] = data.get(value[ID])
 
-        switch_list = [DHW_COMF_MODE]
-        for item in switch_list:
+        for item in self.switch_list:
             for key, value in item.items():
                 if data.get(value[ID]) is not None:
-                    self.switches.update(item)
                     self.switches[key][STATE] = data.get(value[ID])
 
 
@@ -446,6 +484,15 @@ class Plug:
 
         self.sensors = {}
         self.switches = {}
+
+        self.sensor_list = [
+            EL_CONSUMED,
+            EL_CONSUMED_INTERVAL,
+            EL_PRODUCED,
+            EL_PRODUCED_INTERVAL,
+        ]
+
+        self.switch_list = [LOCK, RELAY]
 
         self.init_data()
 
@@ -507,25 +554,29 @@ class Plug:
         self._model = self._devices[self._dev_id]["model"]
         self._vendor = self._devices[self._dev_id]["vendor"]
 
+        data = self._api.get_device_data(self._dev_id)
+
+        for sensor in self.sensor_list:
+            for key, value in sensor.items():
+                if data.get(value[ID]) is not None:
+                    self.sensors.update(sensor)
+
+        for switch in self.switch_list:
+            for key, value in switch.items():
+                if data.get(value[ID]) is not None:
+                    self.switches.update(switch)
+
     def update_data(self):
         """Handle update callbacks."""
         data = self._api.get_device_data(self._dev_id)
 
-        sensor_list = [
-            EL_CONSUMED,
-            EL_CONSUMED_INTERVAL,
-            EL_PRODUCED,
-            EL_PRODUCED_INTERVAL,
-        ]
-        for item in sensor_list:
-            for key, value in item.items():
+
+        for sensor in self.sensor_list:
+            for key, value in sensor.items():
                 if data.get(value[ID]) is not None:
-                    self.sensors.update(item)
                     self.sensors[key][STATE] = data.get(value[ID])
 
-        switch_list = [LOCK, RELAY]
-        for item in switch_list:
-            for key, value in item.items():
+        for switch in self.switch_list:
+            for key, value in switch.items():
                 if data.get(value[ID]) is not None:
-                    self.switches.update(item)
                     self.switches[key][STATE] = data.get(value[ID])
