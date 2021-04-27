@@ -570,7 +570,6 @@ class Plug:
         """Handle update callbacks."""
         data = self._api.get_device_data(self._dev_id)
 
-
         for sensor in self.sensor_list:
             for key, value in sensor.items():
                 if data.get(value[ID]) is not None:
