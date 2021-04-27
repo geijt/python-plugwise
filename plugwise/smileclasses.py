@@ -58,6 +58,8 @@ class Gateway:
         self.binary_sensors = {}
         self.sensors = {}
 
+        self._sm_thermostat = self._api.single_master_thermostat()
+
     @property
     def outdoor_temperature(self):
         """Gateway sensor outdoor temperature."""
@@ -72,12 +74,10 @@ class Gateway:
         """Handle update callbacks."""
         data = self._api.get_device_data(self._dev_id)
 
-        binary_sensor_list = [PW_NOTIFICATION]
-        for item in binary_sensor_list:
-            for key, value in item.items():
-                if data.get(value[ID]) is not None:
-                    self.binary_sensors.update(item)
-                    self.binary_sensors[key][STATE] = data.get(value[ID])
+        for key, value in PW_NOTIFICATION.items():
+            if self._sm_thermostat is not None:
+                self.binary_sensors.update(PW_NOTIFICATION)
+                self.binary_sensors[key][STATE] = self._api.notifications != {}
 
         sensor_list = [OUTDOOR_TEMP]
         for item in sensor_list:
@@ -85,8 +85,6 @@ class Gateway:
                 if data.get(value[ID]) is not None:
                     self.sensors.update(item)
                     self.sensors[key][STATE] = data.get(value[ID])
-
-        self.binary_sensors["plugwise_notification"] = self._api.notifications != {}
 
 
 class Thermostat:
