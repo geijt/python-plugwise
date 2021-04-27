@@ -488,6 +488,7 @@ SMILES = {
 
 # Newly added smileclasses constants
 
+CLASS = "class"
 ID = "id"
 NAME = "name"
 STATE = "state"
@@ -502,47 +503,201 @@ HVAC_MODES = {ID: "hvac_modes"}
 PRESET_MODE = {ID: "preset_mode"}
 PRESET_MODES = {ID: "preset_modes"}
 
+# Binary Sensors
+
+DHW_STATE = {
+    "dhw_state": {
+        ID: "dhw_state",
+        NAME: "DHW State",
+        STATE: "dhw_state",
+        CLASS: "heat",
+    }
+}
+FLAME_STATE = {
+    "flame_state": {
+        ID: "flame_state",
+        NAME: "Flame State",
+        STATE: "flame_state",
+        CLASS: "heat",
+    }
+}
+PW_NOTIFICATION = {
+    "plugwise_notification": {
+        ID: "plugwise_notification",
+        NAME: "Plugwise Notification",
+        STATE: "plugwise_notification",
+        CLASS: None,
+    }
+}
+SLAVE_BOILER_STATE = {
+    "slave_boiler_state": {
+        ID: "slave_boiler_state",
+        NAME: "Slave Boiler State",
+        STATE: "slave_boiler_state",
+        CLASS: "heat",
+    }
+}
+
+# Sensors
 BATTERY = {
-    ID: "battery",
-    NAME: "Battery level",
-    STATE: "battery",
-    UNIT: PERCENTAGE,
+    "battery": {
+        ID: "battery",
+        NAME: "Battery level",
+        STATE: "battery",
+        CLASS: "battery",
+    }
 }
 ILLUMINANCE = {
-    ID: "illuminance",
-    NAME: "Illuminance",
-    STATE: "illuminance",
-    UNIT: UNIT_LUMEN,
+    "illuminance": {
+        ID: "illuminance",
+        NAME: "Illuminance",
+        STATE: "illuminance",
+        CLASS: "illuminance",
+    }
 }
 OUTDOOR_TEMP = {
-    ID: "outdoor_temperature",
-    NAME: "Outdoor Temperature",
-    STATE: "outdoor_temperature",
-    UNIT: TEMP_CELSIUS,
+    "outdoor_temperature": {
+        ID: "outdoor_temperature",
+        NAME: "Outdoor Temperature",
+        STATE: "outdoor_temperature",
+        CLASS: "temperature",
+    }
 }
 CURRENT_TEMP = {
-    ID: "temperature",
-    NAME: "Current Temperature",
-    STATE: "temperature",
-    UNIT: TEMP_CELSIUS,
+    "current_temperature": {
+        ID: "temperature",
+        NAME: "Current Temperature",
+        STATE: "temperature",
+        CLASS: "temperature",
+    }
 }
 TARGET_TEMP = {
-    ID: "setpoint",
-    NAME: "Setpoint",
-    STATE: "setpoint",
-    UNIT: TEMP_CELSIUS,
+    "target_temperature": {
+        ID: "setpoint",
+        NAME: "Setpoint",
+        STATE: "setpoint",
+        CLASS: "temperature",
+    }
 }
 TEMP_DIFF = {
-    ID: "temperature_difference",
-    NAME: "Temperature Difference",
-    STATE: "temperature_difference",
-    UNIT: TEMP_KELVIN,
+    "temperature_difference": {
+        ID: "temperature_difference",
+        NAME: "Temperature Difference",
+        STATE: "temperature_difference",
+        UNIT: TEMP_KELVIN,
+    }
 }
 VALVE_POS = {
-    ID: "valve_position",
-    NAME: "Valve Position",
-    STATE: "valve_position",
-    UNIT: PERCENTAGE,
+    "valve_position": {
+        ID: "valve_position",
+        NAME: "Valve Position",
+        STATE: "valve_position",
+        UNIT: PERCENTAGE,
+    }
 }
+INTENDED_BOILER_TEMP ={
+    "intended_boiler_temperature": {
+        ID: "intended_boiler_temperature",
+        NAME: "Intended Boiler Temperature",
+        STATE: "intended_boiler_temperature",
+        CLASS: "temperature",
+    }
+}
+MOD_LEVEL = {
+    "modulation_level": {
+        ID: "modulation_level",
+        NAME: "Modulation Level",
+        STATE: "modulation_level",
+        UNIT: PERCENTAGE,
+        }
+    }
+RETURN_TEMP = {
+    "return_temperature": {
+        ID: "return_temperature",
+        NAME: "Return Temperature",
+        STATE: "return_temperature",
+        CLASS: "temperature",
+    }
+}
+WATER_PRESSURE = {
+    "water_pressure": {
+        ID: "water_pressure",
+        NAME: "Water Pressure",
+        STATE: "water_pressure",
+        CLASS: "pressure",
+    }
+}
+WATER_TEMP = {
+    "water_temperature": {
+        ID: "water_temperature",
+        NAME: "Water Temperature",
+        STATE: "water_temperature",
+        CLASS: "temperature",
+    }
+}
+EL_CONSUMED = {
+    "electricity_consumed": {
+        ID: "electricity_consumed",
+        NAME: "Electricity Consumed",
+        STATE: "electricity_consumed",
+        CLASS: "power",
+        UNIT: POWER_WATT,
+    }
+}
+EL_CONSUMED_INTERVAL = {
+    "electricity_consumed_interval": {
+        ID: "electricity_consumed_interval",
+        NAME: "Electricity Consumed Interval",
+        STATE: "electricity_consumed_interval",
+        CLASS: "energy",
+        UNIT: ENERGY_WATT_HOUR,
+    }
+}
+EL_PRODUCED = {
+    "electricity_produced": {
+        ID: "electricity_produced",
+        NAME: "Electricity Produced",
+        STATE: "electricity_produced",
+        CLASS: "power",
+        UNIT: POWER_WATT,
+    }
+}
+EL_PRODUCED_INTERVAL = {
+    "electricity_produced_interval": {
+        ID: "electricity_produced_interval",
+        NAME: "Electricity Produced Interval",
+        STATE: "electricity_produced_interval",
+        CLASS: "energy",
+        UNIT: ENERGY_WATT_HOUR,
+    }
+}
+
+# Switches
+
+DHW_COMF_MODE = {
+    "dhw_comf_mode": {
+        ID: "dhw_comf_mode",
+        NAME: "DHW Comfort Mode",
+        STATE: "dhw_comf_mode",
+        CLASS: "switch",
+    }
+}
+LOCK = {
+    "lock": {
+        ID: "lock",
+        NAME: "Lock",
+        STATE: "lock",
+        CLASS: "switch",
+    }
+}
+RELAY = {
+    "relay": {
+        ID: "relay",
+        NAME: "",
+        STATE: "relay",
+        CLASS: "switch",
+    }
+}
+
 
 SWITCH_CLASSES = ["plug", "switch_group"]
