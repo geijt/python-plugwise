@@ -114,34 +114,17 @@ class GWDevice:
         self._s_type = self._api.smile_type
 
         for dev_id in self._devices:
-            if self._devices[dev_id]["class"] != "gateway":
-                continue
-
-            self._friendly_name = self._devices[dev_id]["name"]
-            self._model = self._devices[dev_id]["model"]
-            self._vendor = self._devices[dev_id]["vendor"]
-
-        return self._api
-
-    async def refresh_data(self):
-        """Reconnect to the Gateway Device and collect the data points."""
-
-        await self._api.update_device()
-
-        for dev_id in self._devices:
+            if self._devices[dev_id]["class"] == "gateway":
+                self._friendly_name = self._devices[dev_id]["name"]
+                self._model = self._devices[dev_id]["model"]
+                self._vendor = self._devices[dev_id]["vendor"]
+                gateway = Gateway(self._api, self._devices, dev_id)
+                gateway.update_data()
+                self._devices[dev_id].update({"binary_sensors": gateway.binary_sensors})
+                self._devices[dev_id].update({"sensors": gateway.sensors})
             if self._devices[dev_id]["class"] in THERMOSTAT_CLASSES:
                 thermostat = Thermostat(self._api, self._devices, dev_id)
                 thermostat.update_data()
-                self._devices[dev_id].update({"hvac_mode": thermostat.hvac_mode})
-                self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
-                self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
-                self._devices[dev_id].update({"preset_mode": thermostat.preset_mode})
-                self._devices[dev_id].update(
-                    {"current_temperature": thermostat.current_temperature}
-                )
-                self._devices[dev_id].update(
-                    {"extra_state_attributes": thermostat.extra_state_attributes}
-                )
                 self._devices[dev_id].update({"sensors": thermostat.sensors})
             if self._devices[dev_id]["class"] == "thermo_sensor":
                 thermostat = Thermostat(self._api, self._devices, dev_id)
@@ -153,14 +136,11 @@ class GWDevice:
                 self._devices[dev_id].update({"binary_sensors": auxdev.binary_sensors})
                 self._devices[dev_id].update({"sensors": auxdev.sensors})
                 self._devices[dev_id].update({"switches": auxdev.switches})
-            if self._devices[dev_id]["class"] == "gateway":
-                gateway = Gateway(self._api, self._devices, dev_id)
-                gateway.update_data()
-                self._devices[dev_id].update({"binary_sensors": gateway.binary_sensors})
-                self._devices[dev_id].update({"sensors": gateway.sensors})
             if any(dummy in self._devices[dev_id]["types"] for dummy in SWITCH_CLASSES):
                 plug = Plug(self._api, self._devices, dev_id)
                 plug.update_data()
                 if plug.sensors != {}:
                     self._devices[dev_id].update({"sensors": plug.sensors})
                 self._devices[dev_id].update({"switches": plug.switches})
+
+        return self._api
