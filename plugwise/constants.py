@@ -595,7 +595,7 @@ VALVE_POS = {
         UNIT: PERCENTAGE,
     }
 }
-INTENDED_BOILER_TEMP ={
+INTENDED_BOILER_TEMP = {
     "intended_boiler_temperature": {
         ID: "intended_boiler_temperature",
         NAME: "Intended Boiler Temperature",
@@ -609,8 +609,8 @@ MOD_LEVEL = {
         NAME: "Modulation Level",
         STATE: "modulation_level",
         UNIT: PERCENTAGE,
-        }
     }
+}
 RETURN_TEMP = {
     "return_temperature": {
         ID: "return_temperature",
