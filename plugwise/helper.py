@@ -337,8 +337,7 @@ class SmileHelper:
         if appl.pwclass == "gateway":
             self.gateway_id = appliance.attrib["id"]
             appl.fw = self.smile_version[0]
-            appl.model = self.smile_name
-            appl.name = f"Smile {self.smile_name}"
+            appl.model = appl.name = self.smile_name
             appl.v_name = "Plugwise B.V."
             return appl
 
