@@ -512,7 +512,7 @@ DHW_STATE = {
         ENABLED: "True",
         NAME: "DHW State",
         STATE: "dhw_state",
-        CLASS: "heat",
+        CLASS: None,
     }
 }
 FLAME_STATE = {
@@ -594,6 +594,7 @@ TEMP_DIFF = {
         ENABLED: "False",
         NAME: "Temperature Difference",
         STATE: "temperature_difference",
+        CLASS: None,
         UNIT: TEMP_KELVIN,
     }
 }
@@ -603,6 +604,7 @@ VALVE_POS = {
         ENABLED: "True",
         NAME: "Valve Position",
         STATE: "valve_position",
+        CLASS: None,
         UNIT: PERCENTAGE,
     }
 }
@@ -621,6 +623,7 @@ MOD_LEVEL = {
         ENABLED: "True",
         NAME: "Modulation Level",
         STATE: "modulation_level",
+        CLASS: None,
         UNIT: PERCENTAGE,
     }
 }
