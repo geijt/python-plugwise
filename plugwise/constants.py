@@ -521,7 +521,7 @@ FLAME_STATE = {
         ENABLED: "True",
         NAME: "Flame State",
         STATE: "flame_state",
-        CLASS: "heat",
+        CLASS: None,
     }
 }
 PW_NOTIFICATION = {
@@ -538,7 +538,7 @@ SLAVE_BOILER_STATE = {
         ID: "slave_boiler_state",
         NAME: "Slave Boiler State",
         STATE: "slave_boiler_state",
-        CLASS: "heat",
+        CLASS: None,
     }
 }
 
