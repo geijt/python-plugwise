@@ -489,7 +489,7 @@ SMILES = {
 # Newly added smileclasses constants
 
 CLASS = "class"
-ENABLED = "enabled"
+ENABLED = "enabled_default"
 ID = "id"
 NAME = "name"
 STATE = "state"
