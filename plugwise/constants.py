@@ -509,7 +509,7 @@ PRESET_MODES = {ID: "preset_modes"}
 DHW_STATE = {
     "dhw_state": {
         ID: "dhw_state",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "DHW State",
         STATE: "dhw_state",
         CLASS: None,
@@ -518,7 +518,7 @@ DHW_STATE = {
 FLAME_STATE = {
     "flame_state": {
         ID: "flame_state",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Flame State",
         STATE: "flame_state",
         CLASS: None,
@@ -527,7 +527,7 @@ FLAME_STATE = {
 PW_NOTIFICATION = {
     "plugwise_notification": {
         ID: "plugwise_notification",
-        ENABLED: "False",
+        ENABLED: False,
         NAME: "Plugwise Notification",
         STATE: "plugwise_notification",
         CLASS: None,
@@ -536,6 +536,7 @@ PW_NOTIFICATION = {
 SLAVE_BOILER_STATE = {
     "slave_boiler_state": {
         ID: "slave_boiler_state",
+        ENABLED: False,
         NAME: "Slave Boiler State",
         STATE: "slave_boiler_state",
         CLASS: None,
@@ -546,7 +547,7 @@ SLAVE_BOILER_STATE = {
 BATTERY = {
     "battery": {
         ID: "battery",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Battery level",
         STATE: "battery",
         CLASS: "battery",
@@ -555,7 +556,7 @@ BATTERY = {
 ILLUMINANCE = {
     "illuminance": {
         ID: "illuminance",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Illuminance",
         STATE: "illuminance",
         CLASS: "illuminance",
@@ -564,7 +565,7 @@ ILLUMINANCE = {
 OUTDOOR_TEMP = {
     "outdoor_temperature": {
         ID: "outdoor_temperature",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Outdoor Temperature",
         STATE: "outdoor_temperature",
         CLASS: "temperature",
@@ -573,7 +574,7 @@ OUTDOOR_TEMP = {
 CURRENT_TEMP = {
     "current_temperature": {
         ID: "temperature",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Current Temperature",
         STATE: "temperature",
         CLASS: "temperature",
@@ -582,7 +583,7 @@ CURRENT_TEMP = {
 TARGET_TEMP = {
     "target_temperature": {
         ID: "setpoint",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Setpoint",
         STATE: "setpoint",
         CLASS: "temperature",
@@ -591,7 +592,7 @@ TARGET_TEMP = {
 TEMP_DIFF = {
     "temperature_difference": {
         ID: "temperature_difference",
-        ENABLED: "False",
+        ENABLED: False,
         NAME: "Temperature Difference",
         STATE: "temperature_difference",
         CLASS: None,
@@ -601,7 +602,7 @@ TEMP_DIFF = {
 VALVE_POS = {
     "valve_position": {
         ID: "valve_position",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Valve Position",
         STATE: "valve_position",
         CLASS: None,
@@ -611,7 +612,7 @@ VALVE_POS = {
 INTENDED_BOILER_TEMP = {
     "intended_boiler_temperature": {
         ID: "intended_boiler_temperature",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Intended Boiler Temperature",
         STATE: "intended_boiler_temperature",
         CLASS: "temperature",
@@ -620,7 +621,7 @@ INTENDED_BOILER_TEMP = {
 MOD_LEVEL = {
     "modulation_level": {
         ID: "modulation_level",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Modulation Level",
         STATE: "modulation_level",
         CLASS: None,
@@ -630,7 +631,7 @@ MOD_LEVEL = {
 RETURN_TEMP = {
     "return_temperature": {
         ID: "return_temperature",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Return Temperature",
         STATE: "return_temperature",
         CLASS: "temperature",
@@ -639,7 +640,7 @@ RETURN_TEMP = {
 WATER_PRESSURE = {
     "water_pressure": {
         ID: "water_pressure",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Water Pressure",
         STATE: "water_pressure",
         CLASS: "pressure",
@@ -648,7 +649,7 @@ WATER_PRESSURE = {
 WATER_TEMP = {
     "water_temperature": {
         ID: "water_temperature",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Water Temperature",
         STATE: "water_temperature",
         CLASS: "temperature",
@@ -657,7 +658,7 @@ WATER_TEMP = {
 EL_CONSUMED = {
     "electricity_consumed": {
         ID: "electricity_consumed",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Electricity Consumed",
         STATE: "electricity_consumed",
         CLASS: "power",
@@ -667,7 +668,7 @@ EL_CONSUMED = {
 EL_CONSUMED_INTERVAL = {
     "electricity_consumed_interval": {
         ID: "electricity_consumed_interval",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "Electricity Consumed Interval",
         STATE: "electricity_consumed_interval",
         CLASS: "energy",
@@ -677,7 +678,7 @@ EL_CONSUMED_INTERVAL = {
 EL_PRODUCED = {
     "electricity_produced": {
         ID: "electricity_produced",
-        ENABLED: "False",
+        ENABLED: False,
         NAME: "Electricity Produced",
         STATE: "electricity_produced",
         CLASS: "power",
@@ -687,7 +688,7 @@ EL_PRODUCED = {
 EL_PRODUCED_INTERVAL = {
     "electricity_produced_interval": {
         ID: "electricity_produced_interval",
-        ENABLED: "False",
+        ENABLED: False,
         NAME: "Electricity Produced Interval",
         STATE: "electricity_produced_interval",
         CLASS: "energy",
@@ -700,7 +701,7 @@ EL_PRODUCED_INTERVAL = {
 DHW_COMF_MODE = {
     "dhw_comf_mode": {
         ID: "dhw_comf_mode",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "DHW Comfort Mode",
         STATE: "dhw_comf_mode",
         CLASS: "switch",
@@ -709,7 +710,7 @@ DHW_COMF_MODE = {
 LOCK = {
     "lock": {
         ID: "lock",
-        ENABLED: "False",
+        ENABLED: False,
         NAME: "Lock",
         STATE: "lock",
         CLASS: "switch",
@@ -718,7 +719,7 @@ LOCK = {
 RELAY = {
     "relay": {
         ID: "relay",
-        ENABLED: "True",
+        ENABLED: True,
         NAME: "",
         STATE: "relay",
         CLASS: "switch",
