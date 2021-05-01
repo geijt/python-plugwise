@@ -498,14 +498,9 @@ UNIT = "unit"
 UNIT_LUMEN = "lm"
 
 EXTRA_STATE_ATTRIBS = {}
-HVAC_ACTION = {ID: "hvac_action"}
-HVAC_MODE = {ID: "hvac_mode"}
-HVAC_MODES = {ID: "hvac_modes"}
-PRESET_MODE = {ID: "preset_mode"}
-PRESET_MODES = {ID: "preset_modes"}
 
 # Icons
-COOL_ICON = "mdi:snowflake"
+COOLING_ICON = "mdi:snowflake"
 FLAME_ICON = "mdi:fire"
 FLOW_OFF_ICON = "mdi:water-pump-off"
 FLOW_ON_ICON = "mdi:water-pump"

@@ -10,7 +10,7 @@ from homeassistant.components.climate.const import (
 )
 
 from .constants import (
-    ATTRIB_ICON,
+    ATTR_ICON,
     ATTR_ID,
     ATTR_STATE,
     BATTERY,
@@ -474,7 +474,7 @@ class AuxDevice:
                         self.sensors[key][ATTR_ICON] = HEATING_ICON
                     if self._cooling_state:
                         self.sensors[key][ATTR_STATE] = "cooling"
-                        self.sensors[key][ATTR_ICON] = COOL_ICON
+                        self.sensors[key][ATTR_ICON] = COOLING_ICON
 
         for switch in self.switch_list:
             for key, value in switch.items():
