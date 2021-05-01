@@ -118,22 +118,22 @@ class GWDevice:
                 self._friendly_name = self._devices[dev_id]["name"]
                 self._model = self._devices[dev_id]["model"]
                 self._vendor = self._devices[dev_id]["vendor"]
-                gateway = Gateway(self._api, self._devices, dev_id)
+                gateway = Gateway(self._api, dev_id)
                 gateway.update_data()
                 self._devices[dev_id].update({"binary_sensors": gateway.binary_sensors})
                 self._devices[dev_id].update({"sensors": gateway.sensors})
             if self._devices[dev_id]["class"] in THERMOSTAT_CLASSES:
-                thermostat = Thermostat(self._api, self._devices, dev_id)
+                thermostat = Thermostat(self._api, dev_id)
                 thermostat.update_data()
                 self._devices[dev_id].update({"sensors": thermostat.sensors})
             if self._devices[dev_id]["class"] == "heater_central":
-                auxdev = AuxDevice(self._api, self._devices, dev_id)
+                auxdev = AuxDevice(self._api, dev_id)
                 auxdev.update_data()
                 self._devices[dev_id].update({"binary_sensors": auxdev.binary_sensors})
                 self._devices[dev_id].update({"sensors": auxdev.sensors})
                 self._devices[dev_id].update({"switches": auxdev.switches})
             if any(dummy in self._devices[dev_id]["types"] for dummy in SWITCH_CLASSES):
-                plug = Plug(self._api, self._devices, dev_id)
+                plug = Plug(self._api, dev_id)
                 plug.update_data()
                 if plug.sensors != {}:
                     self._devices[dev_id].update({"sensors": plug.sensors})
