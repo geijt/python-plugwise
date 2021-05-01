@@ -607,7 +607,7 @@ CURRENT_TEMP = {
     "current_temperature": {
         ATTR_ID: "temperature",
         ATTR_ENABLED: True,
-        ATTR_NAME: "Current Temperature",
+        ATTR_NAME: "Temperature",
         ATTR_STATE: "temperature",
         ATTR_DEVICE_CLASS: "temperature",
         ATTR_ICON: None,
