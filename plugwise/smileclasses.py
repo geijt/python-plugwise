@@ -44,6 +44,7 @@ from .constants import (
     WATER_TEMP,
 )
 
+
 def __init__(self):
     """Initialize the SmileClasses."""
     self._heating_state = None
