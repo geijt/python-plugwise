@@ -175,17 +175,17 @@ class Thermostat:
 
     @property
     def compressor_state(self):
-        """Comlimate HVAC action."""
+        """Compressor state."""
         return self._compressor_state
 
     @property
     def cooling_state(self):
-        """Climate HVAC action."""
+        """Cooling state."""
         return self._cooling_state
 
     @property
     def heating_state(self):
-        """Climate HVAC action."""
+        """Heating state."""
         return self._heating_state
 
     @property
