@@ -93,22 +93,13 @@ class Thermostat:
         """Initialize the Thermostat."""
 
         self._api = api
-        self._battery = None
         self._compressor_state = None
         self._cooling_state = None
         self._dev_id = dev_id
-        self._devices = devices
         self._extra_state_attributes = None
-        self._firmware_version = None
-        self._friendly_name = None
         self._heating_state = None
-        self._hvac_action = None
         self._hvac_mode = None
-        self._hvac_modes = None
-        self._illuminance = None
         self._get_presets = None
-        self._model = None
-        self._outdoor_temperature = None
         self._preset_mode = None
         self._preset_modes = None
         self._schema_names = None
@@ -117,9 +108,6 @@ class Thermostat:
         self._setpoint = None
         self._smile_class = None
         self._temperature = None
-        self._temperature_difference = None
-        self._valve_position = None
-        self._vendor = None
 
         self.sensors = {}
 
@@ -138,26 +126,6 @@ class Thermostat:
         self._sm_thermostat = self._api.single_master_thermostat()
 
         self.init_data()
-
-    @property
-    def friendly_name(self):
-        """Device friendly name."""
-        return self._friendly_name
-
-    @property
-    def model(self):
-        """Device model name."""
-        return self._model
-
-    @property
-    def vendor(self):
-        """Device vendor name."""
-        return self._vendor
-
-    @property
-    def firmware_version(self):
-        """Device firmware version."""
-        return self._firmware_version
 
     @property
     def compressor_state(self):
@@ -204,40 +172,10 @@ class Thermostat:
         """Climate extra state attributes."""
         return self._extra_state_attributes
 
-    @property
-    def battery(self):
-        """Thermostat Battery level."""
-        return self._battery
-
-    @property
-    def illuminance(self):
-        """Thermostat illuminance sensor."""
-        return self._illuminance
-
-    @property
-    def outdoor_temperature(self):
-        """Thermostat outdoor temperature."""
-        return self._outdoor_temperature
-
-    @property
-    def temperature_difference(self):
-        """Thermostat temperature difference."""
-        return self._temperature_difference
-
-    @property
-    def valve_position(self):
-        """Thermostat valve position."""
-        return self._valve_position
-
     def init_data(self):
         """Collect the initial data."""
-        self._smile_class = self._devices[self._dev_id]["class"]
-        self._friendly_name = self._devices[self._dev_id]["name"]
-        self._firmware_version = self._devices[self._dev_id]["fw"]
-        self._model = self._devices[self._dev_id]["model"]
-        self._vendor = self._devices[self._dev_id]["vendor"]
-
         data = self._api.get_device_data(self._dev_id)
+
         for sensor in self.sensor_list:
             for key, value in sensor.items():
                 if data.get(value[ATTR_ID]) is not None:
