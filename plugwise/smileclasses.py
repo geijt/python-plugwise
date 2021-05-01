@@ -12,6 +12,7 @@ from homeassistant.components.climate.const import (
 from .constants import (
     BATTERY,
     CURRENT_TEMP,
+    DEVICE_STATE,
     DHW_COMF_MODE,
     DHW_STATE,
     EL_CONSUMED,
@@ -42,6 +43,11 @@ from .constants import (
     WATER_PRESSURE,
     WATER_TEMP,
 )
+
+def __init__(self):
+    """Initialize the SmileClasses."""
+    self._heating_state = None
+    self._cooling_state = None
 
 
 class Gateway:
@@ -110,7 +116,6 @@ class Thermostat:
         self._api = api
         self._battery = None
         self._compressor_state = None
-        self._cooling_state = None
         self._dev_id = dev_id
         self._devices = devices
         self._extra_state_attributes = None
@@ -119,7 +124,6 @@ class Thermostat:
         self._hvac_action = None
         self._hvac_mode = None
         self._hvac_modes = None
-        self._heating_state = None
         self._illuminance = None
         self._get_presets = None
         self._model = None
@@ -349,6 +353,7 @@ class AuxDevice:
         self.b_sensor_list = [DHW_STATE, FLAME_STATE, SLAVE_BOILER_STATE]
 
         self.sensor_list = [
+            DEVICE_STATE,
             INTENDED_BOILER_TEMP,
             MOD_LEVEL,
             RETURN_TEMP,
@@ -434,7 +439,7 @@ class AuxDevice:
 
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None:
+                if data.get(value[ID]) is not None or sensor == DEVICE_STATE:
                     self.sensors.update(sensor)
 
         for switch in self.switch_list:
@@ -447,18 +452,24 @@ class AuxDevice:
         data = self._api.get_device_data(self._dev_id)
 
         if self._active_device:
-            for item in self.b_sensor_list:
-                for key, value in item.items():
+            for b_sensor in self.b_sensor_list:
+                for key, value in b_sensor.items():
                     if data.get(value[ID]) is not None:
                         self.binary_sensors[key][STATE] = data.get(value[ID])
 
-        for item in self.sensor_list:
-            for key, value in item.items():
+        for sensor in self.sensor_list:
+            for key, value in sensor.items():
                 if data.get(value[ID]) is not None:
                     self.sensors[key][STATE] = data.get(value[ID])
+                if sensor == DEVICE_STATE:
+                    self.sensors[key][STATE] = "idle"
+                    if self._heating_state:
+                        self.sensors[key][STATE] = "heating"
+                    if self._cooling_state:
+                        self.sensors[key][STATE] = "cooling"
 
-        for item in self.switch_list:
-            for key, value in item.items():
+        for switch in self.switch_list:
+            for key, value in switch.items():
                 if data.get(value[ID]) is not None:
                     self.switches[key][STATE] = data.get(value[ID])
 
