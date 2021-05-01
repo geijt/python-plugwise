@@ -563,7 +563,7 @@ BATTERY = {
     "battery": {
         ATTR_ID: "battery",
         ATTR_ENABLED: True,
-        ATTR_NAME: "Battery level",
+        ATTR_NAME: "Battery",
         ATTR_STATE: "battery",
         ATTR_DEVICE_CLASS: "battery",
         ATTR_ICON: None,
