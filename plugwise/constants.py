@@ -644,7 +644,7 @@ VALVE_POS = {
 }
 INTENDED_BOILER_TEMP = {
     "intended_boiler_temperature": {
-        IATTR_IDD: "intended_boiler_temperature",
+        ATTR_ID: "intended_boiler_temperature",
         ATTR_ENABLED: True,
         ATTR_NAME: "Intended Boiler Temperature",
         ATTR_STATE: "intended_boiler_temperature",
@@ -666,7 +666,7 @@ MOD_LEVEL = {
 }
 RETURN_TEMP = {
     "return_temperature": {
-        IATTR_IDD: "return_temperature",
+        ATTR_ID: "return_temperature",
         ATTR_ENABLED: True,
         ATTR_NAME: "Return Temperature",
         ATTR_STATE: "return_temperature",
