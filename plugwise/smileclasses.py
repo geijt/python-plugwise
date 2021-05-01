@@ -1,13 +1,4 @@
-from homeassistant.components.climate.const import (
-    CURRENT_HVAC_COOL,
-    CURRENT_HVAC_HEAT,
-    CURRENT_HVAC_IDLE,
-    HVAC_MODE_AUTO,
-    HVAC_MODE_HEAT,
-    HVAC_MODE_HEAT_COOL,
-    HVAC_MODE_OFF,
-    PRESET_AWAY,
-)
+""" Plugwise SmileClasses."""
 
 from .constants import (
     ATTR_ICON,
@@ -23,20 +14,14 @@ from .constants import (
     EL_CONSUMED_INTERVAL,
     EL_PRODUCED,
     EL_PRODUCED_INTERVAL,
-    EXTRA_STATE_ATTRIBS,
     FLAME_STATE,
     HEATING_ICON,
-    HVAC_ACTION,
-    HVAC_MODE,
-    HVAC_MODES,
     IDLE_ICON,
     ILLUMINANCE,
     INTENDED_BOILER_TEMP,
     LOCK,
     MOD_LEVEL,
     OUTDOOR_TEMP,
-    PRESET_MODE,
-    PRESET_MODES,
     PW_NOTIFICATION,
     RELAY,
     RETURN_TEMP,
