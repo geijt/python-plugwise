@@ -42,12 +42,6 @@ from .constants import (
 )
 
 
-def __init__(self):
-    """Initialize the SmileClasses."""
-    self._heating_state = None
-    self._cooling_state = None
-
-
 class Gateway:
     """ Represent the Plugwise Smile/Stretch gateway."""
 
@@ -114,11 +108,13 @@ class Thermostat:
         self._api = api
         self._battery = None
         self._compressor_state = None
+        self._cooling_state = None
         self._dev_id = dev_id
         self._devices = devices
         self._extra_state_attributes = None
         self._firmware_version = None
         self._friendly_name = None
+        self._heating_state = None
         self._hvac_action = None
         self._hvac_mode = None
         self._hvac_modes = None
@@ -362,6 +358,8 @@ class AuxDevice:
         self.switch_list = [DHW_COMF_MODE]
 
         self._active_device = self._api.active_device_present
+        self._heater_id = self._api.heater_id
+        self._sm_thermostat = self._api.single_master_thermostat()
 
         self.init_data()
 
@@ -472,12 +470,17 @@ class AuxDevice:
                 if sensor == DEVICE_STATE:
                     self.sensors[key][ATTR_STATE] = "idle"
                     self.sensors[key][ATTR_ICON] = IDLE_ICON
-                    if self._heating_state:
-                        self.sensors[key][ATTR_STATE] = "heating"
-                        self.sensors[key][ATTR_ICON] = HEATING_ICON
-                    if self._cooling_state:
-                        self.sensors[key][ATTR_STATE] = "cooling"
-                        self.sensors[key][ATTR_ICON] = COOLING_ICON
+                    if self._active_device:
+                        hc_data = self._api.get_device_data(self._heater_id)
+                        if not self._sm_thermostat:
+                            self._cooling_state = hc_data.get("cooling_state")
+                            self._heating_state = hc_data.get("heating_state")
+                            if self._heating_state:
+                                self.sensors[key][ATTR_STATE] = "heating"
+                                self.sensors[key][ATTR_ICON] = HEATING_ICON
+                            if self._cooling_state:
+                                self.sensors[key][ATTR_STATE] = "cooling"
+                                self.sensors[key][ATTR_ICON] = COOLING_ICON
 
         for switch in self.switch_list:
             for key, value in switch.items():
