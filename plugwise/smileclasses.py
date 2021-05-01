@@ -496,6 +496,9 @@ class Plug:
         self._api = api
         self._dev_id = dev_id
 
+        self.sensors ={}
+        self.switches = {}
+        
         self.sensor_list = [
             EL_CONSUMED,
             EL_CONSUMED_INTERVAL,
