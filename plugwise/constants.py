@@ -504,6 +504,17 @@ HVAC_MODES = {ID: "hvac_modes"}
 PRESET_MODE = {ID: "preset_mode"}
 PRESET_MODES = {ID: "preset_modes"}
 
+# Icons
+COOL_ICON = "mdi:snowflake"
+FLAME_ICON = "mdi:fire"
+FLOW_OFF_ICON = "mdi:water-pump-off"
+FLOW_ON_ICON = "mdi:water-pump"
+HEATING_ICON = "mdi:radiator"
+IDLE_ICON = "mdi:circle-off-outline"
+NOTIFICATION_ICON = "mdi:mailbox-up-outline"
+NO_NOTIFICATION_ICON = "mdi:mailbox-outline"
+SWITCH_ICON = "mdi:electric-switch"
+
 # Binary Sensors
 
 DHW_STATE = {
