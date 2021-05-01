@@ -45,13 +45,10 @@ from .constants import (
 class Gateway:
     """ Represent the Plugwise Smile/Stretch gateway."""
 
-    def __init__(self, api, devices, dev_id):
+    def __init__(self, api, dev_id):
         """Initialize the Gateway."""
         self._api = api
         self._dev_id = dev_id
-        self._devices = devices
-        self._outdoor_temperature = None
-        self._plugwise_notification = {}
 
         self.binary_sensors = {}
         self.sensors = {}
@@ -61,16 +58,6 @@ class Gateway:
         self._sm_thermostat = self._api.single_master_thermostat()
 
         self.init_data()
-
-    @property
-    def outdoor_temperature(self):
-        """Gateway sensor outdoor temperature."""
-        return self._outdoor_temperature
-
-    @property
-    def plugwise_notification(self):
-        """Binary sensor plugwise notification."""
-        return self._plugwise_notification
 
     def init_data(self):
         """Collect the initial data."""
@@ -318,27 +305,12 @@ class Thermostat:
 class AuxDevice:
     """Represent an external Auxiliary Device."""
 
-    def __init__(self, api, devices, dev_id):
+    def __init__(self, api, dev_id):
         """Initialize the Thermostat."""
         self._api = api
-        self._compressor_state = None
         self._cooling_state = None
         self._dev_id = dev_id
-        self._dhw_state = None
-        self._devices = devices
-        self._firmware_version = None
-        self._flame_state = None
-        self._friendly_name = None
         self._heating_state = None
-        self._intended_boiler_temperature = None
-        self._model = None
-        self._modulation_level = None
-        self._return_temperature = None
-        self._slave_boiler_state = None
-        self._smile_class = None
-        self._vendor = None
-        self._water_pressure = None
-        self._water_temperature = None
 
         self.binary_sensors = {}
         self.sensors = {}
@@ -363,68 +335,8 @@ class AuxDevice:
 
         self.init_data()
 
-    @property
-    def friendly_name(self):
-        """Device friendly name."""
-        return self._friendly_name
-
-    @property
-    def model(self):
-        """Device model name."""
-        return self._model
-
-    @property
-    def vendor(self):
-        """Device vendor name."""
-        return self._vendor
-
-    @property
-    def dhw_state(self):
-        """Binary sensor DHW state."""
-        return self._dhw_state
-
-    @property
-    def flame_state(self):
-        """Binary sensor flame state."""
-        return self._flame_state
-
-    @property
-    def slave_boiler_state(self):
-        """Binary sensor slave boiler state."""
-        return self._slave_boiler_state
-
-    @property
-    def intended_boiler_temperature(self):
-        """Aux device intended boiler temperature."""
-        return self._intended_boiler_temperature
-
-    @property
-    def modulation_level(self):
-        """Aux device modulation_level."""
-        return self._modulation_level
-
-    @property
-    def return_temperature(self):
-        """Aux device return temperature."""
-        return self._return_temperature
-
-    @property
-    def water_pressure(self):
-        """Aux device water pressure."""
-        return self._water_pressure
-
-    @property
-    def water_temperature(self):
-        """Aux device water pressure."""
-        return self._water_temperature
-
     def init_data(self):
         """Collect the initial data."""
-        self._smile_class = self._devices[self._dev_id]["class"]
-        self._friendly_name = self._devices[self._dev_id]["name"]
-        self._model = self._devices[self._dev_id]["model"]
-        self._vendor = self._devices[self._dev_id]["vendor"]
-
         data = self._api.get_device_data(self._dev_id)
 
         if self._active_device:
@@ -491,7 +403,7 @@ class AuxDevice:
 class Plug:
     """ Represent the Plugwise Plug device."""
 
-    def __init__(self, api, devices, dev_id):
+    def __init__(self, api, dev_id):
         """Initialize the Plug."""
         self._api = api
         self._dev_id = dev_id
