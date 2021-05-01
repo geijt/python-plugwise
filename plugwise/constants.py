@@ -643,7 +643,7 @@ VALVE_POS = {
         ATTR_NAME: "Valve Position",
         ATTR_STATE: "valve_position",
         ATTR_DEVICE_CLASS: None,
-        ATTR_ICON: None,
+        ATTR_ICON: "mdi:valve",
         ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE,
     }
 }
@@ -665,7 +665,7 @@ MOD_LEVEL = {
         ATTR_NAME: "Modulation Level",
         ATTR_STATE: "modulation_level",
         ATTR_DEVICE_CLASS: None,
-        ATTR_ICON: None,
+        ATTR_ICON: "mdi:percent",
         ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE,
     }
 }
