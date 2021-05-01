@@ -89,7 +89,7 @@ class Gateway:
 class Thermostat:
     """Represent a Plugwise Thermostat Device."""
 
-    def __init__(self, api, devices, dev_id):
+    def __init__(self, api, dev_id):
         """Initialize the Thermostat."""
 
         self._api = api
