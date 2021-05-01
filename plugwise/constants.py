@@ -490,8 +490,9 @@ SMILES = {
 
 # Newly added smileclasses constants
 
-ENABLED = "enabled_default"
-ID = "id"
+ATTR_ENABLED = "enabled_default"
+ATTR_ID = "id"
+ATTR_ICON = "icon"
 TEMP_KELVIN = "°K"
 UNIT = "unit"
 UNIT_LUMEN = "lm"
@@ -507,197 +508,226 @@ PRESET_MODES = {ID: "preset_modes"}
 
 DHW_STATE = {
     "dhw_state": {
-        ID: "dhw_state",
-        ENABLED: True,
+        ATTR_ID: "dhw_state",
+        ATTR_ENABLED: True,
         ATTR_NAME: "DHW State",
         ATTR_STATE: "dhw_state",
         ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: None,
     }
 }
 FLAME_STATE = {
     "flame_state": {
-        ID: "flame_state",
-        ENABLED: True,
+        ATTR_ID: "flame_state",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Flame State",
         ATTR_STATE: "flame_state",
         ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: None,
     }
 }
 PW_NOTIFICATION = {
     "plugwise_notification": {
-        ID: "plugwise_notification",
-        ENABLED: False,
+        ATTR_ID: "plugwise_notification",
+        ATTR_ENABLED: False,
         ATTR_NAME: "Plugwise Notification",
         ATTR_STATE: "plugwise_notification",
         ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: None,
     }
 }
 SLAVE_BOILER_STATE = {
     "slave_boiler_state": {
-        ID: "slave_boiler_state",
-        ENABLED: False,
+        ATTR_ID: "slave_boiler_state",
+        ATTR_ENABLED: False,
         ATTR_NAME: "Slave Boiler State",
         ATTR_STATE: "slave_boiler_state",
         ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: None,
     }
 }
 
 # Sensors
 BATTERY = {
     "battery": {
-        ID: "battery",
-        ENABLED: True,
+        ATTR_ID: "battery",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Battery level",
         ATTR_STATE: "battery",
         ATTR_DEVICE_CLASS: "battery",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 DEVICE_STATE = {
     "device_state": {
-        ID: "device_state",
-        ENABLED: True,
+        ATTR_ID: "device_state",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Device State",
         ATTR_STATE: "device_state",
         ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: None,
         ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 ILLUMINANCE = {
     "illuminance": {
-        ID: "illuminance",
-        ENABLED: True,
+        ATTR_ID: "illuminance",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Illuminance",
         ATTR_STATE: "illuminance",
         ATTR_DEVICE_CLASS: "illuminance",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 OUTDOOR_TEMP = {
     "outdoor_temperature": {
-        ID: "outdoor_temperature",
-        ENABLED: True,
+        ATTR_ID: "outdoor_temperature",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Outdoor Temperature",
         ATTR_STATE: "outdoor_temperature",
         ATTR_DEVICE_CLASS: "temperature",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 CURRENT_TEMP = {
     "current_temperature": {
-        ID: "temperature",
-        ENABLED: True,
+        ATTR_ID: "temperature",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Current Temperature",
         ATTR_STATE: "temperature",
         ATTR_DEVICE_CLASS: "temperature",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 TARGET_TEMP = {
     "target_temperature": {
-        ID: "setpoint",
-        ENABLED: True,
+        ATTR_ID: "setpoint",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Setpoint",
         ATTR_STATE: "setpoint",
         ATTR_DEVICE_CLASS: "temperature",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 TEMP_DIFF = {
     "temperature_difference": {
-        ID: "temperature_difference",
-        ENABLED: False,
+        ATTR_ID: "temperature_difference",
+        ATTR_ENABLED: False,
         ATTR_NAME: "Temperature Difference",
         ATTR_STATE: "temperature_difference",
         ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: None,
         ATTR_UNIT_OF_MEASUREMENT: TEMP_KELVIN,
     }
 }
 VALVE_POS = {
     "valve_position": {
-        ID: "valve_position",
-        ENABLED: True,
+        ATTR_ID: "valve_position",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Valve Position",
         ATTR_STATE: "valve_position",
         ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: None,
         ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE,
     }
 }
 INTENDED_BOILER_TEMP = {
     "intended_boiler_temperature": {
-        ID: "intended_boiler_temperature",
-        ENABLED: True,
+        IATTR_IDD: "intended_boiler_temperature",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Intended Boiler Temperature",
         ATTR_STATE: "intended_boiler_temperature",
         ATTR_DEVICE_CLASS: "temperature",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 MOD_LEVEL = {
     "modulation_level": {
-        ID: "modulation_level",
-        ENABLED: True,
+        ATTR_ID: "modulation_level",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Modulation Level",
         ATTR_STATE: "modulation_level",
         ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: None,
         ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE,
     }
 }
 RETURN_TEMP = {
     "return_temperature": {
-        ID: "return_temperature",
-        ENABLED: True,
+        IATTR_IDD: "return_temperature",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Return Temperature",
         ATTR_STATE: "return_temperature",
         ATTR_DEVICE_CLASS: "temperature",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 WATER_PRESSURE = {
     "water_pressure": {
-        ID: "water_pressure",
-        ENABLED: True,
+        ATTR_ID: "water_pressure",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Water Pressure",
         ATTR_STATE: "water_pressure",
         ATTR_DEVICE_CLASS: "pressure",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 WATER_TEMP = {
     "water_temperature": {
-        ID: "water_temperature",
-        ENABLED: True,
+        ATTR_ID: "water_temperature",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Water Temperature",
         ATTR_STATE: "water_temperature",
         ATTR_DEVICE_CLASS: "temperature",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: None,
     }
 }
 EL_CONSUMED = {
     "electricity_consumed": {
-        ID: "electricity_consumed",
-        ENABLED: True,
+        ATTR_ID: "electricity_consumed",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Electricity Consumed",
         ATTR_STATE: "electricity_consumed",
         ATTR_DEVICE_CLASS: "power",
+        ATTR_ICON: None,
         ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
     }
 }
 EL_CONSUMED_INTERVAL = {
     "electricity_consumed_interval": {
-        ID: "electricity_consumed_interval",
-        ENABLED: True,
+        ATTR_ID: "electricity_consumed_interval",
+        ATTR_ENABLED: True,
         ATTR_NAME: "Electricity Consumed Interval",
         ATTR_STATE: "electricity_consumed_interval",
         ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
 EL_PRODUCED = {
     "electricity_produced": {
-        ID: "electricity_produced",
-        ENABLED: False,
+        ATTR_ID: "electricity_produced",
+        ATTR_ENABLED: False,
         ATTR_NAME: "Electricity Produced",
         ATTR_STATE: "electricity_produced",
         ATTR_DEVICE_CLASS: "power",
+        ATTR_ICON: None,
         ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
     }
 }
 EL_PRODUCED_INTERVAL = {
     "electricity_produced_interval": {
-        ID: "electricity_produced_interval",
-        ENABLED: False,
+        ATTR_ID: "electricity_produced_interval",
+        ATTR_ENABLED: False,
         ATTR_NAME: "Electricity Produced Interval",
         ATTR_STATE: "electricity_produced_interval",
         ATTR_DEVICE_CLASS: "energy",
@@ -709,29 +739,32 @@ EL_PRODUCED_INTERVAL = {
 
 DHW_COMF_MODE = {
     "dhw_comf_mode": {
-        ID: "dhw_comf_mode",
-        ENABLED: True,
+        ATTR_ID: "dhw_comf_mode",
+        ATTR_ENABLED: True,
         ATTR_NAME: "DHW Comfort Mode",
         ATTR_STATE: "dhw_comf_mode",
         ATTR_DEVICE_CLASS: "switch",
+        ATTR_ICON: None,
     }
 }
 LOCK = {
     "lock": {
-        ID: "lock",
-        ENABLED: False,
+        ATTR_ID: "lock",
+        ATTR_ENABLED: False,
         ATTR_NAME: "Lock",
         ATTR_STATE: "lock",
         ATTR_DEVICE_CLASS: "switch",
+        ATTR_ICON: None,
     }
 }
 RELAY = {
     "relay": {
-        ID: "relay",
-        ENABLED: True,
+        ATTR_ID: "relay",
+        ATTR_ENABLED: True,
         ATTR_NAME: "",
         ATTR_STATE: "relay",
         ATTR_DEVICE_CLASS: "switch",
+        ATTR_ICON: None,
     }
 }
 
