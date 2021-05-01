@@ -456,9 +456,9 @@ class AuxDevice:
                         self.binary_sensors[key][ATTR_STATE] = data.get(value[ATTR_ID])
                         if b_sensor == DHW_STATE:
                             self.binary_sensors[key][ATTR_ICON] = FLOW_ON_ICON if self._is_on else FLOW_OFF_ICON
-                        if b_sensor == FLAME_STATE
+                        if b_sensor == FLAME_STATE:
                             self.binary_sensors[key][ATTR_ICON] = FLAME_ICON if self._is_on else IDLE_ICON
-                        if b_sensor == SLAVE_BOILER_STATE
+                        if b_sensor == SLAVE_BOILER_STATE:
                             self.binary_sensors[key][ATTR_ICON] = FLAME_ICON if self._is_on else IDLE_ICON
 
         for sensor in self.sensor_list:
