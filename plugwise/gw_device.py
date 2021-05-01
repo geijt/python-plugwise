@@ -32,9 +32,8 @@ class GWDevice:
         self._friendly_name = None
         self._gateway_id = None
         self._hostname = None
-        self._model = None
         self._s_type = None
-        self._vendor = None
+        self._single_master_thermostat = None
 
     @property
     def devices(self) -> dict:
@@ -62,11 +61,6 @@ class GWDevice:
         return self._hostname
 
     @property
-    def model(self):
-        """Device model name."""
-        return self._model
-
-    @property
     def s_type(self):
         """Device vendor name."""
         return self._s_type
@@ -75,11 +69,6 @@ class GWDevice:
     def single_master_thermostat(self):
         """Device vendor name."""
         return self._single_master_thermostat
-
-    @property
-    def vendor(self):
-        """Device vendor name."""
-        return self._vendor
 
     async def discover(self):
         """Connect to the Gateway Device and collect the properties."""
@@ -116,8 +105,6 @@ class GWDevice:
         for dev_id in self._devices:
             if self._devices[dev_id]["class"] == "gateway":
                 self._friendly_name = self._devices[dev_id]["name"]
-                self._model = self._devices[dev_id]["model"]
-                self._vendor = self._devices[dev_id]["vendor"]
                 gateway = Gateway(self._api, dev_id)
                 gateway.update_data()
                 self._devices[dev_id].update({"binary_sensors": gateway.binary_sensors})
