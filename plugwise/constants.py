@@ -553,6 +553,16 @@ BATTERY = {
         CLASS: "battery",
     }
 }
+DEVICE_STATE = {
+    "device_state": {
+        ID: "device_state",
+        ENABLED: True,
+        NAME: "Device State",
+        STATE: "device_state",
+        CLASS: None,
+        UNIT: None,
+    }
+}
 ILLUMINANCE = {
     "illuminance": {
         ID: "illuminance",
