@@ -16,7 +16,7 @@ from .constants import (
     EL_PRODUCED_INTERVAL,
     FLAME_ICON,
     FLAME_STATE,
-    FLOW_OFF_ICON
+    FLOW_OFF_ICON,
     FLOW_ON_ICON,
     HEATING_ICON,
     HVAC_MODE_AUTO,
