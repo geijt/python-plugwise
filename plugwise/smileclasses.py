@@ -10,7 +10,11 @@ from homeassistant.components.climate.const import (
 )
 
 from .constants import (
+    ATTRIB_ICON,
+    ATTR_ID,
+    ATTR_STATE,
     BATTERY,
+    COOLING_ICON,
     CURRENT_TEMP,
     DEVICE_STATE,
     DHW_COMF_MODE,
@@ -21,10 +25,11 @@ from .constants import (
     EL_PRODUCED_INTERVAL,
     EXTRA_STATE_ATTRIBS,
     FLAME_STATE,
+    HEATING_ICON,
     HVAC_ACTION,
     HVAC_MODE,
     HVAC_MODES,
-    ID,
+    IDLE_ICON,
     ILLUMINANCE,
     INTENDED_BOILER_TEMP,
     LOCK,
@@ -36,7 +41,6 @@ from .constants import (
     RELAY,
     RETURN_TEMP,
     SLAVE_BOILER_STATE,
-    STATE,
     TARGET_TEMP,
     TEMP_DIFF,
     VALVE_POS,
@@ -91,7 +95,7 @@ class Gateway:
 
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None:
+                if data.get(value[ATTR_ID]) is not None:
                     self.sensors.update(sensor)
 
     def update_data(self):
@@ -100,12 +104,12 @@ class Gateway:
 
         for key, value in PW_NOTIFICATION.items():
             if self._sm_thermostat is not None:
-                self.binary_sensors[key][STATE] = self._api.notifications != {}
+                self.binary_sensors[key][ATTR_STATE] = self._api.notifications != {}
 
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None:
-                    self.sensors[key][STATE] = data.get(value[ID])
+                if data.get(value[ATTR_ID]) is not None:
+                    self.sensors[key][ATTR_STATE] = data.get(value[ATTR_ID])
 
 
 class Thermostat:
@@ -260,7 +264,7 @@ class Thermostat:
         data = self._api.get_device_data(self._dev_id)
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None:
+                if data.get(value[ATTR_ID]) is not None:
                     self.sensors.update(sensor)
 
     def update_data(self):
@@ -270,8 +274,8 @@ class Thermostat:
         # sensor data
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None:
-                    self.sensors[key][STATE] = data.get(value[ID])
+                if data.get(value[ATTR_ID]) is not None:
+                    self.sensors[key][ATTR_STATE] = data.get(value[ATTR_ID])
 
         # skip the rest for thermo_sensors
         if self._smile_class == "thermo_sensor":
@@ -435,17 +439,17 @@ class AuxDevice:
         if self._active_device:
             for b_sensor in self.b_sensor_list:
                 for key, value in b_sensor.items():
-                    if data.get(value[ID]) is not None:
+                    if data.get(value[ATTR_ID]) is not None:
                         self.binary_sensors.update(b_sensor)
 
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None or sensor == DEVICE_STATE:
+                if data.get(value[ATTR_ID]) is not None or sensor == DEVICE_STATE:
                     self.sensors.update(sensor)
 
         for switch in self.switch_list:
             for key, value in switch.items():
-                if data.get(value[ID]) is not None:
+                if data.get(value[ATTR_ID]) is not None:
                     self.switches.update(switch)
 
     def update_data(self):
@@ -455,24 +459,27 @@ class AuxDevice:
         if self._active_device:
             for b_sensor in self.b_sensor_list:
                 for key, value in b_sensor.items():
-                    if data.get(value[ID]) is not None:
-                        self.binary_sensors[key][STATE] = data.get(value[ID])
+                    if data.get(value[ATTR_ID]) is not None:
+                        self.binary_sensors[key][ATTR_STATE] = data.get(value[ATTR_ID])
 
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None:
-                    self.sensors[key][STATE] = data.get(value[ID])
+                if data.get(value[ATTR_ID]) is not None:
+                    self.sensors[key][ATTR_STATE] = data.get(value[ATTR_ID])
                 if sensor == DEVICE_STATE:
-                    self.sensors[key][STATE] = "idle"
+                    self.sensors[key][ATTR_STATE] = "idle"
+                    self.sensors[key][ATTR_ICON] = IDLE_ICON
                     if self._heating_state:
-                        self.sensors[key][STATE] = "heating"
+                        self.sensors[key][ATTR_STATE] = "heating"
+                        self.sensors[key][ATTR_ICON] = HEATING_ICON
                     if self._cooling_state:
-                        self.sensors[key][STATE] = "cooling"
+                        self.sensors[key][ATTR_STATE] = "cooling"
+                        self.sensors[key][ATTR_ICON] = COOL_ICON
 
         for switch in self.switch_list:
             for key, value in switch.items():
-                if data.get(value[ID]) is not None:
-                    self.switches[key][STATE] = data.get(value[ID])
+                if data.get(value[ATTR_ID]) is not None:
+                    self.switches[key][ATTR_STATE] = data.get(value[ATTR_ID])
 
 
 class Plug:
@@ -570,12 +577,12 @@ class Plug:
 
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None:
+                if data.get(value[ATTR_ID]) is not None:
                     self.sensors.update(sensor)
 
         for switch in self.switch_list:
             for key, value in switch.items():
-                if data.get(value[ID]) is not None:
+                if data.get(value[ATTR_ID]) is not None:
                     self.switches.update(switch)
 
     def update_data(self):
@@ -584,10 +591,10 @@ class Plug:
 
         for sensor in self.sensor_list:
             for key, value in sensor.items():
-                if data.get(value[ID]) is not None:
-                    self.sensors[key][STATE] = data.get(value[ID])
+                if data.get(value[ATTR_ID]) is not None:
+                    self.sensors[key][ATTR_STATE] = data.get(value[ATTR_ID])
 
         for switch in self.switch_list:
             for key, value in switch.items():
-                if data.get(value[ID]) is not None:
-                    self.switches[key][STATE] = data.get(value[ID])
+                if data.get(value[ATTR_ID]) is not None:
+                    self.switches[key][ATTR_STATE] = data.get(value[ATTR_ID])
