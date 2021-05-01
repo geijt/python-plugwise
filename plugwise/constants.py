@@ -362,8 +362,14 @@ SWITCH_GROUP_TYPES = ["switching", "report"]
 THERMOSTAT_CLASSES = [
     "thermostat",
     "zone_thermostat",
+    "thermostatic_radiator_valve",
+]
+DEVICE_THERMOSTAT_CLASSES = [
+    "thermostat",
+    "zone_thermostat",
     "thermo_sensor",
 ]
+
 HOME_MEASUREMENTS = {
     "electricity_consumed": {
         ATTR_TYPE: "power",

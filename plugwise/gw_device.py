@@ -8,7 +8,7 @@ import logging
 
 import aiohttp
 
-from .constants import SWITCH_CLASSES, THERMOSTAT_CLASSES
+from .constants import SWITCH_CLASSES, DEVICE_THERMOSTAT_CLASSES
 from .exceptions import InvalidAuthentication, PlugwiseException
 from .smile import Smile
 from .smileclasses import AuxDevice, Gateway, Plug, Thermostat
@@ -109,7 +109,7 @@ class GWDevice:
                 gateway.update_data()
                 self._devices[dev_id].update({"binary_sensors": gateway.binary_sensors})
                 self._devices[dev_id].update({"sensors": gateway.sensors})
-            if self._devices[dev_id]["class"] in THERMOSTAT_CLASSES:
+            if self._devices[dev_id]["class"] in DEVICE_THERMOSTAT_CLASSES:
                 thermostat = Thermostat(self._api, dev_id)
                 thermostat.update_data()
                 self._devices[dev_id].update({"sensors": thermostat.sensors})
