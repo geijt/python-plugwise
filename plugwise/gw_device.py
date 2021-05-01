@@ -126,10 +126,6 @@ class GWDevice:
                 thermostat = Thermostat(self._api, self._devices, dev_id)
                 thermostat.update_data()
                 self._devices[dev_id].update({"sensors": thermostat.sensors})
-            if self._devices[dev_id]["class"] == "thermo_sensor":
-                thermostat = Thermostat(self._api, self._devices, dev_id)
-                thermostat.update_data()
-                self._devices[dev_id].update({"sensors": thermostat.sensors})
             if self._devices[dev_id]["class"] == "heater_central":
                 auxdev = AuxDevice(self._api, self._devices, dev_id)
                 auxdev.update_data()
