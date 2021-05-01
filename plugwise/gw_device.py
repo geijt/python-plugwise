@@ -8,7 +8,7 @@ import logging
 
 import aiohttp
 
-from .constants import SWITCH_CLASSES, DEVICE_THERMOSTAT_CLASSES
+from .constants import DEVICE_THERMOSTAT_CLASSES, SWITCH_CLASSES
 from .exceptions import InvalidAuthentication, PlugwiseException
 from .smile import Smile
 from .smileclasses import AuxDevice, Gateway, Plug, Thermostat
