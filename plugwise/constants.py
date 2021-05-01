@@ -617,7 +617,7 @@ CURRENT_TEMP = {
 TARGET_TEMP = {
     "target_temperature": {
         ATTR_ID: "setpoint",
-        ATTR_ENABLED: True,
+        ATTR_ENABLED: False,
         ATTR_NAME: "Setpoint",
         ATTR_STATE: "setpoint",
         ATTR_DEVICE_CLASS: "temperature",
