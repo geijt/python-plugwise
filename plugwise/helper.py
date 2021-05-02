@@ -29,7 +29,7 @@ from .constants import (
     LOCATIONS,
     POWER_WATT,
     SWITCH_GROUP_TYPES,
-    THERMOSTAT_CLASSES,
+    PW_THERMOSTAT_CLASSES,
 )
 from .exceptions import (
     DeviceTimeoutError,
@@ -341,7 +341,7 @@ class SmileHelper:
             appl.v_name = "Plugwise B.V."
             return appl
 
-        if appl.pwclass in THERMOSTAT_CLASSES:
+        if appl.pwclass in PW_THERMOSTAT_CLASSES:
             locator = ".//logs/point_log[type='thermostat']/thermostat"
             mod_type = "thermostat"
             module_data = self.get_module_data(appliance, locator, mod_type)

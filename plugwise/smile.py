@@ -24,7 +24,7 @@ from .constants import (
     STATUS,
     SWITCH_GROUP_TYPES,
     SYSTEM,
-    THERMOSTAT_CLASSES,
+    PW_THERMOSTAT_CLASSES,
 )
 from .exceptions import ConnectionFailedError, InvalidXMLError, UnsupportedDeviceError
 from .helper import SmileHelper
@@ -319,7 +319,7 @@ class Smile(SmileHelper):
         # Specific, not generic Adam data
         device_data = self.device_data_adam(details, device_data)
         # Unless thermostat based, no need to walk presets
-        if details["class"] not in THERMOSTAT_CLASSES:
+        if details["class"] not in PW_THERMOSTAT_CLASSES:
             return device_data
 
         # Climate based data (presets, temperatures etc)
