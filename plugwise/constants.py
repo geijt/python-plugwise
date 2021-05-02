@@ -359,12 +359,12 @@ DEFAULT_USERNAME = "smile"
 DEFAULT_PORT = 80
 
 SWITCH_GROUP_TYPES = ["switching", "report"]
-THERMOSTAT_CLASSES = [
+PW_THERMOSTAT_CLASSES = [
     "thermostat",
     "zone_thermostat",
     "thermostatic_radiator_valve",
 ]
-DEVICE_THERMOSTAT_CLASSES = [
+GW_THERMOSTAT_CLASSES = [
     "thermostat",
     "zone_thermostat",
     "thermo_sensor",
