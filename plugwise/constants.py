@@ -369,6 +369,7 @@ GW_THERMOSTAT_CLASSES = [
     "zone_thermostat",
     "thermo_sensor",
 ]
+SWITCH_CLASSES = ["plug", "switch_group"]
 
 HOME_MEASUREMENTS = {
     "electricity_consumed": {
@@ -522,7 +523,6 @@ NO_NOTIFICATION_ICON = "mdi:mailbox-outline"
 SWITCH_ICON = "mdi:electric-switch"
 
 # Binary Sensors
-
 DHW_STATE = {
     "dhw_state": {
         ATTR_ID: "dhw_state",
@@ -730,6 +730,72 @@ EL_CONSUMED_INTERVAL = {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
+EL_CONSUMED_PEAK_INTERVAL: {
+    "electricity_consumed_peak_interval": {
+        ATTR_ID: "electricity_consumed_peak_interval",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Consumed Peak Interval",
+        ATTR_STATE: "electricity_consumed_peak_interval",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
+EL_CONSUMED_OFF_PEAK_INTERVAL: {
+    "electricity_consumed_off_peak_interval": {
+        ATTR_ID: "electricity_consumed_off_peak_interval",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Consumed Off Peak Interval",
+        ATTR_STATE: "electricity_consumed_off_peak_interval",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
+EL_CONSUMED_OFF_PEAK_POINT: {
+    "electricity_consumed_off_peak_point": {
+        ATTR_ID: "electricity_consumed_off_peak_point",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Consumed Off Peak Point",
+        ATTR_STATE: "electricity_consumed_off_peak_point",
+        ATTR_DEVICE_CLASS: "power",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
+    }
+}
+EL_CONSUMED_PEAK_POINT: {
+    "electricity_consumed_peak_point": {
+        ATTR_ID: "electricity_consumed_peak_point",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Consumed Peak Point",
+        ATTR_STATE: "electricity_consumed_peak_point",
+        ATTR_DEVICE_CLASS: "power",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
+    }
+}
+EL_CONSUMED_OFF_PEAK_CUMULATIVE: {
+    "electricity_consumed_off_peak_cumulative": {
+        ATTR_ID: "electricity_consumed_off_peak_cumulative",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Consumed Off Peak Cumulative",
+        ATTR_STATE: "electricity_consumed_off_peak_cumulative",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
+EL_CONSUMED_PEAK_CUMULATIVE: {
+    "electricity_consumed_peak_cumulative": {
+        ATTR_ID: "electricity_consumed_peak_cumulative",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Consumed Peak Cumulative",
+        ATTR_STATE: "electricity_consumed_peak_cumulative",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
 EL_PRODUCED = {
     "electricity_produced": {
         ATTR_ID: "electricity_produced",
@@ -751,9 +817,118 @@ EL_PRODUCED_INTERVAL = {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
+EL_PRODUCED_PEAK_INTERVAL: {
+    "electricity_produced_peak_interval": {
+        ATTR_ID: "electricity_produced_peak_interval",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Produced Peak Interval",
+        ATTR_STATE: "electricity_produced_peak_interval",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
+EL_PRODUCED_OFF_PEAK_INTERVAL: {
+    "electricity_produced_off_peak_interval": {
+        ATTR_ID: "electricity_produced_off_peak_interval",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Produced Off Peak Interval",
+        ATTR_STATE: "electricity_produced_off_peak_interval",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
+EL_PRODUCED_OFF_PEAK_POINT: {
+    "electricity_produced_off_peak_point": {
+        ATTR_ID: "electricity_produced_off_peak_point",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Produced Off Peak Point",
+        ATTR_STATE: "electricity_produced_off_peak_point",
+        ATTR_DEVICE_CLASS: "power",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
+    }
+}
+EL_PRODUCED_PEAK_POINT: {
+    "electricity_produced_peak_point": {
+        ATTR_ID: "electricity_produced_peak_point",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Produced Peak Point",
+        ATTR_STATE: "electricity_produced_peak_point",
+        ATTR_DEVICE_CLASS: "power",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
+    }
+}
+EL_PRODUCED_OFF_PEAK_CUMULATIVE: {
+    "electricity_produced_off_peak_cumulative": {
+        ATTR_ID: "electricity_produced_off_peak_cumulative",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Produced Off Peak Cumulative",
+        ATTR_STATE: "electricity_produced_off_peak_cumulative",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
+EL_PRODUCED_PEAK_CUMULATIVE: {
+    "electricity_produced_peak_cumulative": {
+        ATTR_ID: "electricity_produced_peak_cumulative",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Electricity Produced Peak Cumulative",
+        ATTR_STATE: "electricity_produced_peak_cumulative",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
+NET_EL_POINT: {
+    "net_electricity_point": {
+        ATTR_ID: "net_electricity_point",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Net Electricity Point",
+        ATTR_STATE: "net_electricity_point",
+        ATTR_DEVICE_CLASS: "power",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
+    }
+}
+NET_EL_CUMULATIVE: {
+    "net_electricity_cumulative": {
+        ATTR_ID: "net_electricity_cumulative",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Net Electricity Cumulative",
+        ATTR_STATE: "net_electricity_cumulative",
+        ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
+        ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
+    }
+}
+GAS_CONSUMED_INTERVAL: {
+    "gas_consumed_interval": {
+        ATTR_ID: "gas_consumed_interval",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Gas Consumed Interval",
+        ATTR_STATE: "gas_consumed_interval",
+        ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: FLAME_ICON,
+        ATTR_UNIT_OF_MEASUREMENT: VOLUME_CUBIC_METERS,
+    }
+}
+GAS_CONSUMED_CUMULATIVE: {
+    "gas_consumed_cumulative": {
+        ATTR_ID: "gas_consumed_cumulative",
+        ATTR_ENABLED: True,
+        ATTR_NAME: "Gas Consumed Cumulative",
+        ATTR_STATE: "gas_consumed_cumulative",
+        ATTR_DEVICE_CLASS: None,
+        ATTR_ICON: FLAME_ICON,
+        ATTR_UNIT_OF_MEASUREMENT: VOLUME_CUBIC_METERS,
+    }
+}
 
 # Switches
-
 DHW_COMF_MODE = {
     "dhw_comf_mode": {
         ATTR_ID: "dhw_comf_mode",
@@ -785,5 +960,3 @@ RELAY = {
     }
 }
 
-
-SWITCH_CLASSES = ["plug", "switch_group"]
