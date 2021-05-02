@@ -131,11 +131,13 @@ class Thermostat:
         self._cooling_state = None
         self._dev_id = dev_id
         self._extra_state_attributes = None
+        self._get_presets = None
         self._heating_state = None
         self._hvac_mode = None
-        self._get_presets = None
+        self._last_active_schema = None
         self._preset_mode = None
         self._preset_modes = None
+        self._schedule_temp = None
         self._schema_names = None
         self._schema_status = None
         self._selected_schema = None
@@ -232,6 +234,7 @@ class Thermostat:
         # current & target_temps, heater_central data when required
         self._temperature = data.get("temperature")
         self._setpoint = data.get("setpoint")
+        self._schedule_temp = data.get("schedule_temperature")
         if self._active_device:
             hc_data = self._api.get_device_data(self._heater_id)
             self._compressor_state = hc_data.get("compressor_state")
@@ -242,10 +245,12 @@ class Thermostat:
         # hvac mode
         self._hvac_mode = HVAC_MODE_AUTO
         if "selected_schedule" in data:
-            self._selected_schema = data["selected_schedule"]
+            self._selected_schema = data.get("selected_schedule")
             self._schema_status = False
             if self._selected_schema is not None:
                 self._schema_status = True
+
+        self._last_active_schema = data.get("last_used")
 
         if not self._schema_status:
             if self._preset_mode == PRESET_AWAY:
