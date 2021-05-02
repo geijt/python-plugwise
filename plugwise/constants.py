@@ -730,7 +730,7 @@ EL_CONSUMED_INTERVAL = {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-EL_CONSUMED_PEAK_INTERVAL: {
+EL_CONSUMED_PEAK_INTERVAL = {
     "electricity_consumed_peak_interval": {
         ATTR_ID: "electricity_consumed_peak_interval",
         ATTR_ENABLED: True,
@@ -741,7 +741,7 @@ EL_CONSUMED_PEAK_INTERVAL: {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-EL_CONSUMED_OFF_PEAK_INTERVAL: {
+EL_CONSUMED_OFF_PEAK_INTERVAL = {
     "electricity_consumed_off_peak_interval": {
         ATTR_ID: "electricity_consumed_off_peak_interval",
         ATTR_ENABLED: True,
@@ -752,7 +752,7 @@ EL_CONSUMED_OFF_PEAK_INTERVAL: {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-EL_CONSUMED_OFF_PEAK_POINT: {
+EL_CONSUMED_OFF_PEAK_POINT = {
     "electricity_consumed_off_peak_point": {
         ATTR_ID: "electricity_consumed_off_peak_point",
         ATTR_ENABLED: True,
@@ -763,7 +763,7 @@ EL_CONSUMED_OFF_PEAK_POINT: {
         ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
     }
 }
-EL_CONSUMED_PEAK_POINT: {
+EL_CONSUMED_PEAK_POINT = {
     "electricity_consumed_peak_point": {
         ATTR_ID: "electricity_consumed_peak_point",
         ATTR_ENABLED: True,
@@ -774,7 +774,7 @@ EL_CONSUMED_PEAK_POINT: {
         ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
     }
 }
-EL_CONSUMED_OFF_PEAK_CUMULATIVE: {
+EL_CONSUMED_OFF_PEAK_CUMULATIVE = {
     "electricity_consumed_off_peak_cumulative": {
         ATTR_ID: "electricity_consumed_off_peak_cumulative",
         ATTR_ENABLED: True,
@@ -785,7 +785,7 @@ EL_CONSUMED_OFF_PEAK_CUMULATIVE: {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-EL_CONSUMED_PEAK_CUMULATIVE: {
+EL_CONSUMED_PEAK_CUMULATIVE = {
     "electricity_consumed_peak_cumulative": {
         ATTR_ID: "electricity_consumed_peak_cumulative",
         ATTR_ENABLED: True,
@@ -817,7 +817,7 @@ EL_PRODUCED_INTERVAL = {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-EL_PRODUCED_PEAK_INTERVAL: {
+EL_PRODUCED_PEAK_INTERVAL = {
     "electricity_produced_peak_interval": {
         ATTR_ID: "electricity_produced_peak_interval",
         ATTR_ENABLED: True,
@@ -828,7 +828,7 @@ EL_PRODUCED_PEAK_INTERVAL: {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-EL_PRODUCED_OFF_PEAK_INTERVAL: {
+EL_PRODUCED_OFF_PEAK_INTERVAL = {
     "electricity_produced_off_peak_interval": {
         ATTR_ID: "electricity_produced_off_peak_interval",
         ATTR_ENABLED: True,
@@ -839,7 +839,7 @@ EL_PRODUCED_OFF_PEAK_INTERVAL: {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-EL_PRODUCED_OFF_PEAK_POINT: {
+EL_PRODUCED_OFF_PEAK_POINT = {
     "electricity_produced_off_peak_point": {
         ATTR_ID: "electricity_produced_off_peak_point",
         ATTR_ENABLED: True,
@@ -850,7 +850,7 @@ EL_PRODUCED_OFF_PEAK_POINT: {
         ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
     }
 }
-EL_PRODUCED_PEAK_POINT: {
+EL_PRODUCED_PEAK_POINT = {
     "electricity_produced_peak_point": {
         ATTR_ID: "electricity_produced_peak_point",
         ATTR_ENABLED: True,
@@ -861,7 +861,7 @@ EL_PRODUCED_PEAK_POINT: {
         ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
     }
 }
-EL_PRODUCED_OFF_PEAK_CUMULATIVE: {
+EL_PRODUCED_OFF_PEAK_CUMULATIVE = {
     "electricity_produced_off_peak_cumulative": {
         ATTR_ID: "electricity_produced_off_peak_cumulative",
         ATTR_ENABLED: True,
@@ -872,7 +872,7 @@ EL_PRODUCED_OFF_PEAK_CUMULATIVE: {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-EL_PRODUCED_PEAK_CUMULATIVE: {
+EL_PRODUCED_PEAK_CUMULATIVE = {
     "electricity_produced_peak_cumulative": {
         ATTR_ID: "electricity_produced_peak_cumulative",
         ATTR_ENABLED: True,
@@ -883,7 +883,7 @@ EL_PRODUCED_PEAK_CUMULATIVE: {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-NET_EL_POINT: {
+NET_EL_POINT = {
     "net_electricity_point": {
         ATTR_ID: "net_electricity_point",
         ATTR_ENABLED: True,
@@ -894,7 +894,7 @@ NET_EL_POINT: {
         ATTR_UNIT_OF_MEASUREMENT: POWER_WATT,
     }
 }
-NET_EL_CUMULATIVE: {
+NET_EL_CUMULATIVE = {
     "net_electricity_cumulative": {
         ATTR_ID: "net_electricity_cumulative",
         ATTR_ENABLED: True,
@@ -905,7 +905,7 @@ NET_EL_CUMULATIVE: {
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
-GAS_CONSUMED_INTERVAL: {
+GAS_CONSUMED_INTERVAL = {
     "gas_consumed_interval": {
         ATTR_ID: "gas_consumed_interval",
         ATTR_ENABLED: True,
@@ -916,7 +916,7 @@ GAS_CONSUMED_INTERVAL: {
         ATTR_UNIT_OF_MEASUREMENT: VOLUME_CUBIC_METERS,
     }
 }
-GAS_CONSUMED_CUMULATIVE: {
+GAS_CONSUMED_CUMULATIVE = {
     "gas_consumed_cumulative": {
         ATTR_ID: "gas_consumed_cumulative",
         ATTR_ENABLED: True,
