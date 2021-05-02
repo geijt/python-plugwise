@@ -107,7 +107,8 @@ class GWDevice:
                 self._friendly_name = self._devices[dev_id]["name"]
                 gateway = Gateway(self._api, dev_id)
                 gateway.update_data()
-                self._devices[dev_id].update({"binary_sensors": gateway.binary_sensors})
+                if gateway.binary_sensors != {}:
+                    self._devices[dev_id].update({"binary_sensors": gateway.binary_sensors})
                 self._devices[dev_id].update({"sensors": gateway.sensors})
             if self._devices[dev_id]["class"] in GW_THERMOSTAT_CLASSES:
                 thermostat = Thermostat(self._api, dev_id)

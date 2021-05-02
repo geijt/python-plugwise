@@ -53,7 +53,25 @@ class Gateway:
         self.binary_sensors = {}
         self.sensors = {}
 
-        self.sensor_list = [OUTDOOR_TEMP]
+        self.sensor_list = [
+            OUTDOOR_TEMP,
+            EL_CONSUMED_PEAK_INTERVAL,
+            EL_CONSUMED_OFF_PEAK_INTERVAL,
+            EL_CONSUMED_OFF_PEAK_POINT,
+            EL_CONSUMED_PEAK_POINT,
+            EL_CONSUMED_OFF_PEAK_CUMULATIVE,
+            EL_CONSUMED_PEAK_CUMULATIVE,
+            EL_PRODUCED_PEAK_INTERVAL,
+            EL_PRODUCED_OFF_PEAK_INTERVAL,
+            EL_PRODUCED_OFF_PEAK_POINT,
+            EL_PRODUCED_PEAK_POINT,
+            EL_PRODUCED_OFF_PEAK_CUMULATIVE,
+            EL_PRODUCED_PEAK_CUMULATIVE,
+            NET_EL_POINT,
+            NET_EL_CUMULATIVE,
+            GAS_CONSUMED_INTERVAL,
+            GAS_CONSUMED_CUMULATIVE,
+        ]
 
         self._sm_thermostat = self._api.single_master_thermostat()
 
@@ -63,8 +81,8 @@ class Gateway:
         """Collect the initial data."""
         data = self._api.get_device_data(self._dev_id)
 
-        for key, value in PW_NOTIFICATION.items():
-            if self._sm_thermostat is not None:
+        if self._sm_thermostat is not None:
+            for key, value in PW_NOTIFICATION.items():
                 self.binary_sensors.update(PW_NOTIFICATION)
 
         for sensor in self.sensor_list:
@@ -76,8 +94,8 @@ class Gateway:
         """Handle update callbacks."""
         data = self._api.get_device_data(self._dev_id)
 
-        for key, value in PW_NOTIFICATION.items():
-            if self._sm_thermostat is not None:
+        if self._sm_thermostat is not None:
+            for key, value in PW_NOTIFICATION.items():
                 self.binary_sensors[key][ATTR_STATE] = self._api.notifications != {}
 
         for sensor in self.sensor_list:
@@ -388,52 +406,3 @@ class Plug:
                 if data.get(value[ATTR_ID]) is not None:
                     self.switches[key][ATTR_STATE] = data.get(value[ATTR_ID])
 
-
-class P1:
-    """ Represent the Plugwise P1 device."""
-
-    def __init__(self, api, dev_id):
-        """Initialize the P1."""
-        self._api = api
-        self._dev_id = dev_id
-
-        self.sensors = {}
-
-        self.sensor_list = [
-            EL_CONSUMED_PEAK_INTERVAL,
-            EL_CONSUMED_OFF_PEAK_INTERVAL,
-            EL_CONSUMED_OFF_PEAK_POINT,
-            EL_CONSUMED_PEAK_POINT,
-            EL_CONSUMED_OFF_PEAK_CUMULATIVE,
-            EL_CONSUMED_PEAK_CUMULATIVE,
-            EL_PRODUCED_PEAK_INTERVAL,
-            EL_PRODUCED_OFF_PEAK_INTERVAL,
-            EL_PRODUCED_OFF_PEAK_POINT,
-            EL_PRODUCED_PEAK_POINT,
-            EL_PRODUCED_OFF_PEAK_CUMULATIVE,
-            EL_PRODUCED_PEAK_CUMULATIVE,
-            NET_EL_POINT,
-            NET_EL_CUMULATIVE,
-            GAS_CONSUMED_INTERVAL,
-            GAS_CONSUMED_CUMULATIVE,
-        ]
-
-        self.init_data()
-
-    def init_data(self):
-        """Collect the initial data."""
-        data = self._api.get_device_data(self._dev_id)
-
-        for sensor in self.sensor_list:
-            for key, value in sensor.items():
-                if data.get(value[ATTR_ID]) is not None:
-                    self.sensors.update(sensor)
-
-    def update_data(self):
-        """Handle update callbacks."""
-        data = self._api.get_device_data(self._dev_id)
-
-        for sensor in self.sensor_list:
-            for key, value in sensor.items():
-                if data.get(value[ATTR_ID]) is not None:
-                    self.sensors[key][ATTR_STATE] = data.get(value[ATTR_ID])
