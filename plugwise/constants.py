@@ -931,7 +931,7 @@ GAS_CONSUMED_CUMULATIVE = {
 
 # Switches
 DHW_COMF_MODE = {
-    "dhw_comf_mode": {
+    "dhw_cm_switch": {
         ATTR_ID: "dhw_comf_mode",
         ATTR_ENABLED: True,
         ATTR_NAME: "DHW Comfort Mode",
