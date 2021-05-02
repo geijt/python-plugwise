@@ -814,6 +814,7 @@ EL_PRODUCED_INTERVAL = {
         ATTR_NAME: "Electricity Produced Interval",
         ATTR_STATE: "electricity_produced_interval",
         ATTR_DEVICE_CLASS: "energy",
+        ATTR_ICON: None,
         ATTR_UNIT_OF_MEASUREMENT: ENERGY_WATT_HOUR,
     }
 }
