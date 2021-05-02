@@ -610,7 +610,7 @@ OUTDOOR_TEMP = {
     }
 }
 CURRENT_TEMP = {
-    "current_temperature": {
+    "temperature": {
         ATTR_ID: "temperature",
         ATTR_ENABLED: True,
         ATTR_NAME: "Temperature",
@@ -621,7 +621,7 @@ CURRENT_TEMP = {
     }
 }
 TARGET_TEMP = {
-    "target_temperature": {
+    "setpoint": {
         ATTR_ID: "setpoint",
         ATTR_ENABLED: False,
         ATTR_NAME: "Setpoint",
