@@ -28,8 +28,8 @@ from .constants import (
     HOME_MEASUREMENTS,
     LOCATIONS,
     POWER_WATT,
-    SWITCH_GROUP_TYPES,
     PW_THERMOSTAT_CLASSES,
+    SWITCH_GROUP_TYPES,
 )
 from .exceptions import (
     DeviceTimeoutError,

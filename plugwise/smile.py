@@ -19,12 +19,12 @@ from .constants import (
     LOCATIONS,
     MODULES,
     NOTIFICATIONS,
+    PW_THERMOSTAT_CLASSES,
     RULES,
     SMILES,
     STATUS,
     SWITCH_GROUP_TYPES,
     SYSTEM,
-    PW_THERMOSTAT_CLASSES,
 )
 from .exceptions import ConnectionFailedError, InvalidXMLError, UnsupportedDeviceError
 from .helper import SmileHelper
