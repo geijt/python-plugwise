@@ -405,4 +405,3 @@ class Plug:
             for key, value in switch.items():
                 if data.get(value[ATTR_ID]) is not None:
                     self.switches[key][ATTR_STATE] = data.get(value[ATTR_ID])
-
