@@ -184,6 +184,11 @@ class Thermostat:
         return self._hvac_mode
 
     @property
+    def presets(self):
+        """Climate list of presets."""
+        return self._get_presets
+
+    @property
     def preset_mode(self):
         """Climate active preset mode."""
         return self._preset_mode
@@ -194,6 +199,11 @@ class Thermostat:
         return self._preset_modes
 
     @property
+    def last_active_schema(self):
+        """Climate last active schema."""
+        return self._last_active_schema
+
+    @property
     def current_temperature(self):
         """Climate current measured temperature."""
         return self._temperature
@@ -202,6 +212,11 @@ class Thermostat:
     def target_temperature(self):
         """Climate target temperature."""
         return self._setpoint
+
+    @property
+    def schedule_temperature(self):
+        """Climate target temperature."""
+        return self._schedule_temp
 
     @property
     def extra_state_attributes(self):
