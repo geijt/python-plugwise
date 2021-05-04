@@ -8,7 +8,7 @@ import logging
 
 import aiohttp
 
-from .constants import GW_THERMOSTAT_CLASSES, SWITCH_CLASSES
+from .constants import GW_THERMOSTAT_CLASSES, NOTIFICATIONS, SWITCH_CLASSES
 from .exceptions import InvalidAuthentication, PlugwiseException
 from .smile import Smile
 from .smileclasses import AuxDevice, Gateway, Plug, Thermostat
@@ -69,6 +69,13 @@ class GWDevice:
     def single_master_thermostat(self):
         """Device vendor name."""
         return self._single_master_thermostat
+
+    async def delete_notification(self):
+        """Send a set request to the schema with the given name."""
+        uri = f"{NOTIFICATIONS}"
+
+        await self.request(uri, method="delete")
+        return True
 
     async def discover(self):
         """Connect to the Gateway Device and collect the properties."""

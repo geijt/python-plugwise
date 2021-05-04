@@ -338,13 +338,6 @@ class Thermostat:
         await self.request(uri, method="put", data=data)
         return True
 
-    async def delete_notification(self):
-        """Send a set request to the schema with the given name."""
-        uri = f"{NOTIFICATIONS}"
-
-        await self.request(uri, method="delete")
-        return True
-
     def update_data(self):
         """Handle update callbacks."""
         data = self._api.get_device_data(self._dev_id)
