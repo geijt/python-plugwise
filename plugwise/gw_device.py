@@ -10,13 +10,14 @@ import aiohttp
 
 from .constants import GW_THERMOSTAT_CLASSES, NOTIFICATIONS, SWITCH_CLASSES
 from .exceptions import InvalidAuthentication, PlugwiseException
+from .helper import SmileHelper
 from .smile import Smile
 from .smileclasses import AuxDevice, Gateway, Plug, Thermostat
 
 _LOGGER = logging.getLogger(__name__)
 
 
-class GWDevice:
+class GWDevice(SmileHelper):
     """ Representing the Plugwise Smile/Stretch gateway to which the various Nodes are connected."""
 
     def __init__(self, host, password, websession, port=None):
