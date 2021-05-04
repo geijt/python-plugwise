@@ -31,7 +31,6 @@ class GWDevice(SmileHelper):
         self._devices = {}
         self._firmware_version = None
         self._friendly_name = None
-        self._gateway_id = None
         self._hostname = None
         self._s_type = None
         self._single_master_thermostat = None
@@ -49,7 +48,7 @@ class GWDevice(SmileHelper):
     @property
     def gateway_id(self):
         """Device firmware version."""
-        return self._gateway_id
+        return self.gateway_id
 
     @property
     def friendly_name(self):
