@@ -60,6 +60,7 @@ from .constants import (
     WATER_TEMP,
 )
 
+from .helper import SmileHelper
 
 class Gateway:
     """ Represent the Plugwise Smile/Stretch gateway."""
@@ -123,7 +124,7 @@ class Gateway:
                     self.sensors[key][ATTR_STATE] = data.get(value[ATTR_ID])
 
 
-class Thermostat:
+class Thermostat(SmileHelper):
     """Represent a Plugwise Thermostat Device."""
 
     def __init__(self, api, dev_id):
