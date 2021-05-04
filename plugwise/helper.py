@@ -127,7 +127,6 @@ class SmileHelper:
         self._cp_state = None
         self._endpoint = None
         self._home_location = None
-        self._smile_legacy = False
         self._host = None
         self._loc_data = {}
         self._port = None
@@ -143,6 +142,7 @@ class SmileHelper:
         self.heater_id = None
         self.notifications = {}
         self.smile_hostname = None
+        self.smile_legacy = False
         self.smile_name = None
         self.smile_type = None
         self.smile_version = ()
@@ -247,7 +247,7 @@ class SmileHelper:
         # test data has 5 for example
         locator = ".//services"
         if (
-            self._smile_legacy
+            self.smile_legacy
             and self.smile_type == "power"
             and len(location.find(locator)) > 0
         ):
@@ -265,7 +265,7 @@ class SmileHelper:
         loc = Munch()
 
         # Legacy Anna without outdoor_temp and Stretches have no locations, create one containing all appliances
-        if len(self._locations) == 0 and self._smile_legacy:
+        if len(self._locations) == 0 and self.smile_legacy:
             self.locations_legacy()
             return
 
@@ -408,7 +408,7 @@ class SmileHelper:
         self.all_locations()
 
         # For legacy P1
-        if self._smile_legacy and self.smile_type == "power":
+        if self.smile_legacy and self.smile_type == "power":
             # Inject home_location as dev_id for legacy so
             # _appliance_data can use loc_id for dev_id.
             self.appl_data[self._home_location] = {
@@ -473,7 +473,7 @@ class SmileHelper:
             }
 
         # For legacy Anna gateway and heater_central is the same device
-        if self._smile_legacy and self.smile_type == "thermostat":
+        if self.smile_legacy and self.smile_type == "thermostat":
             self.gateway_id = self.heater_id
 
     def match_locations(self):
@@ -496,7 +496,7 @@ class SmileHelper:
         presets = {}
         tag = "zone_setpoint_and_state_based_on_preset"
 
-        if self._smile_legacy:
+        if self.smile_legacy:
             return self.presets_legacy()
 
         rule_ids = self.rule_ids_by_tag(tag, loc_id)
@@ -591,7 +591,7 @@ class SmileHelper:
 
             p_locator = f'.//logs/point_log[type="{measurement}"]/period/measurement'
             if appliance.find(p_locator) is not None:
-                if self._smile_legacy:
+                if self.smile_legacy:
                     if measurement == "domestic_hot_water_state":
                         continue
 
@@ -628,7 +628,7 @@ class SmileHelper:
         """
         data = {}
         search = self._appliances
-        if self._smile_legacy and self.smile_type != "stretch":
+        if self.smile_legacy and self.smile_type != "stretch":
             search = self._domain_objects
 
         appliances = search.findall(f'.//appliance[@id="{dev_id}"]')
@@ -657,7 +657,7 @@ class SmileHelper:
 
         if (
             loc_id == appliance_details["location"]
-            or (self._smile_legacy and not appliance_details["location"])
+            or (self.smile_legacy and not appliance_details["location"])
         ) and appl_class in thermo_matching:
 
             # Pre-elect new master
@@ -696,7 +696,7 @@ class SmileHelper:
                 self.thermo_locs[loc_id].update(
                     {"master": None, "master_prio": 0, "slaves": set()}
                 )
-            elif self._smile_legacy:
+            elif self.smile_legacy:
                 self.thermo_locs[loc_id].update(
                     {"master": None, "master_prio": 0, "slaves": set()}
                 )
@@ -714,7 +714,7 @@ class SmileHelper:
 
     def temperature_uri(self, loc_id):
         """Determine the location-set_temperature uri."""
-        if self._smile_legacy:
+        if self.smile_legacy:
             return self.temperature_uri_legacy()
 
         locator = f'location[@id="{loc_id}"]/actuator_functionalities/thermostat_functionality'
@@ -820,7 +820,7 @@ class SmileHelper:
 
         search = self._domain_objects
         t_string = "tariff"
-        if self._smile_legacy and self.smile_type == "power":
+        if self.smile_legacy and self.smile_type == "power":
             t_string = "tariff_indicator"
 
         loc.logs = search.find(f'.//location[@id="{loc_id}"]/logs')
@@ -855,7 +855,7 @@ class SmileHelper:
 
     def preset(self, loc_id):
         """Collect the active preset based on location_id."""
-        if self._smile_legacy:
+        if self.smile_legacy:
             active_rule = self._domain_objects.find(
                 "rule[active='true']/directives/when/then"
             )
@@ -921,7 +921,7 @@ class SmileHelper:
         selected = None
 
         # Legacy schemas
-        if self._smile_legacy:  # Only one schedule allowed
+        if self.smile_legacy:  # Only one schedule allowed
             return self.schemas_legacy()
 
         # Current schemas

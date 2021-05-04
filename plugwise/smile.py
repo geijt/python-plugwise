@@ -103,7 +103,7 @@ class Smile(SmileHelper):
         network = result.find(".//module/protocols/network_router/network")
 
         # Assume legacy
-        self._smile_legacy = True
+        self.smile_legacy = True
         # Try if it is an Anna, assuming appliance thermostat
         anna = result.find('.//appliance[type="thermostat"]')
         # Fake insert version assuming Anna
@@ -176,7 +176,7 @@ class Smile(SmileHelper):
         self.smile_version = (version, ver)
 
         if "legacy" in SMILES[target_smile]:
-            self._smile_legacy = SMILES[target_smile]["legacy"]
+            self.smile_legacy = SMILES[target_smile]["legacy"]
 
         if self.smile_type == "stretch":
             self.stretch_v2 = self.smile_version[1].major == 2
@@ -192,7 +192,7 @@ class Smile(SmileHelper):
         self._locations = await self.request(LOCATIONS)
 
         # P1 legacy has no appliances
-        if not (self.smile_type == "power" and self._smile_legacy):
+        if not (self.smile_type == "power" and self.smile_legacy):
             self._appliances = await self.request(APPLIANCES)
 
         # No need to import modules for P1, no userfull info
@@ -204,7 +204,7 @@ class Smile(SmileHelper):
         await self.update_domain_objects()
 
         # P1 legacy has no appliances
-        if not (self.smile_type == "power" and self._smile_legacy):
+        if not (self.smile_type == "power" and self.smile_legacy):
             self._appliances = await self.request(APPLIANCES)
 
     def get_all_devices(self):
@@ -280,11 +280,11 @@ class Smile(SmileHelper):
         device_data["presets"] = self.presets(details["location"])
 
         avail_schemas, sel_schema, sched_setpoint = self.schemas(details["location"])
-        if not self._smile_legacy:
+        if not self.smile_legacy:
             device_data["schedule_temperature"] = sched_setpoint
         device_data["available_schedules"] = avail_schemas
         device_data["selected_schedule"] = sel_schema
-        if self._smile_legacy:
+        if self.smile_legacy:
             device_data["last_used"] = "".join(map(str, avail_schemas))
         else:
             device_data["last_used"] = self.last_active_schema(details["location"])
@@ -350,7 +350,7 @@ class Smile(SmileHelper):
 
         Determined from - DOMAIN_OBJECTS.
         """
-        if self._smile_legacy:
+        if self.smile_legacy:
             return await self.set_schedule_state_legacy(name, state)
 
         schema_rule_ids = self.rule_ids_by_name(str(name), loc_id)
@@ -378,7 +378,7 @@ class Smile(SmileHelper):
 
     async def set_preset(self, loc_id, preset):
         """Set the given location-preset on the relevant thermostat - from LOCATIONS."""
-        if self._smile_legacy:
+        if self.smile_legacy:
             return await self.set_preset_legacy(preset)
 
         current_location = self._locations.find(f'location[@id="{loc_id}"]')
