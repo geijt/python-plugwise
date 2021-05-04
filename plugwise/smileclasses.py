@@ -59,7 +59,6 @@ from .constants import (
     WATER_PRESSURE,
     WATER_TEMP,
 )
-
 from .helper import SmileHelper
 
 
