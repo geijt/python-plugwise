@@ -50,6 +50,7 @@ from .constants import (
     PW_NOTIFICATION,
     RELAY,
     RETURN_TEMP,
+    RULES,
     SLAVE_BOILER_STATE,
     TARGET_TEMP,
     TEMP_DIFF,

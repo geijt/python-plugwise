@@ -20,7 +20,6 @@ from .constants import (
     MODULES,
     NOTIFICATIONS,
     PW_THERMOSTAT_CLASSES,
-    RULES,
     SMILES,
     STATUS,
     SWITCH_GROUP_TYPES,
