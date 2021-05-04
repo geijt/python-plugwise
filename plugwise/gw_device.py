@@ -31,7 +31,6 @@ class GWDevice(SmileHelper):
         self._devices = {}
         self._firmware_version = None
         self._friendly_name = None
-        self._hostname = None
         self._s_type = None
         self._single_master_thermostat = None
 
@@ -43,7 +42,7 @@ class GWDevice(SmileHelper):
     @property
     def firmware_version(self):
         """Device firmware version."""
-        return self._firmware_version
+        return self.smile_version[1]
 
     @property
     def gateway_id(self):
@@ -58,12 +57,12 @@ class GWDevice(SmileHelper):
     @property
     def hostname(self):
         """Device model name."""
-        return self._hostname
+        return self.smile_hostname
 
     @property
     def s_type(self):
         """Device vendor name."""
-        return self._s_type
+        return self.smile_type
 
     @property
     def single_master_thermostat(self):
@@ -104,10 +103,6 @@ class GWDevice(SmileHelper):
 
         self._devices = self._api.get_all_devices()
         self._single_master_thermostat = self._api.single_master_thermostat()
-        self._gateway_id = self._api.gateway_id
-        self._firmware_version = self._api.smile_version[1]
-        self._hostname = self._api.smile_hostname
-        self._s_type = self._api.smile_type
 
         for dev_id in self._devices:
             if self._devices[dev_id]["class"] == "gateway":
