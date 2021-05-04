@@ -62,6 +62,7 @@ from .constants import (
 
 from .helper import SmileHelper
 
+
 class Gateway:
     """ Represent the Plugwise Smile/Stretch gateway."""
 
