@@ -41,6 +41,7 @@ from .constants import (
     IDLE_ICON,
     ILLUMINANCE,
     INTENDED_BOILER_TEMP,
+    LOCATIONS,
     LOCK,
     MOD_LEVEL,
     NET_EL_CUMULATIVE,
