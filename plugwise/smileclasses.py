@@ -129,6 +129,7 @@ class Thermostat(Smile):
 
     def __init__(self, api, dev_id):
         """Initialize the Thermostat."""
+        super().__init__()
 
         self._api = api
         self._compressor_state = None

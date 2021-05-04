@@ -21,6 +21,8 @@ class GWDevice(Smile):
 
     def __init__(self, host, password, websession, port=None):
         """Initialize the device."""
+        super().__init__()
+
         self._api = None
         self._host = host
         self._password = password
