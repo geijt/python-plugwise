@@ -59,7 +59,7 @@ from .constants import (
     WATER_PRESSURE,
     WATER_TEMP,
 )
-from smile import Smile
+from .smile import Smile
 
 
 class Gateway:
