@@ -227,7 +227,7 @@ class Smile(SmileHelper):
             self._appliances = await self._request(APPLIANCES)
 
         self.gw_data["notifications"] = self.notifications
-        
+
         for dev_id, dev_dict in self.gw_devices.items():
             data = self._get_device_data(dev_id)
             for key, value in list(data.items()):
