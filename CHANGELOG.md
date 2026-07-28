@@ -1,6 +1,6 @@
 # Changelog
 
-## Ongoing
+## v1.14.3
 
 - Change representation of no-thermostat-schedule-defined to a single `off` option via PR [#899](https://github.com/plugwise/python-plugwise/pull/899)
 
