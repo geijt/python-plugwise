@@ -52,7 +52,7 @@
     "model": "Generic heater/cooler",
     "name": "OpenTherm",
     "sensors": {
-      "dhw_temperature": 41.5,
+      "max_dhw_temperature": 41.5,
       "intended_boiler_temperature": 18.0,
       "modulation_level": 0,
       "outdoor_air_temperature": 28.2,
