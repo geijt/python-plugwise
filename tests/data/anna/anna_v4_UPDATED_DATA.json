@@ -10,14 +10,14 @@
       "heating_state": false,
       "flame_state": false
     },
-    "maximum_boiler_temperature": {
+    "boiler_temperature": {
       "current": 51.0,
       "setpoint": 69.0,
       "lower_bound": 0.0,
       "upper_bound": 100.0,
       "resolution": 1.0
     },
-    "max_dhw_temperature": {
+    "dhw_temperature": {
       "current": 51.0,
       "setpoint": 59.0,
       "lower_bound": 30.0,

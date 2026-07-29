@@ -82,14 +82,14 @@
       "auto"
     ],
     "location": "82c15f65c9bf44c592d69e16139355e3",
-    "max_dhw_temperature": {
+    "dhw_temperature": {
       "current": 49.5,
       "lower_bound": 35.0,
       "resolution": 0.01,
       "setpoint": 53.0,
       "upper_bound": 60.0
     },
-    "maximum_boiler_temperature": {
+    "boiler_temperature": {
       "current": 23.3,
       "lower_bound": 25.0,
       "resolution": 0.01,

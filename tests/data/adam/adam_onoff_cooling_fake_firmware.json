@@ -14,14 +14,14 @@
       "eco"
     ],
     "location": "eedadcb297564f1483faa509179aebed",
-    "max_dhw_temperature": {
+    "dhw_temperature": {
       "current": 63.5,
       "lower_bound": 40.0,
       "resolution": 0.01,
       "setpoint": 60.0,
       "upper_bound": 65.0
     },
-    "maximum_boiler_temperature": {
+    "boiler_temperature": {
       "current": 24.5,
       "lower_bound": 7.0,
       "resolution": 0.01,
