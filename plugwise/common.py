@@ -309,7 +309,8 @@ class SmileCommon:
                 temp_dict["current"] = data["sensors"]["water_temperature"]
                 self._count += 1
 
-        if item == "boiler_temperature":
+        if item == "maximum_boiler_temperature":
+            item = "boiler_temperature"
             if "water_temperature" in data["sensors"]:
                 temp_dict["current"] = data["sensors"]["water_temperature"]
                 self._count += 1
