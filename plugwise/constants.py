@@ -594,6 +594,8 @@ class GwEntityData(TypedDict, total=False):
     binary_sensors: SmileBinarySensors
     boiler_temperature: ActuatorData
     dhw_temperature: ActuatorData
+    max_dhw_temperature: ActuatorData
+    maximum_boiler_temperature: ActuatorData
     sensors: SmileSensors
     switches: SmileSwitches
     temperature_offset: ActuatorData
