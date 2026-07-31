@@ -1,6 +1,10 @@
 # Changelog
 
-## v1.14.4
+## Ongoing
+
+- Rename dict-keys: `max_dhw_temperature` to `dhw_temperature`, `maximum_boiler_temperature` to `boiler_temperature` via PR [#908](https://github.com/plugwise/python-plugwise/pull/908)
+
+## v1.14.3.post1
 
 - Correct typing of select_schedule, manual fixture update
 
