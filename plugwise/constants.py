@@ -584,7 +584,7 @@ class GwEntityData(TypedDict, total=False):
     preset_modes: list[str] | None
     # Schedules:
     available_schedules: list[str]
-    select_schedule: str | None
+    select_schedule: str
 
     climate_mode: str
     # Extra for Adam Master Thermostats

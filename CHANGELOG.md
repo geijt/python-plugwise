@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.14.3-1
+
+- Correct typing of select_schedule, manual fixture update
+
 ## v1.14.3
 
 - Change representation of no-thermostat-schedule-defined to a single `off` option via PR [#899](https://github.com/plugwise/python-plugwise/pull/899)

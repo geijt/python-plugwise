@@ -60,8 +60,8 @@ class Smile(SmileComm):
             password,
             port,
             self._timeout,
-            username,
-            websession,
+            username=username,
+            websession=websession,
         )
 
         self._cooling_present = False

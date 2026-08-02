@@ -283,6 +283,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         broken=False,
         fail_auth=False,
         raise_timeout=False,
+        *,
         smile_timeout_value=10,
         stretch=False,
         timeout_happened=False,
@@ -728,7 +729,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
 
     @pytest.mark.asyncio
     async def tinker_thermostat_schedule(
-        self, api, loc_id, state, good_schedules=None, single=False, unhappy=False
+        self, api, loc_id, state, *, good_schedules=None, single=False, unhappy=False
     ):
         """Toggle schedules to test functionality."""
         # pragma warning disable S3776
@@ -798,6 +799,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         self,
         api,
         loc_id,
+        *,
         schedule_on=True,
         good_schedules=None,
         single=False,
@@ -817,14 +819,29 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
             for item in api._schedule_old_states[loc_id]:
                 api._schedule_old_states[loc_id][item] = "off"
         result_3 = await self.tinker_thermostat_schedule(
-            api, loc_id, "on", good_schedules, single, unhappy
+            api,
+            loc_id,
+            "on",
+            good_schedules=good_schedules,
+            single=single,
+            unhappy=unhappy,
         )
         if schedule_on:
             result_4 = await self.tinker_thermostat_schedule(
-                api, loc_id, "off", good_schedules, single, unhappy
+                api,
+                loc_id,
+                "off",
+                good_schedules=good_schedules,
+                single=single,
+                unhappy=unhappy,
             )
             result_5 = await self.tinker_thermostat_schedule(
-                api, loc_id, "on", good_schedules, single, unhappy
+                api,
+                loc_id,
+                "on",
+                good_schedules=good_schedules,
+                single=single,
+                unhappy=unhappy,
             )
             return result_1 and result_2 and result_3 and result_4 and result_5
         return result_1 and result_2 and result_3
