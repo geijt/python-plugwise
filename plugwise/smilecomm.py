@@ -34,6 +34,7 @@ class SmileComm:
         password: str,
         port: int,
         timeout: int,
+        *,
         username: str,
         websession: ClientSession | None,
     ) -> None:
