@@ -2,7 +2,7 @@
 
 ## v1.14.3-1
 
-- Correct typing of select_schedule
+- Correct typing of select_schedule, manual fixture update
 
 ## v1.14.3
 
