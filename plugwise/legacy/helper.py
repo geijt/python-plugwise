@@ -273,7 +273,7 @@ class SmileLegacyHelper(SmileCommon):
             self._get_lock_state(appliance, data, self._stretch_v2)
 
             if appliance.find("type").text in ACTUATOR_CLASSES:
-                self._get_actuator_functionalities(appliance, data, entity)
+                self._get_actuator_functionalities(appliance, data)
 
         # Anna: the Smile outdoor_temperature is present in the Home location
         # For some Anna's LOCATIONS is empty, falling back to domain_objects!
@@ -345,17 +345,9 @@ class SmileLegacyHelper(SmileCommon):
         self,
         xml: etree.Element,
         data: GwEntityData,
-        entity: GwEntityData,
     ) -> None:
         """Helper-function for _get_measurement_data()."""
         for item in ACTIVE_ACTUATORS:
-            # Skip max_dhw_temperature, not initially valid,
-            # skip thermostat for thermo_sensors
-            if item == "max_dhw_temperature" or (
-                item == "thermostat" and entity["dev_class"] == "thermo_sensor"
-            ):
-                continue
-
             temp_dict: ActuatorData = {}
             functionality = "thermostat_functionality"
 

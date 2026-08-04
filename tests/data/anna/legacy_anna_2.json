@@ -53,7 +53,7 @@
     },
     "dev_class": "heater_central",
     "location": "be81e3f8275b4129852c4d8d550ae2eb",
-    "maximum_boiler_temperature": {
+    "boiler_temperature": {
       "current": 54.0,
       "lower_bound": 50.0,
       "resolution": 1.0,

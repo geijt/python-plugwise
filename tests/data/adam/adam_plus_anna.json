@@ -50,7 +50,7 @@
       "eco"
     ],
     "location": "07d618f0bb80412687f065b8698ce3e7",
-    "maximum_boiler_temperature": {
+    "boiler_temperature": {
       "current": 48.0,
       "lower_bound": 0.0,
       "resolution": 1.0,

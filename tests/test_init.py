@@ -495,7 +495,15 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
             tests = 0
             tested_items = 0
             asserts = 0
-            bsw_list = ["binary_sensors", "central", "climate", "sensors", "switches"]
+            dicts_content = [
+                "binary_sensors",
+                "sensors",
+                "switches",
+                "dhw_temperature",
+                "boiler_temperature",
+                "temperature_offset",
+                "thermostat",
+            ]
             for testitem, measurements in test_dict.items():
                 item_asserts = 0
                 tests += 1
@@ -514,10 +522,7 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
                                 f"  + Testing {measure_key}/{type(measure_key)} with {details[measure_key]}/{type(details[measure_key])} (should be {measure_assert}/{type(measure_assert)} )",
                             )
                             tests += 1
-                            if (
-                                measure_key in bsw_list
-                                or measure_key in pw_constants.ACTIVE_ACTUATORS
-                            ):
+                            if measure_key in dicts_content:
                                 tests -= 1
                                 for key_1, val_1 in measure_assert.items():
                                     tests += 1
@@ -933,8 +938,8 @@ class TestPlugwise:  # pylint: disable=attribute-defined-outside-init
         new_temp = 60.0
         _LOGGER.info("- Adjusting temperature to %s", new_temp)
         for test in [
-            "maximum_boiler_temperature",
-            "max_dhw_temperature",
+            "boiler_temperature",
+            "dhw_temperature",
             "bogus_temperature",
         ]:
             _LOGGER.info("  + for %s", test)
