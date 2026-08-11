@@ -216,7 +216,7 @@ class SmileAPI(SmileData):
         if (presets := self._presets(loc_id)) is None:
             raise PlugwiseError("Plugwise: no presets available.")  # pragma: no cover
         if preset not in list(presets):
-            raise PlugwiseError("Plugwise: invalid preset.")
+            raise PlugwiseError(f"Plugwise: invalid preset {preset}.")
 
         current_location = self._domain_objects.find(f'location[@id="{loc_id}"]')
         location_name = current_location.find("name").text
@@ -268,12 +268,11 @@ class SmileAPI(SmileData):
         - and the 5 modes available on the Loria.
         """
         if (
-            self._dhw_allowed_modes
-            and mode not in self._dhw_allowed_modes
+            mode not in self.gw_entities[appl_id]["dhw_modes"]
             or length is None
             or not isinstance(length, int)
         ):
-            raise PlugwiseError("Plugwise: invalid dhw mode or invalid dhw modes list.")
+            raise PlugwiseError(f"Plugwise: invalid dhw mode {mode} or invalid length {length}.")
 
         match length:
             case 2:
@@ -291,8 +290,8 @@ class SmileAPI(SmileData):
 
     async def set_gateway_mode(self, mode: str) -> None:
         """Set the gateway mode."""
-        if mode not in self._gw_allowed_modes:
-            raise PlugwiseError("Plugwise: invalid gateway mode.")
+        if mode not in self.gw_entities[self.gateway_id]["gateway_modes"]:
+            raise PlugwiseError(f"Plugwise: invalid gateway mode {mode}.")
 
         end_time = "2037-04-21T08:00:53.000Z"
         valid = ""
@@ -323,8 +322,8 @@ class SmileAPI(SmileData):
 
     async def set_regulation_mode(self, mode: str) -> None:
         """Set the heating regulation mode."""
-        if mode not in self._reg_allowed_modes:
-            raise PlugwiseError("Plugwise: invalid regulation mode.")
+        if mode not in self.gw_entities[self.gateway_id]["regulation_modes"]:
+            raise PlugwiseError(f"Plugwise: invalid regulation mode {mode}.")
 
         duration = ""
         if "bleeding" in mode:
@@ -364,7 +363,7 @@ class SmileAPI(SmileData):
         if state is None:
             state = STATE_ON
         elif state not in (STATE_OFF, STATE_ON):
-            raise PlugwiseError("Plugwise: invalid schedule state.")
+            raise PlugwiseError(f"Plugwise: invalid schedule state {state}.")
 
         # Translate selection of Off-schedule-option to disabling the active schedule
         if name == OFF:
