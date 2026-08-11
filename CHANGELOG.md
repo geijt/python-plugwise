@@ -1,5 +1,9 @@
 # Changelog
 
+## Ongoing
+
+- Bugfix: revert removal of domestic hot water confort switch support, solution for Core issue [#178699](https://github.com/home-assistant/core/issues/178699)
+
 ## v1.14.5
 
 - Rename dict-keys: `max_dhw_temperature` to `dhw_temperature`, `maximum_boiler_temperature` to `boiler_temperature` via PR [#908](https://github.com/plugwise/python-plugwise/pull/908)
