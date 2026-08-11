@@ -272,7 +272,9 @@ class SmileAPI(SmileData):
             or length is None
             or not isinstance(length, int)
         ):
-            raise PlugwiseError(f"Plugwise: invalid dhw mode {mode} or invalid length {length}.")
+            raise PlugwiseError(
+                f"Plugwise: invalid dhw mode {mode} or invalid length {length}."
+            )
 
         match length:
             case 2:

@@ -510,7 +510,10 @@ class SmileHelper(SmileCommon):
                 if "switches" in data:
                     data["switches"][name] = state.text == "on"
                     self._count += 1
-                if not self._dhw_allowed_modes and toggle == "domestic_hot_water_comfort_mode":
+                if (
+                    not self._dhw_allowed_modes
+                    and toggle == "domestic_hot_water_comfort_mode"
+                ):
                     self._dhw_allowed_modes = ["comfort", "eco"]
 
     def _get_plugwise_notifications(self) -> None:
