@@ -157,15 +157,15 @@ class SmileLegacyAPI(SmileLegacyData):
     async def set_preset(self, _: str, preset: str) -> None:
         """Set the given Preset on the relevant Thermostat - from DOMAIN_OBJECTS."""
         if not (presets := self._presets()):
-            raise PlugwiseError("Plugwise: no presets available.")  # pragma: no cover
+            raise PlugwiseError("Plugwise: no presets available")  # pragma: no cover
         if preset not in list(presets):
-            raise PlugwiseError("Plugwise: invalid preset.")
+            raise PlugwiseError(f"Plugwise: invalid preset {preset}")
 
         locator = f'rule/directives/when/then[@icon="{preset}"].../.../...'
         if (rule := self._domain_objects.find(locator)) is None:
-            raise PlugwiseError("Plugwise: no preset rule found.")  # pragma: no cover
+            raise PlugwiseError("Plugwise: no preset rule found")  # pragma: no cover
         if (rule_id := rule.get("id")) is None:
-            raise PlugwiseError("Plugwise: no preset id found.")  # pragma: no cover
+            raise PlugwiseError("Plugwise: no preset id found")  # pragma: no cover
 
         data = f"<rules><rule id='{rule_id}'><active>true</active></rule></rules>"
         await self.call_request(RULES, method="put", data=data)
@@ -196,7 +196,7 @@ class SmileLegacyAPI(SmileLegacyData):
         Used in HA Core to set the hvac_mode: in practice switch between schedule on - off.
         """
         if state not in (STATE_OFF, STATE_ON):
-            raise PlugwiseError("Plugwise: invalid schedule state.")
+            raise PlugwiseError(f"Plugwise: invalid schedule state {state}")
 
         # Handle no schedule-name / Off-schedule provided
         if name is None or name == OFF:
@@ -210,7 +210,7 @@ class SmileLegacyAPI(SmileLegacyData):
 
         if schedule_rule_id is None:
             raise PlugwiseError(
-                "Plugwise: no schedule with this name available."
+                f"Plugwise: no schedule with name {name} available"
             )  # pragma: no cover
 
         new_state = "false"

@@ -189,7 +189,7 @@ class SmileAPI(SmileData):
                     thermostat_id = th_func.get("id")
 
         if thermostat_id is None:
-            raise PlugwiseError(f"Plugwise: cannot change setpoint, {key} not found.")
+            raise PlugwiseError(f"Plugwise: cannot change setpoint, {key} not found")
 
         data = (
             "<thermostat_functionality>"
@@ -203,7 +203,7 @@ class SmileAPI(SmileData):
         """Set the Temperature offset for thermostats that support this feature."""
         if dev_id not in self.therms_with_offset_func:
             raise PlugwiseError(
-                "Plugwise: this device does not have temperature-offset capability."
+                "Plugwise: this device does not have temperature-offset capability"
             )
 
         value = str(offset)
@@ -214,9 +214,9 @@ class SmileAPI(SmileData):
     async def set_preset(self, loc_id: str, preset: str) -> None:
         """Set the given Preset on the relevant Thermostat - from LOCATIONS."""
         if (presets := self._presets(loc_id)) is None:
-            raise PlugwiseError("Plugwise: no presets available.")  # pragma: no cover
+            raise PlugwiseError("Plugwise: no presets available")  # pragma: no cover
         if preset not in list(presets):
-            raise PlugwiseError(f"Plugwise: invalid preset {preset}.")
+            raise PlugwiseError(f"Plugwise: invalid preset {preset}")
 
         current_location = self._domain_objects.find(f'location[@id="{loc_id}"]')
         location_name = current_location.find("name").text
@@ -273,7 +273,7 @@ class SmileAPI(SmileData):
             or not isinstance(length, int)
         ):
             raise PlugwiseError(
-                f"Plugwise: invalid dhw mode {mode} or invalid length {length}."
+                f"Plugwise: invalid dhw mode {mode} or invalid length {length}"
             )
 
         match length:
@@ -295,7 +295,7 @@ class SmileAPI(SmileData):
         if mode not in self.gw_entities.get(self.gateway_id, {}).get(
             "gateway_modes", []
         ):
-            raise PlugwiseError(f"Plugwise: invalid gateway mode {mode}.")
+            raise PlugwiseError(f"Plugwise: invalid gateway mode {mode}")
 
         end_time = "2037-04-21T08:00:53.000Z"
         valid = ""
@@ -329,7 +329,7 @@ class SmileAPI(SmileData):
         if mode not in self.gw_entities.get(self.gateway_id, {}).get(
             "regulation_modes", []
         ):
-            raise PlugwiseError(f"Plugwise: invalid regulation mode {mode}.")
+            raise PlugwiseError(f"Plugwise: invalid regulation mode {mode}")
 
         duration = ""
         if "bleeding" in mode:
@@ -347,7 +347,7 @@ class SmileAPI(SmileData):
     async def set_zone_profile(self, loc_id: str, profile: str) -> None:
         """Set the Adam thermoszone heating profile."""
         if profile not in ALLOWED_ZONE_PROFILES:
-            raise PlugwiseError("Plugwise: invalid zone profile.")
+            raise PlugwiseError(f"Plugwise: invalid zone profile {profile}")
 
         data = (
             "<thermostat_functionality>"
@@ -369,7 +369,7 @@ class SmileAPI(SmileData):
         if state is None:
             state = STATE_ON
         elif state not in (STATE_OFF, STATE_ON):
-            raise PlugwiseError(f"Plugwise: invalid schedule state {state}.")
+            raise PlugwiseError(f"Plugwise: invalid schedule state {state}")
 
         # Translate selection of Off-schedule-option to disabling the active schedule
         if name == OFF:
@@ -384,7 +384,7 @@ class SmileAPI(SmileData):
         schedule_rule = self._rule_ids_by_name(name, loc_id)
         # Raise an error when the schedule name does not exist
         if not schedule_rule or schedule_rule is None:
-            raise PlugwiseError("Plugwise: no schedule with this name available.")
+            raise PlugwiseError(f"Plugwise: no schedule with name {name} available")
 
         # If no state change is requested, do nothing
         if state == self._schedule_old_states[loc_id][name]:
@@ -531,7 +531,7 @@ class SmileAPI(SmileData):
 
         if setpoint is None:
             raise PlugwiseError(
-                "Plugwise: failed setting temperature: no valid input provided"
+                f"Plugwise: failed setting temperature: setpoint {setpoint} provided"
             )  # pragma: no cover"
 
         temperature = str(setpoint)
