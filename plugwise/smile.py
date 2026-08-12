@@ -268,7 +268,7 @@ class SmileAPI(SmileData):
         - and the 5 modes available on the Loria.
         """
         if (
-            mode not in self.gw_entities[appl_id]["dhw_modes"]
+            mode not in self.gw_entities.get(appl_id, {}).get("dhw_modes", [])
             or length is None
             or not isinstance(length, int)
         ):
@@ -292,7 +292,9 @@ class SmileAPI(SmileData):
 
     async def set_gateway_mode(self, mode: str) -> None:
         """Set the gateway mode."""
-        if mode not in self.gw_entities[self.gateway_id]["gateway_modes"]:
+        if mode not in self.gw_entities.get(self.gateway_id, {}).get(
+            "gateway_modes", []
+        ):
             raise PlugwiseError(f"Plugwise: invalid gateway mode {mode}.")
 
         end_time = "2037-04-21T08:00:53.000Z"
@@ -324,7 +326,9 @@ class SmileAPI(SmileData):
 
     async def set_regulation_mode(self, mode: str) -> None:
         """Set the heating regulation mode."""
-        if mode not in self.gw_entities[self.gateway_id]["regulation_modes"]:
+        if mode not in self.gw_entities.get(self.gateway_id, {}).get(
+            "regulation_modes", []
+        ):
             raise PlugwiseError(f"Plugwise: invalid regulation mode {mode}.")
 
         duration = ""
