@@ -271,10 +271,12 @@ class SmileHelper(SmileCommon):
             appliance, "domestic_hot_water_mode_control_functionality"
         )
         # Determine the dhw modes from the domestic_hot_water_comfort_mode toggle
-        if not self._dhw_allowed_modes:
-            self._get_toggle_state(
-                appliance, "domestic_hot_water_comfort_mode", "dhw_cm_switch", {}
-            )
+        if self._dhw_allowed_modes:
+            return
+
+        self._get_toggle_state(
+            appliance, "domestic_hot_water_comfort_mode", "dhw_cm_switch", {}
+        )
 
     def _appl_gateway_info(self, appl: Munch, appliance: etree.Element) -> Munch:
         """Helper-function for _appliance_info_finder()."""
@@ -508,7 +510,10 @@ class SmileHelper(SmileCommon):
                 if "switches" in data:
                     data["switches"][name] = state.text == "on"
                     self._count += 1
-                if toggle == "domestic_hot_water_comfort_mode":
+                if (
+                    not self._dhw_allowed_modes
+                    and toggle == "domestic_hot_water_comfort_mode"
+                ):
                     self._dhw_allowed_modes = ["comfort", "eco"]
 
     def _get_plugwise_notifications(self) -> None:
